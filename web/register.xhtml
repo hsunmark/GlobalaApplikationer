@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <title>Recruitment</title>
+</h:head>
+<h:body>
+    <h3>Register new user</h3>
+    <h:form>
+    <p>
+        <h:outputLabel for="role" value="Your role "/>
+        <h:selectOneMenu id="role" value="#{recruitmentManager.role}">
+            <f:selectItem itemValue="Recruit" itemLabel="Recruit"/>
+            <f:selectItem itemValue="Applicant" itemLabel="Applicant"/>
+        </h:selectOneMenu>
+    </p>
+
+    <p>
+        <h:outputLabel for="firstname" value="Firstname: "/>
+        <h:inputText id="firstname" value="#{recruitmentManager.firstname}"/>
+    </p>
+    <p>
+        <h:outputLabel for="lastname" value="Lastname: "/>
+        <h:inputText id="lastname" value="#{recruitmentManager.lastname}"/>
+    </p>
+
+    <p>
+        <h:outputLabel for="ssc" value="Social security number: "/>
+        <h:inputText id="ssc" value="#{recruitmentManager.ssn}"/>
+    </p>
+    <p>
+        <h:outputLabel for="email" value="E-mail: "/>
+        <h:inputText id="email" value="#{recruitmentManager.email}"/>
+    </p>
+
+    <p>
+        <h:outputLabel for="username" value="Username: "/>
+        <h:inputText id="username" value="#{recruitmentManager.username}"/>
+    </p>
+    <p>
+        <h:outputLabel for="password" value="Password: "/>
+        <h:inputSecret id="password" value="#{recruitmentManager.password}"/>
+    </p>
+
+    <p>
+        <h:outputLabel for="password2" value="Confirm password: "/>
+        <h:inputSecret id="password2" value="#{recruitmentManager.password2}"/>
+    </p>
+
+    <p>
+        <h:commandButton value="Register" action="#{recruitmentManager.register}"/>
+    </p>
+    </h:form>
+</h:body>
+</html>
