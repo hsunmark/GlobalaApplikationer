@@ -25,13 +25,11 @@ public class RecruitmentController {
 
     public void register(RegisterDTO registerDTO) {
         // TODO validera alla värden i objektet
-
-       /* roleEntity = em.find(RoleEntity.class, registerDTO.getRole());
+        roleEntity = em.find(RoleEntity.class, registerDTO.getRole());
         personEntity = new PersonEntity(registerDTO.getFirstname(), registerDTO.getLastname(),
                 registerDTO.getSsn(), registerDTO.getEmail(), registerDTO.getUsername(),
                 registerDTO.getPassword(), roleEntity.getRoleId());
 
-        em.persist(personEntity);*/
-        System.out.println("Registering!! (from controller)");
+        em.persist(personEntity);
     }
 }

@@ -2,9 +2,7 @@ package model;
 
 import javax.persistence.*;
 
-/**
- * Created by Henrik on 2016-02-10.
- */
+
 @Entity
 @Table(name = "person", schema = "recruitdb")
 public class PersonEntity {
@@ -17,7 +15,21 @@ public class PersonEntity {
     private Long roleId;
     private String username;
 
+    public PersonEntity (String firstname, String lastname,
+                         String ssn, String email, String username, String password, long roleId) {
+        this.name = firstname;
+        this.surname = lastname;
+        this.ssn = ssn;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.roleId = roleId;
+    }
+
+    public PersonEntity() {}
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "person_id")
     public long getPersonId() {
         return personId;

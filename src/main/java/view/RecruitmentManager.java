@@ -1,20 +1,20 @@
 package view;
 
+import controller.RecruitmentController;
 import model.RegisterDTO;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import java.io.Serializable;
-import java.util.logging.Logger;
 
 
 @ManagedBean(name = "recruitmentManager")
 @SessionScoped
 public class RecruitmentManager implements Serializable {
 
-  //  @EJB
- //   private RecruitmentController controller;
+    @EJB
+    private RecruitmentController controller;
     private String username;
     private String password;
     private String password2;
@@ -23,7 +23,6 @@ public class RecruitmentManager implements Serializable {
     private String role;
     private String ssn;
     private String email;
-    private Logger log = Logger.getLogger(RecruitmentManager.class.getName());
 
     public String getRole() {
         return role;
@@ -102,7 +101,7 @@ public class RecruitmentManager implements Serializable {
     public String register(){
        String message = validateRegisterParameters() ;
       // if (validateRegisterParameters()!= "ok") {
-        //   controller.register(new RegisterDTO(role, firstname, lastname, ssn, email, username, password));
+           controller.register(new RegisterDTO("recruit", firstname, lastname, ssn, email, username, password));
        //}
         return message;
     }

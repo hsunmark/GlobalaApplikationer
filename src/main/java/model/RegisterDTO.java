@@ -41,8 +41,11 @@ public class RegisterDTO {
         return lastname;
     }
 
-    public String getRole() {
-        return role;
+    //TODO fullösning. Fixa
+    public long getRole() {
+        if(role.equals("recruit")) return 1;
+        else if(role.equals("applicant")) return 2;
+        return 0;
     }
 
     public String getUsername() {

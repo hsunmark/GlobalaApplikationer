@@ -2,16 +2,16 @@ package model;
 
 import javax.persistence.*;
 
-/**
- * Created by Henrik on 2016-02-10.
- */
 @Entity
 @Table(name = "role", schema = "recruitdb")
 public class RoleEntity {
     private long roleId;
     private String name;
 
+    public RoleEntity() {}
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "role_id")
     public long getRoleId() {
         return roleId;
