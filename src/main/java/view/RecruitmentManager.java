@@ -104,7 +104,7 @@ public class RecruitmentManager implements Serializable {
             controller.login(username, password);
         }
         System.out.println(message);
-        return message;
+        return "";
     }
 
     public String register(){
@@ -113,7 +113,7 @@ public class RecruitmentManager implements Serializable {
            controller.register(new RegisterDTO("recruit", firstname, lastname, ssn, email, username, password));
         }
         System.out.println(message);
-        return message;
+        return "";
     }
 
     private String validateRegisterParameters() {
