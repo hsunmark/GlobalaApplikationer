@@ -101,7 +101,7 @@ public class RecruitmentManager implements Serializable {
     }
 
     public String login(){
-        String message = validateLoginParameters();
+        message = validateLoginParameters();
         if(message.equals("ok")){
             controller.login(username, password);
         }
@@ -110,7 +110,7 @@ public class RecruitmentManager implements Serializable {
     }
 
     public String register(){
-        String message = validateRegisterParameters() ;
+        message = validateRegisterParameters() ;
         if (message.equals("ok")){
            controller.register(new RegisterDTO("recruit", firstname, lastname, ssn, email, username, password));
         }
