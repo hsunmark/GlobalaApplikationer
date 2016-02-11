@@ -99,10 +99,10 @@ public class RecruitmentManager implements Serializable {
     }
 
     public String register(){
-       String message = validateRegisterParameters() ;
-      // if (validateRegisterParameters()!= "ok") {
+        String message = validateRegisterParameters() ;
+        //if (validateRegisterParameters()!= "ok") {
            controller.register(new RegisterDTO("recruit", firstname, lastname, ssn, email, username, password));
-       //}
+        //}
         return message;
     }
 
