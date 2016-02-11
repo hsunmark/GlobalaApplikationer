@@ -110,7 +110,7 @@ public class RecruitmentManager implements Serializable {
     }
 
     public String register(){
-        message = validateRegisterParameters();
+        message = validateRegisterParameters() ;
         if (message.equals("ok")){
            controller.register(new RegisterDTO("recruit", firstname, lastname, ssn, email, username, password));
         }
@@ -138,7 +138,9 @@ public class RecruitmentManager implements Serializable {
         String nameregex = "^[a-zA-Z]+$";
         String userregex = "^[a-zA-Z0-9]+$";
         String ssnregex = "^[0-9]+$";
-        if(!username.matches(userregex) || !password.matches(userregex) || !firstname.matches(nameregex)
+        if(!username.matches(userregex)
+                || !password.matches(userregex)
+                || !firstname.matches(nameregex)
                 || !lastname.matches(nameregex)){
             return "You are using invalid characters.. " +
                     "(aA-zZ allowed for names and aA-zZ + 0-9 allowed for username and password)";
