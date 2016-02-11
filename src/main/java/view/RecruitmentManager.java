@@ -23,6 +23,15 @@ public class RecruitmentManager implements Serializable {
     private String role;
     private String ssn;
     private String email;
+    private String message;
+
+    public String getMessage(){
+        return message;
+    }
+
+    public void setMessage(String message){
+        this.message = message;
+    }
 
     public String getRole() {
         return role;
@@ -90,59 +99,67 @@ public class RecruitmentManager implements Serializable {
     }
 
     public String login(){
-        String message ="";// validateLoginParameters();
-      /*  if(message =="ok"){
+        String message = validateLoginParameters();
+        if(message.equals("ok")){
             controller.login(username, password);
-        }*/
-        System.out.println("Login!!!");
+        }
+        System.out.println(message);
         return message;
     }
 
     public String register(){
         String message = validateRegisterParameters() ;
-        //if (validateRegisterParameters()!= "ok") {
+        if (message.equals("ok")){
            controller.register(new RegisterDTO("recruit", firstname, lastname, ssn, email, username, password));
-        //}
+        }
+        System.out.println(message);
         return message;
     }
 
     private String validateRegisterParameters() {
-        if(username==null || password==null || password2== null || firstname==null || lastname==null || role==null
-                || ssn==null || email==null){
+        if(username.equals("")
+                || password.equals("")
+                || password2.equals("")
+                || firstname.equals("")
+                || lastname.equals("")
+                || role.equals("")
+                || ssn.equals("")
+                || email.equals("")){
             return "You have not filled all the fields.";
         }
         if(!password.equals(password2)){
             return "Passwords does not match";
         }
-        String regex = "^[a-zA-Z0-9]+$";
-        String emailregex = "\\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}\\b";
+        if(password.length() < 6){
+            return "Password must be atleast 6 charachters long";
+        }
+        String nameregex = "^[a-zA-Z]+$";
+        String userregex = "^[a-zA-Z0-9]+$";
+        String emailregex = "^[a-zA-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}\\";
         String ssnregex = "^[0-9]+$";
-        if(!username.matches(regex) || !password.matches(regex) || !firstname.matches(regex)
-                || !lastname.matches(regex)){
-            return "You are using invalid characters.. (a-z , 0-9 allowed)";
+        if(!username.matches(userregex) || !password.matches(userregex) || !firstname.matches(nameregex)
+                || !lastname.matches(nameregex)){
+            return "You are using invalid characters.. " +
+                    "(aA-zZ allowed for names and aA-zZ + 0-9 allowed for username and password)";
         }
         if(!email.matches(emailregex)){
             return "Your email includes invalid characters";
         }
 
-        if(!ssn.matches(ssnregex)){
+        if((!ssn.matches(ssnregex) || (ssn.length()!=10))){
             return "Your ssn should be 10 numbers";
         }
         return "ok";
     }
 
     private String validateLoginParameters() {
-        //TODO validera alla andra parametrar
-        if(password==null || username==null){
-            System.out.println("Please enter a valid username and a password");
+        if(password.equals("") || username.equals("")){
             return "Please enter a valid username and a password";
         }
         String regex = "^[a-zA-Z0-9]+$";
         if (!password.matches(regex) || !username.matches(regex)) {
-            System.out.println("You are only allowed to use characters and/or numbers");
             return "You are only allowed to use characters and/or numbers";
         }
-        System.out.println("ok");
         return "ok";
     }
 }
