@@ -13,7 +13,6 @@ import javax.persistence.PersistenceContext;
 
 
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-@Stateless
 public class RecruitmentController {
     @PersistenceContext(unitName = "recruitPU")
     private EntityManager em;
