@@ -19,11 +19,20 @@ public class RecruitmentController {
     private PersonEntity personEntity;
     private RoleEntity roleEntity;
 
+    /**
+     * @param username
+     * @param password
+     * @return
+     */
     public String login(String username, String password){
 
         return"";
     }
 
+    /**
+     *
+     * @param registerDTO
+     */
     public void register(RegisterDTO registerDTO) {
         // TODO validera alla värden i objektet
         roleEntity = em.find(RoleEntity.class, registerDTO.getRole());
