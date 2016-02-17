@@ -140,6 +140,18 @@ public class RecruitmentManager implements Serializable {
         return "";
     }
 
+
+    /**
+     * Method register:
+     * Validates all the fields that a user has typed in and
+     * if the fields are validated method calls controller.register(RegisterDTO dto)
+     * to continue registration.
+     * Otherwise an errormessage is set by this method
+     *
+     *
+     * @return      returns an empty string due to jsf22bugfix
+     *
+     */
     public String register(){
         try {
             error = null;
@@ -201,7 +213,7 @@ public class RecruitmentManager implements Serializable {
         return "ok";
     }
 
-    public boolean isValidEmailAddress(String email) {
+    private boolean isValidEmailAddress(String email) {
         boolean result = true;
         try {
             InternetAddress emailAddr = new InternetAddress(email);
