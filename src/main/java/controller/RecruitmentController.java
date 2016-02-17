@@ -20,6 +20,7 @@ public class RecruitmentController {
     private RoleEntity roleEntity;
 
     /**
+     *
      * @param username
      * @param password
      * @return
@@ -30,7 +31,7 @@ public class RecruitmentController {
     }
 
     /**
-     *
+     * registers a user account and persists it in database
      * @param registerDTO
      */
     public void register(RegisterDTO registerDTO) {
