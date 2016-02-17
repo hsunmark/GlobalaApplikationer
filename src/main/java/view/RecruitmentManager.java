@@ -165,6 +165,8 @@ public class RecruitmentManager implements Serializable {
         return "";
     }
 
+
+    //method that validates parameters for registration.
     private String validateRegisterParameters() {
         if(username.equals("")
                 || password.equals("")
@@ -202,6 +204,7 @@ public class RecruitmentManager implements Serializable {
         return "ok";
     }
 
+    //method that validates parameters for login
     private String validateLoginParameters() {
         if(loginPw.equals("") || loginName.equals("")){
             return "Invalid login";
@@ -213,6 +216,7 @@ public class RecruitmentManager implements Serializable {
         return "ok";
     }
 
+    //method that validates if a string is a valid email address.
     private boolean isValidEmailAddress(String email) {
         boolean result = true;
         try {
