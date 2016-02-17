@@ -11,7 +11,7 @@ import javax.mail.internet.InternetAddress;
 import java.io.Serializable;
 
 
-@ManagedBean(name = "recruitmentManager")
+@ManagedBean(name = "recruitmentManager", eager = true)
 @SessionScoped
 public class RecruitmentManager implements Serializable {
 
@@ -33,6 +33,7 @@ public class RecruitmentManager implements Serializable {
     public String getLoginName(){
         return loginName;
     }
+
     public String getLoginPw(){
         return loginPw;
     }
@@ -76,7 +77,6 @@ public class RecruitmentManager implements Serializable {
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
-
 
     public String getEmail() {
         return email;
@@ -123,10 +123,18 @@ public class RecruitmentManager implements Serializable {
         error = e;
     }
 
+    /**
+     * Method used to check if any exception was thrown
+     * @return true or false
+     */
     public boolean getSuccess() {
         return error == null;
     }
 
+    /**
+     * Description
+     * @return 
+     */
     public Exception getException() {
         return error;
     }
