@@ -17,6 +17,8 @@ public class RecruitmentManager implements Serializable {
 
     @EJB
     private RecruitmentController controller;
+    private String loginName;
+    private String loginPw;
     private String username;
     private String password;
     private String password2;
@@ -26,6 +28,22 @@ public class RecruitmentManager implements Serializable {
     private String ssn;
     private String email;
     private String message;
+    private Exception error;
+
+    public String getLoginName(){
+        return loginName;
+    }
+    public String getLoginPw(){
+        return loginPw;
+    }
+
+    public void setLoginName(String loginName){
+        this.loginName = loginName;
+    }
+
+    public void setLoginPw(String loginPw){
+        this.loginPw = loginPw;
+    }
 
     public String getMessage(){
         return message;
@@ -100,21 +118,38 @@ public class RecruitmentManager implements Serializable {
         this.password2 = password2;
     }
 
+    private void handleException(Exception e) {
+        e.printStackTrace(System.err);
+        error = e;
+    }
+
+    public boolean getSuccess() {
+        return error == null;
+    }
+
+    public Exception getException() {
+        return error;
+    }
+
     public String login(){
-        message = validateLoginParameters();
+        String message = validateLoginParameters();
         if(message.equals("ok")){
-            controller.login(username, password);
+            controller.login(loginName, loginPw);
         }
         System.out.println(message);
         return "";
     }
 
     public String register(){
-        message = validateRegisterParameters() ;
-        if (message.equals("ok")){
-           controller.register(new RegisterDTO("recruit", firstname, lastname, ssn, email, username, password));
-        }
-        System.out.println(message);
+        try {
+            error = null;
+            message = validateRegisterParameters();
+            if (message.equals("ok")) {
+                controller.register(new RegisterDTO("recruit", firstname, lastname, ssn, email, username, password));
+            }
+        } catch (Exception e) {
+        handleException(e);
+    }
         return "";
     }
 
@@ -138,7 +173,9 @@ public class RecruitmentManager implements Serializable {
         String nameregex = "^[a-zA-Z]+$";
         String userregex = "^[a-zA-Z0-9]+$";
         String ssnregex = "^[0-9]+$";
-        if(!username.matches(userregex) || !password.matches(userregex) || !firstname.matches(nameregex)
+        if(!username.matches(userregex)
+                || !password.matches(userregex)
+                || !firstname.matches(nameregex)
                 || !lastname.matches(nameregex)){
             return "You are using invalid characters.. " +
                     "(aA-zZ allowed for names and aA-zZ + 0-9 allowed for username and password)";
@@ -154,12 +191,12 @@ public class RecruitmentManager implements Serializable {
     }
 
     private String validateLoginParameters() {
-        if(password.equals("") || username.equals("")){
-            return "Please enter a valid username and a password";
+        if(loginPw.equals("") || loginName.equals("")){
+            return "Invalid login";
         }
         String regex = "^[a-zA-Z0-9]+$";
-        if (!password.matches(regex) || !username.matches(regex)) {
-            return "You are only allowed to use characters and/or numbers";
+        if (!loginPw.matches(regex) || !loginName.matches(regex)) {
+            return "Invalid login";
         }
         return "ok";
     }
