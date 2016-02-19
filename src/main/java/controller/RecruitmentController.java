@@ -20,28 +20,38 @@ public class RecruitmentController {
     private RoleEntity roleEntity;
 
     /**
+     * h
      * @param username
      * @param password
      * @return
      */
     public String login(String username, String password){
-        personEntity = em.find(PersonEntity.class, username);
-        if(personEntity != null && personEntity.getPassword().equals(password))
-            return "logged in successfully!";
-        return "invalid username or password";
+        try {
+            personEntity = em.find(PersonEntity.class, username);
+            if (personEntity != null && personEntity.getPassword().equals(password)) {
+                return "logged in successfully!";
+            }
+            return "invalid username or password";
+        } catch (Exception e) {
+            return "Database error";
+        }
     }
 
     /**
      * registers a user account and persists it in database
      * @param registerDTO
      */
-    public void register(RegisterDTO registerDTO) {
-        // TODO validera alla värden i objektet
-        roleEntity = em.find(RoleEntity.class, registerDTO.getRole());
-        personEntity = new PersonEntity(registerDTO.getFirstname(), registerDTO.getLastname(),
-                registerDTO.getSsn(), registerDTO.getEmail(), registerDTO.getUsername(),
-                registerDTO.getPassword(), roleEntity.getRoleId());
+    public boolean register(RegisterDTO registerDTO) {
+        try {
+            roleEntity = em.find(RoleEntity.class, registerDTO.getRole());
+            personEntity = new PersonEntity(registerDTO.getFirstname(), registerDTO.getLastname(),
+                    registerDTO.getSsn(), registerDTO.getEmail(), registerDTO.getUsername(),
+                    registerDTO.getPassword(), roleEntity.getRoleId());
 
-        em.persist(personEntity);
+            em.persist(personEntity);
+        } catch (Exception e){
+            return false;
+        }
+        return true;
     }
 }

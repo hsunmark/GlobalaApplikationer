@@ -6,15 +6,29 @@
     <navigation-rule>
         <from-view-id>/register.xhtml</from-view-id>
         <navigation-case>
-            <if>#{!recruitmentManager.success}</if>
+            <if>#{!recruitmentManager.error}</if>
             <to-view-id>/error.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
         <from-view-id>/index.xhtml</from-view-id>
         <navigation-case>
-            <if>#{!recruitmentManager.success}</if>
+            <if>#{recruitmentManager.error}</if>
             <to-view-id>/error.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/index.xhtml</from-view-id>
+        <navigation-case>
+            <if>#{recruitmentManager.loginSuccess}</if>
+            <to-view-id>/welcome.xhtml.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/register.xhtml</from-view-id>
+        <navigation-case>
+            <if>#{recruitmentManager.loginSuccess}</if>
+            <to-view-id>/welcome.xhtml.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
 </faces-config>
