@@ -29,14 +29,14 @@ public class RecruitmentManager implements Serializable {
     private String email;
     private String message;
     private Exception error;
-    private boolean loginSucces;
+    private boolean loginSuccess;
 
-    public boolean getLoginSucces() {
-        return loginSucces;
+    public boolean getLoginSuccess() {
+        return loginSuccess;
     }
 
-    public void setLoginSucces(boolean loginSucces) {
-        this.loginSucces = loginSucces;
+    public void setLoginSuccess(boolean loginSucces) {
+        this.loginSuccess = loginSuccess;
     }
 
 
