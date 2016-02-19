@@ -20,7 +20,7 @@ public class RecruitmentController {
     private RoleEntity roleEntity;
 
     /**
-     * h
+     *
      * @param username
      * @param password
      * @return
