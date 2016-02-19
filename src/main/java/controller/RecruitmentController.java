@@ -20,7 +20,8 @@ public class RecruitmentController {
     private RoleEntity roleEntity;
 
     /**
-     *
+     * checks that the person trying to login are using a valid combination of
+     * username and password
      * @param username
      * @param password
      * @return
