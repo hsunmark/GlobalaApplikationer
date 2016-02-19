@@ -2,11 +2,12 @@ package model;
 
 import javax.persistence.*;
 
-
+/**
+ * Created by Henrik on 2016-02-19.
+ */
 @Entity
 @Table(name = "person", schema = "recruitdb")
 public class PersonEntity {
-    private long personId;
     private String name;
     private String surname;
     private String ssn;
@@ -27,17 +28,6 @@ public class PersonEntity {
     }
 
     public PersonEntity() {}
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "person_id")
-    public long getPersonId() {
-        return personId;
-    }
-
-    public void setPersonId(long personId) {
-        this.personId = personId;
-    }
 
     @Basic
     @Column(name = "name")
@@ -99,7 +89,7 @@ public class PersonEntity {
         this.roleId = roleId;
     }
 
-    @Basic
+    @Id
     @Column(name = "username")
     public String getUsername() {
         return username;
@@ -116,7 +106,6 @@ public class PersonEntity {
 
         PersonEntity that = (PersonEntity) o;
 
-        if (personId != that.personId) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (surname != null ? !surname.equals(that.surname) : that.surname != null) return false;
         if (ssn != null ? !ssn.equals(that.ssn) : that.ssn != null) return false;
@@ -130,8 +119,7 @@ public class PersonEntity {
 
     @Override
     public int hashCode() {
-        int result = (int) (personId ^ (personId >>> 32));
-        result = 31 * result + (name != null ? name.hashCode() : 0);
+        int result = name != null ? name.hashCode() : 0;
         result = 31 * result + (surname != null ? surname.hashCode() : 0);
         result = 31 * result + (ssn != null ? ssn.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);

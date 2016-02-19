@@ -138,7 +138,7 @@ public class RecruitmentManager implements Serializable {
     public String login(){
         String message = validateLoginParameters();
         if(message.equals("ok")){
-            controller.login(loginName, loginPw);
+           message = controller.login(loginName, loginPw);
         }
         System.out.println(message);
         return "";
@@ -169,6 +169,8 @@ public class RecruitmentManager implements Serializable {
         return "";
     }
 
+
+    //method that validates parameters for registration.
     private String validateRegisterParameters() {
         if(username.equals("")
                 || password.equals("")
@@ -206,6 +208,7 @@ public class RecruitmentManager implements Serializable {
         return "ok";
     }
 
+    //method that validates parameters for login
     private String validateLoginParameters() {
         if(loginPw.equals("") || loginName.equals("")){
             return "Invalid login";
@@ -217,6 +220,7 @@ public class RecruitmentManager implements Serializable {
         return "ok";
     }
 
+    //method that validates if a string is a valid email address.
     private boolean isValidEmailAddress(String email) {
         boolean result = true;
         try {

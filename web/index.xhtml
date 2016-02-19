@@ -14,6 +14,12 @@
    <h3>Please login or register</h3>
    <h:form>
       <p>
+         <h:outputLabel for="login" rendered="#{recruitmentManager.message != null}" value=""/>
+         <h:outputText id="login" value="#{recruitmentManager.message}"/>
+         <h:outputText rendered="#{recruitmentManager.message == null}" value="Login page"/>
+      </p>
+      <hr/>
+      <p>
          <h:outputLabel for="username" value="Username: "/>
          <h:inputText id="username" value="#{recruitmentManager.loginName}"/>
       </p>
