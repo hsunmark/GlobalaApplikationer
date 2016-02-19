@@ -39,8 +39,6 @@ public class RecruitmentManager implements Serializable {
         this.loginSuccess = loginSuccess;
     }
 
-
-
     public String getLoginName(){
         return loginName;
     }
