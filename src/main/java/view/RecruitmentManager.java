@@ -31,6 +31,11 @@ public class RecruitmentManager implements Serializable {
     private Exception error;
     private boolean loginSuccess;
 
+    private String NAME_REGEX = "^[a-zA-Z]+$";
+    private String USER_REGEX = "^[a-zA-Z0-9]+$";
+    private String SSN_REGEX = "^[0-9]+$";
+    private String PW_REGEX = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
+
     public boolean getLoginSuccess() {
         return loginSuccess;
     }
@@ -39,27 +44,27 @@ public class RecruitmentManager implements Serializable {
         this.loginSuccess = loginSuccess;
     }
 
-    public String getLoginName(){
+    public String getLoginName() {
         return loginName;
     }
 
-    public String getLoginPw(){
+    public String getLoginPw() {
         return loginPw;
     }
 
-    public void setLoginName(String loginName){
+    public void setLoginName(String loginName) {
         this.loginName = loginName;
     }
 
-    public void setLoginPw(String loginPw){
+    public void setLoginPw(String loginPw) {
         this.loginPw = loginPw;
     }
 
-    public String getMessage(){
+    public String getMessage() {
         return message;
     }
 
-    public void setMessage(String message){
+    public void setMessage(String message) {
         this.message = message;
     }
 
@@ -142,16 +147,21 @@ public class RecruitmentManager implements Serializable {
 
     /**
      * Method used to validate an user login attempt
+     *
      * @return returns an empty string due to jsf22bugfix
      */
-    public String login(){
-        error = null;
-        String message = validateLoginParameters();
-        if(message.equals("ok")){
-           message = controller.login(loginName, loginPw);
-            if(message.equals("logged in successfully!")){
-                loginSuccess = true;
+    public String login() {
+        try {
+            error = null;
+            String message = validateLoginParameters();
+            if (message.equals("ok")) {
+                message = controller.login(loginName, loginPw);
+                if (message.equals("logged in successfully!")) {
+                    loginSuccess = true;
+                }
             }
+        } catch (Exception e) {
+            handleException(e);
         }
         return "";
     }
@@ -164,11 +174,9 @@ public class RecruitmentManager implements Serializable {
      * to continue registration.
      * Otherwise an errormessage is set by this method
      *
-     *
-     * @return      returns an empty string due to jsf22bugfix
-     *
+     * @return returns an empty string due to jsf22bugfix
      */
-    public String register(){
+    public String register() {
         try {
             error = null;
             message = validateRegisterParameters();
@@ -176,45 +184,43 @@ public class RecruitmentManager implements Serializable {
                 loginSuccess = controller.register(new RegisterDTO("recruit", firstname, lastname, ssn, email, username, password));
             }
         } catch (Exception e) {
-        handleException(e);
-    }
+            handleException(e);
+        }
         return "";
     }
 
 
     //method that validates parameters for registration.
     private String validateRegisterParameters() {
-        if(username.equals("")
+        if (username.equals("")
                 || password.equals("")
                 || password2.equals("")
                 || firstname.equals("")
                 || lastname.equals("")
                 || role.equals("")
                 || ssn.equals("")
-                || email.equals("")){
+                || email.equals("")) {
             return "You have not filled all the fields.";
         }
-        if(!password.equals(password2)){
+        if (!password.equals(password2)) {
             return "Passwords does not match";
         }
-        if(password.length() < 6){
+        if (password.length() < 6) {
             return "Password must be atleast 6 charachters long";
         }
-        String nameregex = "^[a-zA-Z]+$";
-        String userregex = "^[a-zA-Z0-9]+$";
-        String ssnregex = "^[0-9]+$";
-        if(!username.matches(userregex)
-                || !password.matches(userregex)
-                || !firstname.matches(nameregex)
-                || !lastname.matches(nameregex)){
+
+        if (!username.matches(USER_REGEX)
+                || !password.matches(PW_REGEX)
+                || !firstname.matches(NAME_REGEX)
+                || !lastname.matches(NAME_REGEX)) {
             return "You are using invalid characters.. " +
                     "(aA-zZ allowed for names and aA-zZ + 0-9 allowed for username and password)";
         }
-        if(!isValidEmailAddress(email)){
+        if (!isValidEmailAddress(email)) {
             return "Your email is not a valid email address";
         }
 
-        if((!ssn.matches(ssnregex) || (ssn.length()!=10))){
+        if ((!ssn.matches(SSN_REGEX) || (ssn.length() != 10))) {
             return "Your ssn should be 10 numbers";
         }
         return "ok";
@@ -222,11 +228,10 @@ public class RecruitmentManager implements Serializable {
 
     //method that validates parameters for login
     private String validateLoginParameters() {
-        if(loginPw.equals("") || loginName.equals("")){
-            return "Invalid login";
+        if (loginPw.equals("") || loginName.equals("")) {
+            return "Enter login credentials";
         }
-        String regex = "^[a-zA-Z0-9]+$";
-        if (!loginPw.matches(regex) || !loginName.matches(regex)) {
+        if (!loginPw.matches(PW_REGEX) || !loginName.matches(USER_REGEX)) {
             return "Invalid login";
         }
         return "ok";
@@ -243,6 +248,4 @@ public class RecruitmentManager implements Serializable {
         }
         return result;
     }
-
-
 }

@@ -11,6 +11,11 @@
    <h1>Welcome to our recruitment page</h1>
    <h3>Please login or register</h3>
    <h:form>
+      <p>
+         <h:outputLabel for="registration" rendered="#{recruitmentManager.message != null}" value=""/>
+         <h:outputText id="registration" value="#{recruitmentManager.message}"/>
+         <h:outputText rendered="#{recruitmentManager.message == null}" value="Login"/>
+      </p>
       <hr/>
       <p>
          <h:outputLabel for="username" value="Username: "/>
