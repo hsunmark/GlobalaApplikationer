@@ -181,7 +181,7 @@ public class RecruitmentManager implements Serializable {
             error = null;
             message = validateRegisterParameters();
             if (message.equals("ok")) {
-                loginSuccess = controller.register(new RegisterDTO("recruit", firstname, lastname, ssn, email, username, password));
+                loginSuccess = controller.register(new RegisterDTO("applicant", firstname, lastname, ssn, email, username, password));
             }
         } catch (Exception e) {
             handleException(e);
