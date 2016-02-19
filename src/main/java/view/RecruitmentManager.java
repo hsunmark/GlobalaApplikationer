@@ -29,6 +29,17 @@ public class RecruitmentManager implements Serializable {
     private String email;
     private String message;
     private Exception error;
+    private boolean loginSucces;
+
+    public boolean isLoginSucces() {
+        return loginSucces;
+    }
+
+    public void setLoginSucces(boolean loginSucces) {
+        this.loginSucces = loginSucces;
+    }
+
+
 
     public String getLoginName(){
         return loginName;
@@ -143,8 +154,10 @@ public class RecruitmentManager implements Serializable {
         String message = validateLoginParameters();
         if(message.equals("ok")){
            message = controller.login(loginName, loginPw);
+            if(message.equals("logged in successfully!")){
+                loginSucces = true;
+            }
         }
-        System.out.println(message);
         return "";
     }
 
@@ -165,7 +178,7 @@ public class RecruitmentManager implements Serializable {
             error = null;
             message = validateRegisterParameters();
             if (message.equals("ok")) {
-                controller.register(new RegisterDTO("recruit", firstname, lastname, ssn, email, username, password));
+                loginSucces = controller.register(new RegisterDTO("recruit", firstname, lastname, ssn, email, username, password));
             }
         } catch (Exception e) {
         handleException(e);
@@ -235,4 +248,6 @@ public class RecruitmentManager implements Serializable {
         }
         return result;
     }
+
+
 }
