@@ -10,9 +10,6 @@
 <h:body>
     <p>
         <h:outputText id="welcome" value="Welcome "/>
-        <h:outputLabel for="name" rendered="#{recruitmentManager.loginName != null}" value=""/>
-        <h:outputText id="name" value="#{recruitmentManager.loginName}"/>
-        <h:outputText rendered="#{recruitmentManager.loginName == null}" value="No user name found"/>
     </p>
 </h:body>
 </html>
