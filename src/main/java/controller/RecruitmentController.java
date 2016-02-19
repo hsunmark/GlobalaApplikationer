@@ -20,6 +20,7 @@ public class RecruitmentController {
     private RoleEntity roleEntity;
 
     /**
+     * h
      * @param username
      * @param password
      * @return
@@ -41,7 +42,6 @@ public class RecruitmentController {
      * @param registerDTO
      */
     public boolean register(RegisterDTO registerDTO) {
-        // TODO validera alla värden i objektet
         try {
             roleEntity = em.find(RoleEntity.class, registerDTO.getRole());
             personEntity = new PersonEntity(registerDTO.getFirstname(), registerDTO.getLastname(),
