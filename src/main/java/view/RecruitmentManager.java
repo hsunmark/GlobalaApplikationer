@@ -152,7 +152,7 @@ public class RecruitmentManager implements Serializable {
         if(message.equals("ok")){
            message = controller.login(loginName, loginPw);
             if(message.equals("logged in successfully!")){
-                loginSucces = true;
+                loginSuccess = true;
             }
         }
         return "";
@@ -175,7 +175,7 @@ public class RecruitmentManager implements Serializable {
             error = null;
             message = validateRegisterParameters();
             if (message.equals("ok")) {
-                loginSucces = controller.register(new RegisterDTO("recruit", firstname, lastname, ssn, email, username, password));
+                loginSuccess = controller.register(new RegisterDTO("recruit", firstname, lastname, ssn, email, username, password));
             }
         } catch (Exception e) {
         handleException(e);
