@@ -123,22 +123,18 @@ public class RecruitmentManager implements Serializable {
         error = e;
     }
 
-    /**
-     * Method used to check if any exception was thrown
-     * @return true or false
-     */
     public boolean getSuccess() {
         return error == null;
     }
 
-    /**
-     * Description
-     * @return 
-     */
     public Exception getException() {
         return error;
     }
 
+    /**
+     * Method used to validate an user login attempt
+     * @return returns an empty string due to jsf22bugfix
+     */
     public String login(){
         String message = validateLoginParameters();
         if(message.equals("ok")){
