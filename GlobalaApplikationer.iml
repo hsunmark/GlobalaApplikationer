@@ -7,7 +7,7 @@
         <setting name="provider-name" value="EclipseLink" />
         <datasource-mapping>
           <factory-entry name="NewPersistenceUnit" value="8d1d6a80-4442-4347-9560-1385db7b355f" />
-          <factory-entry name="recruitPU" />
+          <factory-entry name="recruitPU" value="8d1d6a80-4442-4347-9560-1385db7b355f" />
         </datasource-mapping>
         <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/main/resources/META-INF/persistence.xml" />
       </configuration>

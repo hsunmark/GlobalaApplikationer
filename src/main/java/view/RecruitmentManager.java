@@ -142,7 +142,7 @@ public class RecruitmentManager implements Serializable {
     public String login(){
         String message = validateLoginParameters();
         if(message.equals("ok")){
-            controller.login(loginName, loginPw);
+           message = controller.login(loginName, loginPw);
         }
         System.out.println(message);
         return "";

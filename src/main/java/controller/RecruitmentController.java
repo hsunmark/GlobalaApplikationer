@@ -5,7 +5,6 @@ import model.RegisterDTO;
 import model.RoleEntity;
 
 import javax.ejb.Stateful;
-import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
@@ -13,6 +12,7 @@ import javax.persistence.PersistenceContext;
 
 
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+@Stateful
 public class RecruitmentController {
     @PersistenceContext(unitName = "recruitPU")
     private EntityManager em;
@@ -20,14 +20,15 @@ public class RecruitmentController {
     private RoleEntity roleEntity;
 
     /**
-     *
      * @param username
      * @param password
      * @return
      */
     public String login(String username, String password){
-
-        return"";
+        personEntity = em.find(PersonEntity.class, username);
+        if(personEntity != null && personEntity.getPassword().equals(password))
+            return "logged in successfully!";
+        return "invalid username or password";
     }
 
     /**
