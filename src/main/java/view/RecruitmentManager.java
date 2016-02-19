@@ -134,7 +134,7 @@ public class RecruitmentManager implements Serializable {
         error = e;
     }
 
-    public boolean getSuccess() {
+    public boolean getError() {
         return error == null;
     }
 
