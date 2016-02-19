@@ -147,6 +147,7 @@ public class RecruitmentManager implements Serializable {
      * @return returns an empty string due to jsf22bugfix
      */
     public String login(){
+        error = null;
         String message = validateLoginParameters();
         if(message.equals("ok")){
            message = controller.login(loginName, loginPw);
