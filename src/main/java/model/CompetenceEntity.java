@@ -3,13 +3,14 @@ package model;
 import javax.persistence.*;
 
 /**
- * Created by Henrik on 2016-02-10.
+ * Created by Henrik on 2016-02-24.
  */
 @Entity
 @Table(name = "competence", schema = "recruitdb")
 public class CompetenceEntity {
     private long competenceId;
     private String name;
+    private CompetenceProfileEntity competence_id;
 
     @Id
     @Column(name = "competence_id")
@@ -49,5 +50,14 @@ public class CompetenceEntity {
         int result = (int) (competenceId ^ (competenceId >>> 32));
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
+    }
+
+    @OneToOne(mappedBy = "competence_id")
+    public CompetenceProfileEntity getCompetence_id() {
+        return competence_id;
+    }
+
+    public void setCompetence_id(CompetenceProfileEntity competence_id) {
+        this.competence_id = competence_id;
     }
 }

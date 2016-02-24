@@ -1,8 +1,6 @@
 package controller;
 
-import model.PersonEntity;
 import model.RegisterDTO;
-import model.RoleEntity;
 
 import javax.ejb.Stateful;
 import javax.ejb.TransactionAttribute;

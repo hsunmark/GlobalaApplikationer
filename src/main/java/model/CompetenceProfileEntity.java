@@ -4,15 +4,16 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 /**
- * Created by Henrik on 2016-02-10.
+ * Created by Henrik on 2016-02-24.
  */
 @Entity
-@Table(name = "competence_profile", schema = "recruitdb")
+@Table(name = "competence_profile", schema = "recruitdb", catalog = "")
 public class CompetenceProfileEntity {
     private long competenceProfileId;
     private Long personId;
     private Long competenceId;
     private BigDecimal yearsOfExperience;
+    private CompetenceEntity competence_id;
 
     @Id
     @Column(name = "competence_profile_id")
@@ -77,5 +78,14 @@ public class CompetenceProfileEntity {
         result = 31 * result + (competenceId != null ? competenceId.hashCode() : 0);
         result = 31 * result + (yearsOfExperience != null ? yearsOfExperience.hashCode() : 0);
         return result;
+    }
+
+    @OneToOne
+    public CompetenceEntity getCompetence_id() {
+        return competence_id;
+    }
+
+    public void setCompetence_id(CompetenceEntity competence_id) {
+        this.competence_id = competence_id;
     }
 }

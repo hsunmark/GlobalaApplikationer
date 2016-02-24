@@ -3,31 +3,42 @@ package model;
 import javax.persistence.*;
 
 /**
- * Created by Henrik on 2016-02-19.
+ * Created by Henrik on 2016-02-24.
  */
 @Entity
 @Table(name = "person", schema = "recruitdb")
 public class PersonEntity {
+    private long personId;
     private String name;
     private String surname;
     private String ssn;
     private String email;
     private String password;
-    private Long roleId;
     private String username;
+    private RoleEntity person_id;
 
-    public PersonEntity (String firstname, String lastname,
-                         String ssn, String email, String username, String password, long roleId) {
-        this.name = firstname;
-        this.surname = lastname;
+    public PersonEntity(){}
+
+    public PersonEntity(RoleEntity role, String name, String surname,
+                       String ssn, String email, String username, String password) {
+        this.person_id = role;
+        this.name = name;
+        this.surname = surname;
         this.ssn = ssn;
         this.email = email;
         this.username = username;
         this.password = password;
-        this.roleId = roleId;
     }
 
-    public PersonEntity() {}
+    @Id
+    @Column(name = "person_id")
+    public long getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(long personId) {
+        this.personId = personId;
+    }
 
     @Basic
     @Column(name = "name")
@@ -80,16 +91,6 @@ public class PersonEntity {
     }
 
     @Basic
-    @Column(name = "role_id")
-    public Long getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Long roleId) {
-        this.roleId = roleId;
-    }
-
-    @Id
     @Column(name = "username")
     public String getUsername() {
         return username;
@@ -106,12 +107,12 @@ public class PersonEntity {
 
         PersonEntity that = (PersonEntity) o;
 
+        if (personId != that.personId) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (surname != null ? !surname.equals(that.surname) : that.surname != null) return false;
         if (ssn != null ? !ssn.equals(that.ssn) : that.ssn != null) return false;
         if (email != null ? !email.equals(that.email) : that.email != null) return false;
         if (password != null ? !password.equals(that.password) : that.password != null) return false;
-        if (roleId != null ? !roleId.equals(that.roleId) : that.roleId != null) return false;
         if (username != null ? !username.equals(that.username) : that.username != null) return false;
 
         return true;
@@ -119,13 +120,33 @@ public class PersonEntity {
 
     @Override
     public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
+        int result = (int) (personId ^ (personId >>> 32));
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (surname != null ? surname.hashCode() : 0);
         result = 31 * result + (ssn != null ? ssn.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (roleId != null ? roleId.hashCode() : 0);
         result = 31 * result + (username != null ? username.hashCode() : 0);
         return result;
+    }
+
+    @OneToOne
+    public RoleEntity getPerson_id() {
+        return person_id;
+    }
+
+    public void setPerson_id(RoleEntity person_id) {
+        this.person_id = person_id;
+    }
+
+    private RoleEntity oneToOne;
+
+    @OneToOne
+    public RoleEntity getOneToOne() {
+        return oneToOne;
+    }
+
+    public void setOneToOne(RoleEntity oneToOne) {
+        this.oneToOne = oneToOne;
     }
 }
