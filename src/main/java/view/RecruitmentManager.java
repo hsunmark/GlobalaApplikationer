@@ -151,10 +151,8 @@ public class RecruitmentManager implements Serializable {
      * @return returns an empty string due to jsf22bugfix
      */
     public String login() {
-
         try {
             error = null;
-
             message = validateLoginParameters();
             if (message.equals("ok")) {
                 message = controller.login(loginName, loginPw);
@@ -162,11 +160,9 @@ public class RecruitmentManager implements Serializable {
                     loginSuccess = true;
                 }
             }
-            throw new NullPointerException();
         } catch (Exception e) {
             handleException(e);
         }
-
         return "";
     }
 
