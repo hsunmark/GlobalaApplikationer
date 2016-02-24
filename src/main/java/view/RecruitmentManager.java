@@ -220,7 +220,7 @@ public class RecruitmentManager implements Serializable {
         }
 
         if ((!ssn.matches(SSN_REGEX) || (ssn.length() != 10))) {
-            return "Your ssn should be 10 numbers";
+            return "Your social security number should be 10 numbers";
         }
         return "ok";
     }
