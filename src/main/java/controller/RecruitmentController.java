@@ -45,14 +45,14 @@ public class RecruitmentController {
      * @param registerDTO
      */
     public boolean register(RegisterDTO registerDTO) {
-        String username = em.find(PersonEntity.class, registerDTO.getUsername()).getUsername();
+        PersonEntity personEntityCheck = em.find(PersonEntity.class, registerDTO.getUsername());
 
-        if (username == null) {
+        if (personEntityCheck.getUsername() == null) {
             try {
-            /*roleEntity = em.find(RoleEntity.class, registerDTO.getRole());
-            personEntity = new PersonEntity(registerDTO.getFirstname(), registerDTO.getLastname(),
+            roleEntity = em.find(RoleEntity.class, registerDTO.getRole());
+            personEntity = new PersonEntity(roleEntity, registerDTO.getFirstname(), registerDTO.getLastname(),
                     registerDTO.getSsn(), registerDTO.getEmail(), registerDTO.getUsername(),
-                    registerDTO.getPassword(), roleEntity);*/
+                    registerDTO.getPassword());
                 em.persist(personEntity);
             } catch (Exception e){
                 return false;
