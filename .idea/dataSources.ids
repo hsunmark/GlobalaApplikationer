@@ -97,4 +97,101 @@
       </key>
     </database-model>
   </data-source>
+  <data-source name="recruitPU/EclipseLink" uuid="25019943-8bdd-4638-854c-cb6ffb1a511e">
+    <database-info product="MySQL" version="5.7.10-log" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.37 ( Revision: 09940f05b4c98150f352e787a2549f11a2e9da93 )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
+    <database-model serializer="dbm" rdbms="MYSQL" format-version="2.4">
+      <schema id="1" name="recruitdb"/>
+      <table id="2" parent="1" name="availability"/>
+      <table id="3" parent="1" name="competence"/>
+      <table id="4" parent="1" name="competence_profile"/>
+      <table id="5" parent="1" name="person"/>
+      <table id="6" parent="1" name="role"/>
+      <column id="7" parent="2" name="availability_id">
+        <mandatory>1</mandatory>
+        <data-type>bigint(20)</data-type>
+      </column>
+      <column id="8" parent="2" name="person_id">
+        <data-type>bigint(20)</data-type>
+      </column>
+      <column id="9" parent="2" name="from_date">
+        <data-type>date</data-type>
+      </column>
+      <column id="10" parent="2" name="to_date">
+        <data-type>date</data-type>
+      </column>
+      <key id="11" parent="2" name="PRIMARY">
+        <columns>availability_id</columns>
+        <primary>1</primary>
+      </key>
+      <column id="12" parent="3" name="competence_id">
+        <mandatory>1</mandatory>
+        <data-type>bigint(20)</data-type>
+      </column>
+      <column id="13" parent="3" name="name">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <key id="14" parent="3" name="PRIMARY">
+        <columns>competence_id</columns>
+        <primary>1</primary>
+      </key>
+      <column id="15" parent="4" name="competence_profile_id">
+        <mandatory>1</mandatory>
+        <data-type>bigint(20)</data-type>
+      </column>
+      <column id="16" parent="4" name="person_id">
+        <data-type>bigint(20)</data-type>
+      </column>
+      <column id="17" parent="4" name="competence_id">
+        <data-type>bigint(20)</data-type>
+      </column>
+      <column id="18" parent="4" name="years_of_experience">
+        <data-type>decimal(4,2)</data-type>
+      </column>
+      <key id="19" parent="4" name="PRIMARY">
+        <columns>competence_profile_id</columns>
+        <primary>1</primary>
+      </key>
+      <column id="20" parent="5" name="name">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="21" parent="5" name="surname">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="22" parent="5" name="ssn">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="23" parent="5" name="email">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="24" parent="5" name="password">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="25" parent="5" name="role_id">
+        <data-type>bigint(20)</data-type>
+      </column>
+      <column id="26" parent="5" name="username">
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)</data-type>
+      </column>
+      <key id="27" parent="5" name="PRIMARY">
+        <columns>username</columns>
+        <primary>1</primary>
+      </key>
+      <column id="28" parent="6" name="role_id">
+        <mandatory>1</mandatory>
+        <data-type>bigint(20)</data-type>
+      </column>
+      <column id="29" parent="6" name="name">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <key id="30" parent="6" name="PRIMARY">
+        <columns>role_id</columns>
+        <primary>1</primary>
+      </key>
+    </database-model>
+  </data-source>
 </component>

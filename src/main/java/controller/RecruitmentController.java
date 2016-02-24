@@ -3,6 +3,7 @@ package controller;
 import model.PersonEntity;
 import model.RegisterDTO;
 import model.RoleEntity;
+import view.RecruitmentManager;
 
 import javax.ejb.Stateful;
 import javax.ejb.TransactionAttribute;
@@ -18,6 +19,7 @@ public class RecruitmentController {
     private EntityManager em;
     private PersonEntity personEntity;
     private RoleEntity roleEntity;
+    private RecruitmentManager manager;
 
     /**
      * checks that the person trying to login are using a valid combination of
@@ -43,15 +45,20 @@ public class RecruitmentController {
      * @param registerDTO
      */
     public boolean register(RegisterDTO registerDTO) {
-        try {
-            roleEntity = em.find(RoleEntity.class, registerDTO.getRole());
+        String username = em.find(PersonEntity.class, registerDTO.getUsername()).getUsername();
+
+        if (username == null) {
+            try {
+            /*roleEntity = em.find(RoleEntity.class, registerDTO.getRole());
             personEntity = new PersonEntity(registerDTO.getFirstname(), registerDTO.getLastname(),
                     registerDTO.getSsn(), registerDTO.getEmail(), registerDTO.getUsername(),
-                    registerDTO.getPassword(), roleEntity.getRoleId());
-
-            em.persist(personEntity);
-        } catch (Exception e){
-            return false;
+                    registerDTO.getPassword(), roleEntity);*/
+                em.persist(personEntity);
+            } catch (Exception e){
+                return false;
+            }
+        } else {
+            manager.setMessage("Username taken");
         }
         return true;
     }
