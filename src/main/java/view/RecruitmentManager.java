@@ -155,8 +155,7 @@ public class RecruitmentManager implements Serializable {
             error = null;
             message = validateLoginParameters();
             if (message.equals("ok")) {
-                message = controller.login(loginName, loginPw);
-                if (message.equals("logged in successfully!")) {
+                if (controller.login(loginName, loginPw)) {
                     loginSuccess = true;
                 }
             }
