@@ -10,6 +10,9 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.metamodel.CollectionAttribute;
+import java.util.Collection;
 
 
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
@@ -47,11 +50,19 @@ public class RecruitmentController {
      * @param registerDTO
      */
     public boolean register(RegisterDTO registerDTO) {
-        PersonEntity personEntityCheck = em.find(PersonEntity.class, registerDTO.getUsername());
 
-        if (personEntityCheck.getUsername() == null) {
+        //Collection<PersonEntity> personEntityCheck = em.createNamedQuery("PersonEntity.findByUsername")
+                //.setParameter("username", registerDTO.getUsername()).getResultList();
+        //TODO ta bort hårdkodningen
+        Collection<RoleEntity> role = em.createNamedQuery("RoleEntity.findByName")
+                .setParameter("name", "applicant").getResultList();
+        //TODO fixa bättre lösning än loop?
+        for (RoleEntity i : role) {
+            roleEntity = i;
+        }
+
+        //if (personEntityCheck.isEmpty()) {
             try {
-            roleEntity = em.find(RoleEntity.class, registerDTO.getRole());
             personEntity = new PersonEntity(roleEntity, registerDTO.getFirstname(), registerDTO.getLastname(),
                     registerDTO.getSsn(), registerDTO.getEmail(), registerDTO.getUsername(),
                     registerDTO.getPassword());
@@ -59,9 +70,9 @@ public class RecruitmentController {
             } catch (Exception e){
                 return false;
             }
-        } else {
-            manager.setMessage("Username taken");
-        }
+        //} else {
+            //manager.setMessage("Username taken");
+        //}
         return true;
     }
 }

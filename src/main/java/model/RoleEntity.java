@@ -7,8 +7,16 @@ import java.util.List;
  * Created by Henrik on 2016-02-25.
  */
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "RoleEntity.findAll", query = "SELECT c FROM RoleEntity c"),
+        @NamedQuery(name = "RoleEntity.findByName", query = "SELECT c FROM RoleEntity c WHERE c.name = :name")})
 @Table(name = "role", schema = "recruitdb")
 public class RoleEntity {
+
+    public RoleEntity () {}
+
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long roleId;
     private String name;
 
@@ -22,11 +30,7 @@ public class RoleEntity {
     public void setPersonEntities(List<PersonEntity> personEntities) {
         this.personEntities = personEntities;
     }
-
-
-
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    
     @Column(name = "role_id")
     public long getRoleId() {
         return roleId;
