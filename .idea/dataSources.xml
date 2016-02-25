@@ -1,29 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="2885872855">
-    <data-source source="LOCAL" name="MySQL - recruitdb@130.229.160.227" uuid="8d1d6a80-4442-4347-9560-1385db7b355f">
+  <component name="DataSourceManagerImpl" format="xml" hash="1968760083">
+    <data-source source="LOCAL" name="MySQL - recruitdb@192.168.0.22" uuid="8d1d6a80-4442-4347-9560-1385db7b355f">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://130.229.160.227:3306/recruitdb</jdbc-url>
-      <driver-properties>
-        <property name="zeroDateTimeBehavior" value="convertToNull" />
-        <property name="tinyInt1isBit" value="false" />
-        <property name="characterEncoding" value="utf8" />
-        <property name="characterSetResults" value="utf8" />
-        <property name="yearIsDateType" value="false" />
-      </driver-properties>
-    </data-source>
-    <data-source source="LOCAL" name="recruitPU/EclipseLink" uuid="e2661759-16a0-4fb9-9217-39ed32b047bd">
-      <driver-ref>mysql</driver-ref>
-      <synchronize>true</synchronize>
-      <imported>true</imported>
-      <remarks>$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml</remarks>
-      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://130.229.160.227:3306/recruitdb</jdbc-url>
-      <explain-plan-config>
-        <provider>com.intellij.database.plan.ExplainPlanProvider.NullExplainPlanProvider</provider>
-      </explain-plan-config>
+      <jdbc-url>jdbc:mysql://192.168.0.22:3306/recruitdb</jdbc-url>
       <driver-properties>
         <property name="zeroDateTimeBehavior" value="convertToNull" />
         <property name="tinyInt1isBit" value="false" />

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="dataSourceStorage">
-  <data-source name="MySQL - recruitdb@130.229.160.227" uuid="8d1d6a80-4442-4347-9560-1385db7b355f">
+  <data-source name="MySQL - recruitdb@192.168.0.22" uuid="8d1d6a80-4442-4347-9560-1385db7b355f">
     <database-info product="MySQL" version="5.7.10-log" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
       <extra-name-characters>#@</extra-name-characters>
       <identifier-quote-string>`</identifier-quote-string>
@@ -17,7 +17,7 @@
         <mandatory>1</mandatory>
         <data-type>bigint(20)</data-type>
       </column>
-      <column id="8" parent="2" name="person_iid">
+      <column id="8" parent="2" name="person_id">
         <data-type>bigint(20)</data-type>
       </column>
       <column id="9" parent="2" name="from_date">
@@ -26,16 +26,16 @@
       <column id="10" parent="2" name="to_date">
         <data-type>date</data-type>
       </column>
-      <index id="11" parent="2" name="availability_person_person_id_fk">
-        <columns>person_iid</columns>
+      <index id="11" parent="2" name="availability_fk">
+        <columns>person_id</columns>
         <desc-columns></desc-columns>
       </index>
       <key id="12" parent="2" name="PRIMARY">
         <columns>availability_id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="13" parent="2" name="availability_person_person_id_fk">
-        <columns>person_iid</columns>
+      <foreign-key id="13" parent="2" name="availability_fk">
+        <columns>person_id</columns>
         <ref-key>~.person.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
@@ -64,27 +64,27 @@
       <column id="20" parent="4" name="years_of_experience">
         <data-type>decimal(4,2)</data-type>
       </column>
-      <index id="21" parent="4" name="competence_profile_comp_fk">
-        <columns>competence_id</columns>
+      <index id="21" parent="4" name="competence_profile_fk">
+        <columns>person_id</columns>
         <desc-columns></desc-columns>
       </index>
-      <index id="22" parent="4" name="competence_profile_fk">
-        <columns>person_id</columns>
+      <index id="22" parent="4" name="competence_profile__fk">
+        <columns>competence_id</columns>
         <desc-columns></desc-columns>
       </index>
       <key id="23" parent="4" name="PRIMARY">
         <columns>competence_profile_id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="24" parent="4" name="competence_profile_comp_fk">
-        <columns>competence_id</columns>
-        <ref-key>~.competence.PRIMARY</ref-key>
+      <foreign-key id="24" parent="4" name="competence_profile_fk">
+        <columns>person_id</columns>
+        <ref-key>~.person.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="25" parent="4" name="competence_profile_fk">
-        <columns>person_id</columns>
-        <ref-key>~.person.PRIMARY</ref-key>
+      <foreign-key id="25" parent="4" name="competence_profile__fk">
+        <columns>competence_id</columns>
+        <ref-key>~.competence.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
@@ -113,7 +113,7 @@
       <column id="33" parent="5" name="username">
         <data-type>varchar(255)</data-type>
       </column>
-      <index id="34" parent="5" name="person_role_role_id_fk">
+      <index id="34" parent="5" name="person_fk">
         <columns>role_id</columns>
         <desc-columns></desc-columns>
       </index>
@@ -121,7 +121,7 @@
         <columns>person_id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="36" parent="5" name="person_role_role_id_fk">
+      <foreign-key id="36" parent="5" name="person_fk">
         <columns>role_id</columns>
         <ref-key>~.role.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
@@ -139,8 +139,5 @@
         <primary>1</primary>
       </key>
     </database-model>
-  </data-source>
-  <data-source name="recruitPU/EclipseLink" uuid="e2661759-16a0-4fb9-9217-39ed32b047bd">
-    <database-info product="" version="" jdbc-version="" driver-name="" driver-version=""/>
   </data-source>
 </component>

@@ -1,18 +1,32 @@
 package model;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
- * Created by Henrik on 2016-02-24.
+ * Created by Henrik on 2016-02-25.
  */
 @Entity
 @Table(name = "role", schema = "recruitdb")
 public class RoleEntity {
     private long roleId;
     private String name;
-    private PersonEntity role_id;
+
+    @OneToMany(targetEntity = PersonEntity.class)
+    private List<PersonEntity> personEntities;
+
+    public List<PersonEntity> getPersonEntities() {
+        return personEntities;
+    }
+
+    public void setPersonEntities(List<PersonEntity> personEntities) {
+        this.personEntities = personEntities;
+    }
+
+
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "role_id")
     public long getRoleId() {
         return roleId;
@@ -50,14 +64,5 @@ public class RoleEntity {
         int result = (int) (roleId ^ (roleId >>> 32));
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
-    }
-
-    @OneToOne(mappedBy = "person_id")
-    public PersonEntity getRole_id() {
-        return role_id;
-    }
-
-    public void setRole_id(PersonEntity role_id) {
-        this.role_id = role_id;
     }
 }
