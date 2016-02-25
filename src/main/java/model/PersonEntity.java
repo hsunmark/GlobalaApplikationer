@@ -29,6 +29,7 @@ public class PersonEntity {
         this.username = username;
         this.password = password;
     }
+
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "person_id")
