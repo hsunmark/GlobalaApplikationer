@@ -8,6 +8,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "person", schema = "recruitdb")
 public class PersonEntity {
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long personId;
     private String name;
     private String surname;
@@ -29,8 +31,7 @@ public class PersonEntity {
         this.username = username;
         this.password = password;
     }
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+
     @Column(name = "person_id")
     public long getPersonId() {
         return personId;

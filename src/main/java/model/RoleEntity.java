@@ -9,6 +9,8 @@ import java.util.List;
 @Entity
 @Table(name = "role", schema = "recruitdb")
 public class RoleEntity {
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long roleId;
     private String name;
 
@@ -25,8 +27,7 @@ public class RoleEntity {
 
 
 
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+
     @Column(name = "role_id")
     public long getRoleId() {
         return roleId;
