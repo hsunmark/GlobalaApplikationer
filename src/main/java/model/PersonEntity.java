@@ -3,7 +3,7 @@ package model;
 import javax.persistence.*;
 
 /**
- * Created by Henrik on 2016-02-24.
+ * Created by Henrik on 2016-02-25.
  */
 @Entity
 @Table(name = "person", schema = "recruitdb")
@@ -14,23 +14,23 @@ public class PersonEntity {
     private String ssn;
     private String email;
     private String password;
+    private Long roleId;
     private String username;
-    private RoleEntity person_id;
 
     public PersonEntity(){}
 
-    public PersonEntity(RoleEntity role, String name, String surname,
+    public PersonEntity(RoleEntity role, String firstname, String lastname,
                        String ssn, String email, String username, String password) {
-        this.person_id = role;
-        this.name = name;
-        this.surname = surname;
+        this.roleEntity = role;
+        this.name = firstname;
+        this.surname = lastname;
         this.ssn = ssn;
         this.email = email;
         this.username = username;
         this.password = password;
     }
-
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "person_id")
     public long getPersonId() {
         return personId;
@@ -91,6 +91,16 @@ public class PersonEntity {
     }
 
     @Basic
+    @Column(name = "role_id")
+    public Long getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
+    }
+
+    @Basic
     @Column(name = "username")
     public String getUsername() {
         return username;
@@ -113,6 +123,7 @@ public class PersonEntity {
         if (ssn != null ? !ssn.equals(that.ssn) : that.ssn != null) return false;
         if (email != null ? !email.equals(that.email) : that.email != null) return false;
         if (password != null ? !password.equals(that.password) : that.password != null) return false;
+        if (roleId != null ? !roleId.equals(that.roleId) : that.roleId != null) return false;
         if (username != null ? !username.equals(that.username) : that.username != null) return false;
 
         return true;
@@ -126,27 +137,19 @@ public class PersonEntity {
         result = 31 * result + (ssn != null ? ssn.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (roleId != null ? roleId.hashCode() : 0);
         result = 31 * result + (username != null ? username.hashCode() : 0);
         return result;
     }
 
-    @OneToOne
-    public RoleEntity getPerson_id() {
-        return person_id;
-    }
-
-    public void setPerson_id(RoleEntity person_id) {
-        this.person_id = person_id;
-    }
-
-    private RoleEntity oneToOne;
+    private RoleEntity roleEntity;
 
     @OneToOne
     public RoleEntity getOneToOne() {
-        return oneToOne;
+        return roleEntity;
     }
 
-    public void setOneToOne(RoleEntity oneToOne) {
-        this.oneToOne = oneToOne;
+    public void setOneToOne(RoleEntity roleEntity) {
+        this.roleEntity = roleEntity;
     }
 }

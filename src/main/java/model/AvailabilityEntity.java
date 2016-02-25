@@ -4,13 +4,13 @@ import javax.persistence.*;
 import java.sql.Date;
 
 /**
- * Created by Henrik on 2016-02-24.
+ * Created by Henrik on 2016-02-25.
  */
 @Entity
 @Table(name = "availability", schema = "recruitdb")
 public class AvailabilityEntity {
     private long availabilityId;
-    private Long personIid;
+    private Long personId;
     private Date fromDate;
     private Date toDate;
 
@@ -25,13 +25,13 @@ public class AvailabilityEntity {
     }
 
     @Basic
-    @Column(name = "person_iid")
-    public Long getPersonIid() {
-        return personIid;
+    @Column(name = "person_id")
+    public Long getPersonId() {
+        return personId;
     }
 
-    public void setPersonIid(Long personIid) {
-        this.personIid = personIid;
+    public void setPersonId(Long personId) {
+        this.personId = personId;
     }
 
     @Basic
@@ -62,7 +62,7 @@ public class AvailabilityEntity {
         AvailabilityEntity that = (AvailabilityEntity) o;
 
         if (availabilityId != that.availabilityId) return false;
-        if (personIid != null ? !personIid.equals(that.personIid) : that.personIid != null) return false;
+        if (personId != null ? !personId.equals(that.personId) : that.personId != null) return false;
         if (fromDate != null ? !fromDate.equals(that.fromDate) : that.fromDate != null) return false;
         if (toDate != null ? !toDate.equals(that.toDate) : that.toDate != null) return false;
 
@@ -72,7 +72,7 @@ public class AvailabilityEntity {
     @Override
     public int hashCode() {
         int result = (int) (availabilityId ^ (availabilityId >>> 32));
-        result = 31 * result + (personIid != null ? personIid.hashCode() : 0);
+        result = 31 * result + (personId != null ? personId.hashCode() : 0);
         result = 31 * result + (fromDate != null ? fromDate.hashCode() : 0);
         result = 31 * result + (toDate != null ? toDate.hashCode() : 0);
         return result;
