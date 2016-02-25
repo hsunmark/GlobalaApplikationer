@@ -30,7 +30,7 @@ public class RoleEntity {
     public void setPersonEntities(List<PersonEntity> personEntities) {
         this.personEntities = personEntities;
     }
-
+    
     @Column(name = "role_id")
     public long getRoleId() {
         return roleId;

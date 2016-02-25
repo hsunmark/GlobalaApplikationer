@@ -17,8 +17,8 @@ public class PersonEntity {
     private String ssn;
     private String email;
     private String password;
-    private Long roleId;
     private String username;
+    private RoleEntity roleEntity;
 
     public PersonEntity(){}
 
@@ -41,6 +41,15 @@ public class PersonEntity {
 
     public void setPersonId(long personId) {
         this.personId = personId;
+    }
+
+    @OneToOne
+    public RoleEntity getOneToOne() {
+        return roleEntity;
+    }
+
+    public void setOneToOne(RoleEntity roleEntity) {
+        this.roleEntity = roleEntity;
     }
 
     @Basic
@@ -94,16 +103,6 @@ public class PersonEntity {
     }
 
     @Basic
-    @Column(name = "role_id")
-    public Long getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Long roleId) {
-        this.roleId = roleId;
-    }
-
-    @Basic
     @Column(name = "username")
     public String getUsername() {
         return username;
@@ -126,7 +125,7 @@ public class PersonEntity {
         if (ssn != null ? !ssn.equals(that.ssn) : that.ssn != null) return false;
         if (email != null ? !email.equals(that.email) : that.email != null) return false;
         if (password != null ? !password.equals(that.password) : that.password != null) return false;
-        if (roleId != null ? !roleId.equals(that.roleId) : that.roleId != null) return false;
+        if (roleEntity != null ? !roleEntity.equals(that.roleEntity) : that.roleEntity != null) return false;
         if (username != null ? !username.equals(that.username) : that.username != null) return false;
 
         return true;
@@ -140,19 +139,9 @@ public class PersonEntity {
         result = 31 * result + (ssn != null ? ssn.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (roleId != null ? roleId.hashCode() : 0);
+        result = 31 * result + (roleEntity != null ? roleEntity.hashCode() : 0);
         result = 31 * result + (username != null ? username.hashCode() : 0);
         return result;
     }
 
-    private RoleEntity roleEntity;
-
-    @OneToOne
-    public RoleEntity getOneToOne() {
-        return roleEntity;
-    }
-
-    public void setOneToOne(RoleEntity roleEntity) {
-        this.roleEntity = roleEntity;
-    }
 }
