@@ -28,15 +28,17 @@ public class RecruitmentController {
      * @param password
      * @return
      */
-    public String login(String username, String password){
+    public boolean login(String username, String password){
         try {
             personEntity = em.find(PersonEntity.class, username);
             if (personEntity != null && personEntity.getPassword().equals(password)) {
-                return "logged in successfully!";
+                return true;
             }
-            return "invalid username or password";
+            manager.setMessage("invalid username or password");
+            return false;
         } catch (Exception e) {
-            return "Database error";
+            manager.setMessage("Database error");
+            return false;
         }
     }
 

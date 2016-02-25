@@ -155,8 +155,7 @@ public class RecruitmentManager implements Serializable {
             error = null;
             message = validateLoginParameters();
             if (message.equals("ok")) {
-                message = controller.login(loginName, loginPw);
-                if (message.equals("logged in successfully!")) {
+                if (controller.login(loginName, loginPw)) {
                     loginSuccess = true;
                 }
             }
@@ -221,7 +220,7 @@ public class RecruitmentManager implements Serializable {
         }
 
         if ((!ssn.matches(SSN_REGEX) || (ssn.length() != 10))) {
-            return "Your ssn should be 10 numbers";
+            return "Your social security number should be 10 numbers";
         }
         return "ok";
     }
