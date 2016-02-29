@@ -30,10 +30,12 @@ public class RecruitmentController {
      */
     public boolean login(String username, String password, RecruitmentManager manager){
         try {
-            personEntity = em.find(PersonEntity.class, username);
+            Collection<PersonEntity> getUser = em.createNamedQuery("PersonEntity.findByUsername")
+                    .setParameter("username", username).getResultList();
+            personEntity = getUser.iterator().next();
             if (personEntity != null && personEntity.getPassword().equals(password)) {
                 return true;
-        }
+            }
             manager.setMessage("invalid username or password");
             return false;
         } catch (Exception e) {
