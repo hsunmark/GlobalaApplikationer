@@ -8,7 +8,8 @@ import javax.persistence.*;
 @Entity
 @NamedQueries({
         @NamedQuery(name = "RoleEntity.findAll", query = "SELECT c FROM RoleEntity c"),
-        @NamedQuery(name = "RoleEntity.findByName", query = "SELECT c FROM RoleEntity c WHERE c.name = :name")})
+        @NamedQuery(name = "RoleEntity.findByName", query = "SELECT c FROM RoleEntity c WHERE c.name = :name")
+})
 @Table(name = "role", schema = "recruitdb")
 public class RoleEntity {
     private long roleId;
