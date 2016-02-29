@@ -6,6 +6,9 @@ import javax.persistence.*;
  * Created by Henrik on 2016-02-29.
  */
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "RoleEntity.findAll", query = "SELECT c FROM RoleEntity c"),
+        @NamedQuery(name = "RoleEntity.findByName", query = "SELECT c FROM RoleEntity c WHERE c.name = :name")})
 @Table(name = "role", schema = "recruitdb")
 public class RoleEntity {
     private long roleId;
