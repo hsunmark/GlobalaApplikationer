@@ -1,6 +1,8 @@
 package model;
 
-
+/**
+ * Creates a data transfer object represntring an application user
+ */
 public class RegisterDTO {
     private String role;
     private String firstname;
@@ -10,6 +12,16 @@ public class RegisterDTO {
     private String username;
     private String password;
 
+    /**
+     *
+     * @param role
+     * @param firstname
+     * @param lastname
+     * @param ssn
+     * @param email
+     * @param username
+     * @param password
+     */
     public RegisterDTO(String role, String firstname, String lastname,
                        String ssn, String email, String username, String password) {
         this.role = role;
