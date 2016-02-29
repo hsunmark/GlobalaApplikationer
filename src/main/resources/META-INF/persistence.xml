@@ -4,6 +4,8 @@
     <persistence-unit name="recruitPU">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <jta-data-source>jdbc/__default</jta-data-source>
+        <class>model.PersonEntity</class>
+        <class>model.RoleEntity</class>
         <properties>
             <property name="eclipselink.jdbc.url" value="jdbc:mysql://81.224.134.26:3306/recruitdb"/>
             <property name="eclipselink.jdbc.driver" value="com.mysql.jdbc.Driver"/>
