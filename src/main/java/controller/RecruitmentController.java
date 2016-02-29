@@ -20,7 +20,6 @@ public class RecruitmentController {
     private EntityManager em;
     private PersonEntity personEntity;
     private RoleEntity roleEntity;
-    private RecruitmentManager manager;
 
     /**
      * checks that the person trying to login are using a valid combination of
@@ -29,12 +28,12 @@ public class RecruitmentController {
      * @param password
      * @return
      */
-    public boolean login(String username, String password){
+    public boolean login(String username, String password, RecruitmentManager manager){
         try {
             personEntity = em.find(PersonEntity.class, username);
             if (personEntity != null && personEntity.getPassword().equals(password)) {
                 return true;
-            }
+        }
             manager.setMessage("invalid username or password");
             return false;
         } catch (Exception e) {
@@ -47,19 +46,17 @@ public class RecruitmentController {
      * registers a user account and persists it in database
      * @param registerDTO
      */
-    public boolean register(RegisterDTO registerDTO) {
+    public boolean register(RegisterDTO registerDTO, RecruitmentManager manager) {
 
-        //Collection<PersonEntity> personEntityCheck = em.createNamedQuery("PersonEntity.findByUsername")
-                //.setParameter("username", registerDTO.getUsername()).getResultList();
-        //TODO ta bort hårdkodningen
+        Collection<PersonEntity> usernameCheck = em.createNamedQuery("PersonEntity.findByUsername")
+                .setParameter("username", registerDTO.getUsername()).getResultList();
+
         Collection<RoleEntity> role = em.createNamedQuery("RoleEntity.findByName")
-                .setParameter("name", "applicant").getResultList();
-        //TODO fixa bättre lösning än loop?
-        for (RoleEntity i : role) {
-            roleEntity = i;
-        }
+                .setParameter("name", registerDTO.getRole()).getResultList();
 
-        //if (personEntityCheck.isEmpty()) {
+        roleEntity = role.iterator().next();
+
+        if (usernameCheck.isEmpty()) {
             try {
             personEntity = new PersonEntity(roleEntity, registerDTO.getFirstname(), registerDTO.getLastname(),
                     registerDTO.getSsn(), registerDTO.getEmail(), registerDTO.getUsername(),
@@ -68,9 +65,10 @@ public class RecruitmentController {
             } catch (Exception e){
                 return false;
             }
-        //} else {
-            //manager.setMessage("Username taken");
-        //}
+        } else {
+            manager.setMessage("Username taken");
+            return false;
+        }
         return true;
     }
 }
