@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:composite="http://java.sun.com/jsf/composite">
+
+<h:body>
+    <composite:interface>
+        <composite:attribute name="username" />
+        <composite:attribute name="password" />
+    </composite:interface>
+
+    <composite:implementation>
+        <div align="center">
+        <p>
+        <h:outputLabel value="Username: "></h:outputLabel><br></br>
+        <h:inputText id="username" value="#{cc.attrs.username}" />
+        </p>
+        <p>
+        <h:outputLabel value="Password: "></h:outputLabel><br></br>
+        <h:inputSecret id="password" value="#{cc.attrs.password}" />
+        </p>
+        </div>
+    </composite:implementation>
+</h:body>
+</html>
+
