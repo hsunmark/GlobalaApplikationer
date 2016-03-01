@@ -108,10 +108,12 @@ public class RecruitmentController {
         if (loginPw.equals("") || loginName.equals("")) {
             return false;
         }
-         if (!loginPw.matches(PW_REGEX) || !loginName.matches(USER_REGEX)) {
+
+        if (!loginPw.matches(PW_REGEX) || !loginName.matches(USER_REGEX)) {
             return false;
-        } 
-        return true; 
+        }
+        return true;
+
     }
 
     //method that validates register parameters 
@@ -136,12 +138,12 @@ public class RecruitmentController {
             return false;
         }
 
-
-        if (!manager.isValidEmailAddress(registerDTO.getEmail())) {
+        if(!manager.isValidEmailAddress(registerDTO.getEmail())) {
             return false;
-        }  
-        if ((!registerDTO.getSsn().matches(SSN_REGEX) || (registerDTO.getSsn().length() != 10))) {
-             return false; 
+        }
+
+        if(!registerDTO.getSsn().matches(SSN_REGEX) || (registerDTO.getSsn().length() != 10)) {
+            return false;
         }
         return true;
     }
