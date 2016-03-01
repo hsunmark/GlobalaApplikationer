@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="dataSourceStorage">
-  <data-source name="MySQL - recruitdb@192.168.0.22" uuid="8d1d6a80-4442-4347-9560-1385db7b355f">
-    <database-info product="MySQL" version="5.7.10-log" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.37 ( Revision: 09940f05b4c98150f352e787a2549f11a2e9da93 )">
+  <data-source name="MySQL - recruitdb@81.224.134.26" uuid="8d1d6a80-4442-4347-9560-1385db7b355f">
+    <database-info product="MySQL" version="5.7.10-log" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
       <extra-name-characters>#@</extra-name-characters>
       <identifier-quote-string>`</identifier-quote-string>
     </database-info>
@@ -113,14 +113,14 @@
       <column id="33" parent="5" name="username">
         <data-type>varchar(255)</data-type>
       </column>
-      <index id="34" parent="5" name="person_fk">
-        <columns>role_id</columns>
-        <desc-columns></desc-columns>
-      </index>
-      <index id="35" parent="5" name="person_person_id_uindex">
+      <index id="34" parent="5" name="person_person_id_uindex">
         <columns>person_id</columns>
         <desc-columns></desc-columns>
         <unique>1</unique>
+      </index>
+      <index id="35" parent="5" name="person__fk">
+        <columns>role_id</columns>
+        <desc-columns></desc-columns>
       </index>
       <key id="36" parent="5" name="person_person_id_uindex">
         <columns>person_id</columns>
@@ -130,27 +130,36 @@
         <columns>person_id</columns>
         <primary>1</primary>
       </key>
-      <column id="38" parent="6" name="role_id">
+      <foreign-key id="38" parent="5" name="person__fk">
+        <columns>role_id</columns>
+        <ref-key>~.role.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="39" parent="6" name="role_id">
         <mandatory>1</mandatory>
         <data-type>bigint(20)</data-type>
       </column>
-      <column id="39" parent="6" name="name">
+      <column id="40" parent="6" name="name">
         <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <index id="40" parent="6" name="role_name_uindex">
+      <index id="41" parent="6" name="role_name_uindex">
         <columns>name</columns>
         <desc-columns></desc-columns>
         <unique>1</unique>
       </index>
-      <key id="41" parent="6" name="PRIMARY">
+      <key id="42" parent="6" name="PRIMARY">
         <columns>role_id</columns>
         <primary>1</primary>
       </key>
-      <key id="42" parent="6" name="role_name_uindex">
+      <key id="43" parent="6" name="role_name_uindex">
         <columns>name</columns>
         <underlying-index>role_name_uindex</underlying-index>
       </key>
     </database-model>
+  </data-source>
+  <data-source name="recruitPU/EclipseLink" uuid="af0650e2-9018-4767-a887-6ddcc5ffe11c">
+    <database-info product="" version="" jdbc-version="" driver-name="" driver-version=""/>
   </data-source>
 </component>

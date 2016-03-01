@@ -7,7 +7,7 @@
         <setting name="provider-name" value="EclipseLink" />
         <datasource-mapping>
           <factory-entry name="NewPersistenceUnit" value="8d1d6a80-4442-4347-9560-1385db7b355f" />
-          <factory-entry name="recruitPU" value="8d1d6a80-4442-4347-9560-1385db7b355f" />
+          <factory-entry name="recruitPU" value="af0650e2-9018-4767-a887-6ddcc5ffe11c" />
         </datasource-mapping>
         <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/main/resources/META-INF/persistence.xml" />
       </configuration>
@@ -40,6 +40,7 @@
     <orderEntry type="library" name="JPA 2.0-2.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="GlassFish 4.1.1" level="application_server_libraries" />
     <orderEntry type="library" scope="PROVIDED" name="GlassFish 4.1.1 - JSF" level="application_server_libraries" />
+    <orderEntry type="library" name="Java EE 6-Java EE 6" level="project" />
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:5.1.38" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.persistence:eclipselink:2.6.2" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.persistence:javax.persistence:2.1.1" level="project" />
