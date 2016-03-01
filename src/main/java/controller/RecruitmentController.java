@@ -12,6 +12,7 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.util.Collection;
 
 
@@ -28,7 +29,7 @@ public class RecruitmentController {
     private String USER_REGEX = "^[a-zA-Z0-9]+$";
     private String SSN_REGEX = "^[0-9]+$";
     private String PW_REGEX = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
-    private Logg logg = new Logg();
+   // private Logg logg = new Logg();
 
     /**
      * checks that the person trying to login are using a valid combination of
@@ -39,12 +40,12 @@ public class RecruitmentController {
      * @return
      */
     public boolean login(String username, String password, RecruitmentManager manager) {
-        logg.logInvalidLogInAttempt(username, password);
+        //logg.logInvalidLogInAttempt(username, password);
         if(validateLoginParameters(username, password)){
             try {
-                Collection<PersonEntity> getUser = em.createNamedQuery("PersonEntity.findByUsername")
-                        .setParameter("username", username).getResultList();
-                personEntity = getUser.iterator().next();
+                TypedQuery<PersonEntity> getUser = em.createNamedQuery("PersonEntity.findByUsername", PersonEntity.class)
+                        .setParameter("username", username);
+                personEntity = getUser.getSingleResult();
                 if (personEntity != null && personEntity.getPassword().equals(password)) {
                     return true;
                 }
@@ -60,7 +61,6 @@ public class RecruitmentController {
             manager.setMessage("login failed due to invalid parameters");
             return false;
         }
-
     }
 
     /**
