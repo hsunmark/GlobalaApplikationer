@@ -1,6 +1,7 @@
 package model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -9,28 +10,28 @@ import java.util.List;
 @Entity
 @NamedQueries({
         @NamedQuery(name = "RoleEntity.findAll", query = "SELECT c FROM RoleEntity c"),
-        @NamedQuery(name = "RoleEntity.findByName", query = "SELECT c FROM RoleEntity c WHERE c.name = :name")})
+        @NamedQuery(name = "RoleEntity.findByName", query = "SELECT OBJECT(c) FROM RoleEntity c WHERE c.name = :name")})
 @Table(name = "role", schema = "recruitdb")
 public class RoleEntity {
-
-    public RoleEntity () {}
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long roleId;
     private String name;
 
-    @OneToMany(targetEntity = PersonEntity.class)
-    private List<PersonEntity> personEntities;
+    public RoleEntity () {}
 
-    public List<PersonEntity> getPersonEntities() {
-        return personEntities;
-    }
+    //@OneToMany(targetEntity = PersonEntity.class)
+    //private List<PersonEntity> personEntities;
 
-    public void setPersonEntities(List<PersonEntity> personEntities) {
-        this.personEntities = personEntities;
-    }
-    
+    //public List<PersonEntity> getPersonEntities() {
+    //    return personEntities;
+   // }
+
+    //public void setPersonEntities(List<PersonEntity> personEntities) {
+        //this.personEntities = personEntities;
+    //}
+
     @Column(name = "role_id")
     public long getRoleId() {
         return roleId;

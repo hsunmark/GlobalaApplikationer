@@ -54,12 +54,17 @@ public class RecruitmentController {
         //Collection<PersonEntity> personEntityCheck = em.createNamedQuery("PersonEntity.findByUsername")
                 //.setParameter("username", registerDTO.getUsername()).getResultList();
         //TODO ta bort hårdkodningen
-        Collection<RoleEntity> role = em.createNamedQuery("RoleEntity.findByName")
-                .setParameter("name", "applicant").getResultList();
+        //Collection<RoleEntity> role = em.createNamedQuery("RoleEntity.findByName")
+          //      .setParameter("name", "applicant").getResultList();
         //TODO fixa bättre lösning än loop?
-        for (RoleEntity i : role) {
-            roleEntity = i;
-        }
+       // for (RoleEntity i : role) {
+         //   roleEntity = i;
+        //}
+        //PersonEntity test = em.find(PersonEntity.class, (long)1);
+        //System.out.println("****************" + test.getName());
+
+        RoleEntity test = em.find(RoleEntity.class, (long)1);
+        System.out.println("****************" + test.getName());
 
         //if (personEntityCheck.isEmpty()) {
             try {
