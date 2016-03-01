@@ -4,20 +4,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:em="http://java.sun.com/jsf/composite/emcomp">
 
 <h:head>
-    <ui:define name="title"/>
+    <em:header/>
 </h:head>
 <h:body>
-    <ui:define name="header"/>
     <div align="center">
     <p>
         <h:outputLabel for="registration" rendered="#{recruitmentManager.message != null}" value=""/>
         <h:outputText id="registration" value="#{recruitmentManager.message}"/>
         <h:outputText rendered="#{recruitmentManager.message == null}" value="Register new user"/>
     </p>
-    <hr/>
+
     <h:form>
         <p>
             <h:outputLabel for="role" value="Your role: "/><br></br>
@@ -45,14 +45,8 @@
             <h:inputText id="email" value="#{recruitmentManager.email}"/>
         </p>
 
-        <p>
-            <h:outputLabel for="username" value="Username: "/><br></br>
-            <h:inputText id="username" value="#{recruitmentManager.username}"/>
-        </p>
-        <p>
-            <h:outputLabel for="password" value="Password: "/><br></br>
-            <h:inputSecret id="password" value="#{recruitmentManager.password}"/>
-        </p>
+        <em:form username = "#{recruitmentManager.username}"
+                 password = "#{recruitmentManager.password}"/>
 
         <p>
             <h:outputLabel for="password2" value="Confirm password: "/><br></br>
@@ -63,8 +57,10 @@
             <h:commandButton value="Register" action="#{recruitmentManager.register}"/>
         </p>
     </h:form>
+        <p>
     <a href="index.xhtml">Back to main page</a>
+        </p>
+        <em:footer/>
     </div>
-    <ui:define name="footer"/>
 </h:body>
 </html>
