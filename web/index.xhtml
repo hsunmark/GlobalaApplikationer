@@ -1,29 +1,26 @@
-<ui:composition composite="/WEB-INF/composite.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:ui="http://java.sun.com/jsf/facelets">
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:em="http://java.sun.com/jsf/composite/emcomp"
+      xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-    <ui:define name="title"/>
+    <em:header/>
 </h:head>
 <h:body>
     <div align="center">
-   <ui:define name="header"/>
-   <h:form>
-      <p>
-         <h:outputLabel for="login" rendered="#{recruitmentManager.message != null}" value=""/>
-         <h:outputText id="login" value="#{recruitmentManager.message}"/>
-         <h:outputText rendered="#{recruitmentManager.message == null}" value="Please login or register"/>
-      </p>
-      <hr/>
-      <p>
-         <h:outputLabel for="username" value="Username: "/>
-         <h:inputText id="username" value="#{recruitmentManager.loginName}"/>
-      </p>
-      <p>
-         <h:outputLabel for="password" value="Password: "/>
-         <h:inputSecret id="password" value="#{recruitmentManager.loginPw}"/>
-      </p>
+        <h:form>
+
+            <p>
+                <h:outputLabel for="login" rendered="#{recruitmentManager.message != null}" value=""/>
+                <h:outputText id="login" value="#{recruitmentManager.message}"/>
+                <h:outputText rendered="#{recruitmentManager.message == null}" value="Please login or register"/>
+            </p>
+
+            <em:form username = "#{recruitmentManager.loginName}"
+                     password = "#{recruitmentManager.loginPw}"/>
 
       <p>
          <h:commandButton value="Login" action="#{recruitmentManager.login}"/>
@@ -32,7 +29,7 @@
    <p>
       <a href="register.xhtml">Register</a>
    </p>
+        <em:footer/>
     </div>
-    <ui:define name="footer"/>
 </h:body>
-</ui:composition>
+</html>
