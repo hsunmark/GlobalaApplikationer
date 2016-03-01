@@ -10,6 +10,7 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.util.Collection;
 
 
@@ -36,9 +37,9 @@ public class RecruitmentController {
      */
     public boolean login(String username, String password, RecruitmentManager manager) {
         try {
-            Collection<PersonEntity> getUser = em.createNamedQuery("PersonEntity.findByUsername")
-                    .setParameter("username", username).getResultList();
-            personEntity = getUser.iterator().next();
+            TypedQuery<PersonEntity> getUser = em.createNamedQuery("PersonEntity.findByUsername", PersonEntity.class)
+                                    .setParameter("username", username);
+            personEntity = getUser.getSingleResult();
             if (personEntity != null && personEntity.getPassword().equals(password)) {
                 return true;
             }
