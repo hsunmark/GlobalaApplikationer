@@ -3,6 +3,8 @@ package controller;
 import model.PersonEntity;
 import model.RegisterDTO;
 import model.RoleEntity;
+import org.slf4j.Logger;
+import slf4j.Logg;
 import view.RecruitmentManager;
 
 import javax.ejb.Stateful;
@@ -21,10 +23,12 @@ public class RecruitmentController {
     private PersonEntity personEntity;
     private RoleEntity roleEntity;
 
+
     private String NAME_REGEX = "^[a-zA-Z]+$";
     private String USER_REGEX = "^[a-zA-Z0-9]+$";
     private String SSN_REGEX = "^[0-9]+$";
     private String PW_REGEX = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
+    private Logg logg = new Logg();
 
     /**
      * checks that the person trying to login are using a valid combination of
@@ -35,35 +39,28 @@ public class RecruitmentController {
      * @return
      */
     public boolean login(String username, String password, RecruitmentManager manager) {
-        try {
-            Collection<PersonEntity> getUser = em.createNamedQuery("PersonEntity.findByUsername")
-                    .setParameter("username", username).getResultList();
-            personEntity = getUser.iterator().next();
-            if (personEntity != null && personEntity.getPassword().equals(password)) {
-                return true;
-            }
-            manager.setMessage("invalid username or password");
-            return false;
-        } catch (Exception e) {
-            manager.setMessage("Database error");
-        }
-
-        if (validateLoginParameters(username, password)) {
+        logg.logInvalidLogInAttempt(username, password);
+        if(validateLoginParameters(username, password)){
             try {
-                personEntity = em.find(PersonEntity.class, username);
+                Collection<PersonEntity> getUser = em.createNamedQuery("PersonEntity.findByUsername")
+                        .setParameter("username", username).getResultList();
+                personEntity = getUser.iterator().next();
                 if (personEntity != null && personEntity.getPassword().equals(password)) {
                     return true;
                 }
+
                 manager.setMessage("invalid username or password");
                 return false;
-            } catch (Exception e1) {
+            } catch (Exception e) {
                 manager.setMessage("Database error");
                 return false;
             }
-        } else {
-            manager.setMessage("Login parameters not valid");
+        }
+        else{
+            manager.setMessage("login failed due to invalid parameters");
             return false;
         }
+
     }
 
     /**
