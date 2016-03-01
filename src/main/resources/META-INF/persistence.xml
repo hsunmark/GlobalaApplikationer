@@ -6,8 +6,11 @@
         <jta-data-source>jdbc/__default</jta-data-source>
         <class>model.PersonEntity</class>
         <class>model.RoleEntity</class>
+        <class>model.AvailabilityEntity</class>
+        <class>model.CompetenceEntity</class>
+        <class>model.CompetenceProfileEntity</class>
         <properties>
-            <property name="eclipselink.jdbc.url" value="jdbc:mysql://81.224.134.26:3306/recruitdb"/>
+            <property name="eclipselink.jdbc.url" value="jdbc:mysql://130.229.156.121:3306/recruitdb"/>
             <property name="eclipselink.jdbc.driver" value="com.mysql.jdbc.Driver"/>
             <property name="eclipselink.jdbc.user" value="root"/>
             <property name="eclipselink.jdbc.password" value="adminglobal"/>

@@ -25,9 +25,11 @@ public class RecruitmentController {
     private String USER_REGEX = "^[a-zA-Z0-9]+$";
     private String SSN_REGEX = "^[0-9]+$";
     private String PW_REGEX = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
+
     /**
      * checks that the person trying to login are using a valid combination of
      * username and password
+     *
      * @param username
      * @param password
      * @return
@@ -44,32 +46,31 @@ public class RecruitmentController {
             return false;
         } catch (Exception e) {
             manager.setMessage("Database error");
+        }
 
-            if (validateLoginParameters(username, password)) {
-                try {
-                    personEntity = em.find(PersonEntity.class, username);
-                    if (personEntity != null && personEntity.getPassword().equals(password)) {
-                        return true;
-                    }
-                    manager.setMessage("invalid username or password");
-                    return false;
-                } catch (Exception ex) {
-                    manager.setMessage("Database error");
-                    return false;
+        if (validateLoginParameters(username, password)) {
+            try {
+                personEntity = em.find(PersonEntity.class, username);
+                if (personEntity != null && personEntity.getPassword().equals(password)) {
+                    return true;
                 }
-            } else {
-                manager.setMessage("Login parameters not valid");
-
+                manager.setMessage("invalid username or password");
+                return false;
+            } catch (Exception e1) {
+                manager.setMessage("Database error");
                 return false;
             }
+        } else {
+            manager.setMessage("Login parameters not valid");
+            return false;
         }
     }
 
     /**
-     *  registers a user account and persists it in database
+     * registers a user account and persists it in database
+     *
      * @param registerDTO
      */
-
     public boolean register(RegisterDTO registerDTO, RecruitmentManager manager) {
 
         if (validateRegisterParameters(registerDTO, manager)) {
@@ -103,44 +104,47 @@ public class RecruitmentController {
     }
 
     //method that validates login parametrs 
-    private boolean validateLoginParameters(String loginName, String loginPw) { 
-        if (loginPw.equals("") || loginName.equals("")) { 
-            return false; 
+    private boolean validateLoginParameters(String loginName, String loginPw) {
+        if (loginPw.equals("") || loginName.equals("")) {
+            return false;
         }
-         if (!loginPw.matches(PW_REGEX) || !loginName.matches(USER_REGEX)) {
-             return false;
-        } 
-        return true; 
-    }
 
-      
+        if (!loginPw.matches(PW_REGEX) || !loginName.matches(USER_REGEX)) {
+            return false;
+        }
+        return true;
+
+    }
 
     //method that validates register parameters 
     private boolean validateRegisterParameters(RegisterDTO registerDTO, RecruitmentManager manager) {
-         if (registerDTO.getUsername().equals("")
-                ||registerDTO.getPassword().equals("") 
-                ||registerDTO.getUsername().equals("")
-                ||registerDTO.getLastname().equals("") 
-                ||registerDTO.getRole().equals("") 
-                ||registerDTO.getSsn().equals("") 
-                ||registerDTO.getEmail().equals("")){ 
-            return false; 
-        } 
-        if (registerDTO.getPassword().length() < 6) { 
-            return false; 
-        }  
-        if (!registerDTO.getUsername().matches(USER_REGEX) 
-                ||!registerDTO.getPassword().matches(PW_REGEX)
-                ||!registerDTO.getFirstname().matches(NAME_REGEX) 
-                ||!registerDTO.getLastname().matches(NAME_REGEX)){ 
-            return false; 
-        } 
-        if (!manager.isValidEmailAddress(registerDTO.getEmail())) { 
-            return false; 
-        }  
-        if ((!registerDTO.getSsn().matches(SSN_REGEX) || (registerDTO.getSsn().length() != 10))) {
-             return false; 
-        } 
-        return true; 
+        if (registerDTO.getUsername().equals("")
+                || registerDTO.getPassword().equals("")
+                || registerDTO.getFirstname().equals("")
+                || registerDTO.getLastname().equals("")
+                || registerDTO.getRole().equals("")
+                || registerDTO.getSsn().equals("")
+                || registerDTO.getEmail().equals("")) {
+            return false;
+        }
+
+        if (registerDTO.getPassword().length() < 6) {
+            return false;
+        }
+        if (!registerDTO.getUsername().matches(USER_REGEX)
+                || !registerDTO.getPassword().matches(PW_REGEX)
+                || !registerDTO.getFirstname().matches(NAME_REGEX)
+                || !registerDTO.getLastname().matches(NAME_REGEX)) {
+            return false;
+        }
+
+        if(!manager.isValidEmailAddress(registerDTO.getEmail())) {
+            return false;
+        }
+
+        if(!registerDTO.getSsn().matches(SSN_REGEX) || (registerDTO.getSsn().length() != 10)) {
+            return false;
+        }
+        return true;
     }
 }

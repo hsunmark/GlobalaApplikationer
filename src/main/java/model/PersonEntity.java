@@ -19,8 +19,11 @@ public class PersonEntity {
     private String password;
     private String username;
     private RoleEntity role_id;
+    private AvailabilityEntity availability_fk;
+    private CompetenceProfileEntity competence_fk;
 
     public PersonEntity(){}
+
     public PersonEntity(RoleEntity role, String firstname, String lastname,
                         String ssn, String email, String username, String password) {
         this.role_id = role;
@@ -140,5 +143,23 @@ public class PersonEntity {
 
     public void setRole_id(RoleEntity role_id) {
         this.role_id = role_id;
+    }
+
+    @OneToOne(mappedBy = "person_fk")
+    public AvailabilityEntity getAvailability_fk() {
+        return availability_fk;
+    }
+
+    public void setAvailability_fk(AvailabilityEntity availability_fk) {
+        this.availability_fk = availability_fk;
+    }
+
+    @OneToOne(mappedBy = "person_fk")
+    public CompetenceProfileEntity getCompetence_fk() {
+        return competence_fk;
+    }
+
+    public void setCompetence_fk(CompetenceProfileEntity competence_fk) {
+        this.competence_fk = competence_fk;
     }
 }
