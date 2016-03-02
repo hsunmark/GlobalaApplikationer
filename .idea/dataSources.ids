@@ -159,4 +159,7 @@
       </key>
     </database-model>
   </data-source>
+  <data-source name="recruitPU/EclipseLink" uuid="e71ae32a-b8d0-421f-a43b-136ee3a1ee70">
+    <database-info product="" version="" jdbc-version="" driver-name="" driver-version=""/>
+  </data-source>
 </component>
