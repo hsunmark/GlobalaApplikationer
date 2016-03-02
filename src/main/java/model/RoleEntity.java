@@ -3,7 +3,7 @@ package model;
 import javax.persistence.*;
 
 /**
- * Created by Henrik on 2016-02-29.
+ * Table with names of roles.
  */
 @Entity
 @NamedQueries({
@@ -16,6 +16,9 @@ public class RoleEntity {
     private String name;
     private PersonEntity role_id;
 
+    /**
+     * Creates a new instance of PersonEntity.
+     */
     public RoleEntity(){}
 
     @Id

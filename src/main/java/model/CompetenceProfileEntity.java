@@ -4,7 +4,8 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 /**
- * Created by Henrik on 2016-02-29.
+ * Table with number of years of experience connecting to a specific
+ * person and competence.
  */
 @Entity
 @Table(name = "competence_profile", schema = "recruitdb")

@@ -5,19 +5,24 @@ import model.RegisterDTO;
 import model.RoleEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import slf4jLog.Logg;
+import slf4j.Logg;
 import view.RecruitmentManager;
 
 import javax.ejb.Stateful;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.management.relation.Role;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.Collection;
 
-
+/**
+ * A controller. Handles all calls to the database and the requests
+ * from the Manager.
+ */
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 @Stateful
 public class RecruitmentController {
@@ -25,7 +30,8 @@ public class RecruitmentController {
     private EntityManager em;
     private PersonEntity personEntity;
     private RoleEntity roleEntity;
-    private Logg logg;
+    private RecruitmentManager manager;
+
 
     private String NAME_REGEX = "^[a-zA-Z]+$";
     private String USER_REGEX = "^[a-zA-Z0-9]+$";
@@ -33,21 +39,22 @@ public class RecruitmentController {
     private String PW_REGEX = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
 
     /**
-     * checks that the person trying to login are using a valid combination of
-     * username and password
+     * Checks that the person trying to login are using a valid combination of
+     * username and password.
      *
      * @param username
      * @param password
-     * @return
+     * @return true if login is successful, false otherwise.
      */
     public boolean login(String username, String password, RecruitmentManager manager) {
-        //logg = new Logg();
-        System.out.println("mothafucka");
+        this.manager = manager;
+
         if (validateLoginParameters(username, password)) {
             try {
                 TypedQuery<PersonEntity> getUser = em.createNamedQuery("PersonEntity.findByUsername", PersonEntity.class)
                         .setParameter("username", username);
                 personEntity = getUser.getSingleResult();
+                setPermission(personEntity);
                 if (personEntity != null && personEntity.getPassword().equals(password)) {
                     return true;
                 }
@@ -65,12 +72,16 @@ public class RecruitmentController {
     }
 
     /**
-     * registers a user account and persists it in database
+     * Registers a user account and store the information
+     * in the database
      *
      * @param registerDTO
+     * @param manager
+     * @return true if register is successful, false otherwise.
      */
     public boolean register(RegisterDTO registerDTO, RecruitmentManager manager) {
-        if (validateRegisterParameters(registerDTO, manager)) {
+        this.manager = manager;
+        if (validateRegisterParameters(registerDTO)) {
             try {
                 TypedQuery<PersonEntity> usernameCheck = em.createNamedQuery("PersonEntity.findByUsername", PersonEntity.class)
                         .setParameter("username", registerDTO.getUsername());
@@ -78,14 +89,13 @@ public class RecruitmentController {
                 roleEntity = em.createNamedQuery("RoleEntity.findByName", RoleEntity.class)
                         .setParameter("name", registerDTO.getRole()).getSingleResult();
 
-
                 if (usernameCheck.getResultList().isEmpty()) {
 
                     personEntity = new PersonEntity(roleEntity, registerDTO.getFirstname(), registerDTO.getLastname(),
                             registerDTO.getSsn(), registerDTO.getEmail(), registerDTO.getUsername(),
                             registerDTO.getPassword());
                     em.persist(personEntity);
-
+                    setPermission(personEntity);
                 } else {
                     manager.setMessage("Username taken");
                     return false;
@@ -116,8 +126,7 @@ public class RecruitmentController {
     }
 
     //method that validates register parameters 
-    //public for testing (remove later)
-    public boolean validateRegisterParameters(RegisterDTO registerDTO, RecruitmentManager manager) {
+    private boolean validateRegisterParameters(RegisterDTO registerDTO) {
         if (registerDTO.getUsername().equals("")
                 || registerDTO.getPassword().equals("")
                 || registerDTO.getFirstname().equals("")
@@ -138,7 +147,7 @@ public class RecruitmentController {
             return false;
         }
 
-        if (!manager.isValidEmailAddress(registerDTO.getEmail())) {
+        if (!isValidEmailAddress(registerDTO.getEmail())) {
             return false;
         }
 
@@ -146,5 +155,26 @@ public class RecruitmentController {
             return false;
         }
         return true;
+    }
+
+    private void setPermission(PersonEntity personEntity) {
+        RoleEntity role = personEntity.getRole_id();
+        String roleName = role.getName();
+        if (roleName.equals("applicant")) {
+            manager.setApplicant(true);
+        } else if (roleName.equals("recruit")) {
+            manager.setRecruit(true);
+        }
+    }
+
+    private boolean isValidEmailAddress(String email) {
+        boolean result = true;
+        try {
+            InternetAddress emailAddr = new InternetAddress(email);
+            emailAddr.validate();
+        } catch (AddressException ex) {
+            result = false;
+        }
+        return result;
     }
 }

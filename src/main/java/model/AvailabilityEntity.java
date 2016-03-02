@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.sql.Date;
 
 /**
- * Created by Henrik on 2016-02-29.
+ * Table holding a date-span where person is available.
  */
 @Entity
 @Table(name = "availability", schema = "recruitdb")

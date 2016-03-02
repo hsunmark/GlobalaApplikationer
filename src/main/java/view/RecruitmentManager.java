@@ -11,7 +11,9 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import java.io.Serializable;
 
-
+/**
+ * A Manager. Handles all interactions from the client interface.
+ */
 @ManagedBean(name = "recruitmentManager", eager = true)
 @SessionScoped
 public class RecruitmentManager implements Serializable {
@@ -32,6 +34,7 @@ public class RecruitmentManager implements Serializable {
     private Exception error;
     private boolean loginSuccess;
     private boolean applicant;
+    private boolean recruit;
 
     private String NAME_REGEX = "^[a-zA-Z]+$";
     private String USER_REGEX = "^[a-zA-Z0-9]+$";
@@ -138,6 +141,10 @@ public class RecruitmentManager implements Serializable {
 
     public void setApplicant(boolean applicant) { this.applicant = applicant; }
 
+    public boolean isRecruit() { return recruit; }
+
+    public void setRecruit(boolean recruit) { this.recruit = recruit; }
+
     public boolean getError() {
         return error == null;
     }
@@ -159,11 +166,14 @@ public class RecruitmentManager implements Serializable {
     public String login() {
         try {
             error = null;
-            message = validateLoginParameters();
-            if (message.equals("ok")) {
+            String msg = validateLoginParameters();
+            if (msg.equals("ok")) {
                 if (controller.login(loginName, loginPw, this)) {
+                    message = null;
                     loginSuccess = true;
                 }
+            } else {
+                message = msg;
             }
         } catch (Exception e) {
             handleException(e);
@@ -173,7 +183,6 @@ public class RecruitmentManager implements Serializable {
 
 
     /**
-     * Method register:
      * Validates all the fields that a user has typed in and
      * if the fields are validated method calls controller.register(RegisterDTO dto)
      * to continue registration.
@@ -184,9 +193,12 @@ public class RecruitmentManager implements Serializable {
     public String register() {
         try {
             error = null;
-            message = validateRegisterParameters();
-            if (message.equals("ok")) {
+            String msg = validateRegisterParameters();
+            if (msg.equals("ok")) {
                 loginSuccess = controller.register(new RegisterDTO(role, firstname, lastname, ssn, email, username, password), this);
+                message = null;
+            } else {
+                message = msg;
             }
         } catch (Exception e) {
             handleException(e);
@@ -243,7 +255,7 @@ public class RecruitmentManager implements Serializable {
     }
 
     //method that validates if a string is a valid email address.
-    public boolean isValidEmailAddress(String email) {
+    private boolean isValidEmailAddress(String email) {
         boolean result = true;
         try {
             InternetAddress emailAddr = new InternetAddress(email);
@@ -253,5 +265,4 @@ public class RecruitmentManager implements Serializable {
         }
         return result;
     }
-
 }
