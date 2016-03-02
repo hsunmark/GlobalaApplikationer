@@ -63,10 +63,4 @@ public class RegisterTest {
         //assertFalse(controller.register(mockDTO, mockManager));
     }
 
-    @Test
-    public void testValidEmail() {
-
-        assertTrue(mockManager.isValidEmailAddress("test@domain.se"));
-    }
-
 }

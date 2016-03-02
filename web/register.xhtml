@@ -54,11 +54,11 @@
         <p>
             <h:outputLabel for="password2" value="Confirm password: "/>
             <h:message for="password2" style="color:red"/><br></br>
-            <h:inputSecret id="password2" value="#{recruitmentManager.password2}" required="true" requiredMessage="Please enter a password"/>
+            <h:inputSecret id="password2" value="#{recruitmentManager.password2}" required="true" requiredMessage="Please confirm password"/>
         </p>
 
         <p>
-            <h:commandButton value="Register" action="#{recruitmentManager.register}" required="true" requiredMessage="Please confirm password"/>
+            <h:commandButton value="Register" action="#{recruitmentManager.register}"/>
         </p>
     </h:form>
         <p>
