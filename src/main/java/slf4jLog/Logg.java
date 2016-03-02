@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * Created by Ivan on 01/03/16.
  */
 public class Logg {
-    private final Logger slf4jLogger = LoggerFactory.getLogger(Logg.class);
+    private static final Logger slf4jLogger = LoggerFactory.getLogger(Logg.class);
 
     public Logg(){
         System.out.println("penis");

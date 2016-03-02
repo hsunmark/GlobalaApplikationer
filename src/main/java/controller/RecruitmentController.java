@@ -5,7 +5,7 @@ import model.RegisterDTO;
 import model.RoleEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import slf4j.Logg;
+import slf4jLog.Logg;
 import view.RecruitmentManager;
 
 import javax.ejb.Stateful;
@@ -25,7 +25,7 @@ public class RecruitmentController {
     private EntityManager em;
     private PersonEntity personEntity;
     private RoleEntity roleEntity;
-
+    private Logg logg;
 
     private String NAME_REGEX = "^[a-zA-Z]+$";
     private String USER_REGEX = "^[a-zA-Z0-9]+$";
@@ -41,8 +41,8 @@ public class RecruitmentController {
      * @return
      */
     public boolean login(String username, String password, RecruitmentManager manager) {
-
-
+        //logg = new Logg();
+        System.out.println("mothafucka");
         if (validateLoginParameters(username, password)) {
             try {
                 TypedQuery<PersonEntity> getUser = em.createNamedQuery("PersonEntity.findByUsername", PersonEntity.class)
