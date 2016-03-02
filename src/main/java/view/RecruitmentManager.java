@@ -10,7 +10,9 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import java.io.Serializable;
 
-
+/**
+ * A Manager. Handles all interactions from the client interface.
+ */
 @ManagedBean(name = "recruitmentManager", eager = true)
 @SessionScoped
 public class RecruitmentManager implements Serializable {
@@ -180,7 +182,6 @@ public class RecruitmentManager implements Serializable {
 
 
     /**
-     * Method register:
      * Validates all the fields that a user has typed in and
      * if the fields are validated method calls controller.register(RegisterDTO dto)
      * to continue registration.
@@ -253,7 +254,7 @@ public class RecruitmentManager implements Serializable {
     }
 
     //method that validates if a string is a valid email address.
-    public boolean isValidEmailAddress(String email) {
+    private boolean isValidEmailAddress(String email) {
         boolean result = true;
         try {
             InternetAddress emailAddr = new InternetAddress(email);

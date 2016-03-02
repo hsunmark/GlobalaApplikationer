@@ -11,13 +11,18 @@ import view.RecruitmentManager;
 import javax.ejb.Stateful;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.management.relation.Role;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.Collection;
 
-
+/**
+ * A controller. Handles all calls to the database and the requests
+ * from the Manager.
+ */
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 @Stateful
 public class RecruitmentController {
@@ -34,12 +39,12 @@ public class RecruitmentController {
     private String PW_REGEX = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
 
     /**
-     * checks that the person trying to login are using a valid combination of
-     * username and password
+     * Checks that the person trying to login are using a valid combination of
+     * username and password.
      *
      * @param username
      * @param password
-     * @return
+     * @return true if login is successful, false otherwise.
      */
     public boolean login(String username, String password, RecruitmentManager manager) {
         this.manager = manager;
@@ -66,20 +71,13 @@ public class RecruitmentController {
         }
     }
 
-    private void setPermission(PersonEntity personEntity) {
-        RoleEntity role = personEntity.getRole_id();
-        String roleName = role.getName();
-        if (roleName.equals("applicant")) {
-            manager.setApplicant(true);
-        } else if (roleName.equals("recruit")) {
-            manager.setRecruit(true);
-        }
-    }
-
     /**
-     * registers a user account and persists it in database
+     * Registers a user account and store the information
+     * in the database
      *
      * @param registerDTO
+     * @param manager
+     * @return true if register is successful, false otherwise.
      */
     public boolean register(RegisterDTO registerDTO, RecruitmentManager manager) {
         this.manager = manager;
@@ -128,8 +126,7 @@ public class RecruitmentController {
     }
 
     //method that validates register parameters 
-    //public for testing (remove later)
-    public boolean validateRegisterParameters(RegisterDTO registerDTO) {
+    private boolean validateRegisterParameters(RegisterDTO registerDTO) {
         if (registerDTO.getUsername().equals("")
                 || registerDTO.getPassword().equals("")
                 || registerDTO.getFirstname().equals("")
@@ -150,7 +147,7 @@ public class RecruitmentController {
             return false;
         }
 
-        if (!manager.isValidEmailAddress(registerDTO.getEmail())) {
+        if (!isValidEmailAddress(registerDTO.getEmail())) {
             return false;
         }
 
@@ -158,5 +155,26 @@ public class RecruitmentController {
             return false;
         }
         return true;
+    }
+
+    private void setPermission(PersonEntity personEntity) {
+        RoleEntity role = personEntity.getRole_id();
+        String roleName = role.getName();
+        if (roleName.equals("applicant")) {
+            manager.setApplicant(true);
+        } else if (roleName.equals("recruit")) {
+            manager.setRecruit(true);
+        }
+    }
+
+    private boolean isValidEmailAddress(String email) {
+        boolean result = true;
+        try {
+            InternetAddress emailAddr = new InternetAddress(email);
+            emailAddr.validate();
+        } catch (AddressException ex) {
+            result = false;
+        }
+        return result;
     }
 }
