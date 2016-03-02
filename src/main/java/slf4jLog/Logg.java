@@ -1,4 +1,4 @@
-package slf4j;
+package slf4jLog;
 
 
 import org.slf4j.Logger;
