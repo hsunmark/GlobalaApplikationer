@@ -6,9 +6,11 @@ import model.RegisterDTO;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
+import javax.servlet.http.HttpServletResponse;
 import java.io.Serializable;
 
 /**
@@ -172,6 +174,9 @@ public class RecruitmentManager implements Serializable {
         try {
             error = null;
             logOutSuccess = true;
+            FacesContext context = FacesContext.getCurrentInstance();
+            HttpServletResponse response = (HttpServletResponse)context.getExternalContext().getResponse();
+            response.sendRedirect("/WEB-INF/logOut.xhtml");
         } catch (Exception e) {
             handleException(e);
         }

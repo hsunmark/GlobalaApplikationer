@@ -11,8 +11,8 @@
     <div align="center">
     <h1>Welcome applicant</h1>
     <p>
-        <h:form action="/logOut.xhtml">
-            <input type="submit" value="Log out"/>
+        <h:form id="form">
+            <h:commandButton id="button" value="Log out" action="#{recruitmentManager.logOut}" />
         </h:form>
     </p>
         <em:footer/>
