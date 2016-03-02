@@ -10,7 +10,7 @@
         <class>model.CompetenceEntity</class>
         <class>model.CompetenceProfileEntity</class>
         <properties>
-            <property name="eclipselink.jdbc.url" value="jdbc:mysql://192.168.1.65:3306/recruitdb"/>
+            <property name="eclipselink.jdbc.url" value="jdbc:mysql://81.224.134.26:3306/recruitdb"/>
             <property name="eclipselink.jdbc.driver" value="com.mysql.jdbc.Driver"/>
             <property name="eclipselink.jdbc.user" value="root"/>
             <property name="eclipselink.jdbc.password" value="adminglobal"/>
