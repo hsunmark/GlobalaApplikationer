@@ -11,6 +11,7 @@ import view.RecruitmentManager;
 import javax.ejb.Stateful;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.management.relation.Role;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -70,17 +71,15 @@ public class RecruitmentController {
      * @param registerDTO
      */
     public boolean register(RegisterDTO registerDTO, RecruitmentManager manager) {
-
         if (validateRegisterParameters(registerDTO, manager)) {
-            Collection<PersonEntity> usernameCheck = em.createNamedQuery("PersonEntity.findByUsername")
-                    .setParameter("username", registerDTO.getUsername()).getResultList();
+            TypedQuery<PersonEntity> usernameCheck = em.createNamedQuery("PersonEntity.findByUsername", PersonEntity.class)
+                    .setParameter("username", registerDTO.getUsername());
 
-            Collection<RoleEntity> role = em.createNamedQuery("RoleEntity.findByName")
-                    .setParameter("name", registerDTO.getRole()).getResultList();
+            TypedQuery<RoleEntity> role = em.createNamedQuery("RoleEntity.findByName", RoleEntity.class)
+                    .setParameter("name", registerDTO.getRole());
 
-            roleEntity = role.iterator().next();
-
-            if (usernameCheck.isEmpty()) {
+            roleEntity = role.getSingleResult();
+            if (usernameCheck.getResultList().isEmpty()) {
                 try {
                     personEntity = new PersonEntity(roleEntity, registerDTO.getFirstname(), registerDTO.getLastname(),
                             registerDTO.getSsn(), registerDTO.getEmail(), registerDTO.getUsername(),
@@ -115,7 +114,8 @@ public class RecruitmentController {
     }
 
     //method that validates register parameters 
-    private boolean validateRegisterParameters(RegisterDTO registerDTO, RecruitmentManager manager) {
+    //public for testing (remove later)
+    public boolean validateRegisterParameters(RegisterDTO registerDTO, RecruitmentManager manager) {
         if (registerDTO.getUsername().equals("")
                 || registerDTO.getPassword().equals("")
                 || registerDTO.getFirstname().equals("")
