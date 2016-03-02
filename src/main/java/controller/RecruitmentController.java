@@ -10,12 +10,9 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
-import javax.management.relation.Role;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import java.util.Collection;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
