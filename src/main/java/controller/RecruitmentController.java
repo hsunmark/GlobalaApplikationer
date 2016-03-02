@@ -4,6 +4,7 @@ import model.PersonEntity;
 import model.RegisterDTO;
 import model.RoleEntity;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import slf4j.Logg;
 import view.RecruitmentManager;
 
@@ -29,7 +30,6 @@ public class RecruitmentController {
     private String USER_REGEX = "^[a-zA-Z0-9]+$";
     private String SSN_REGEX = "^[0-9]+$";
     private String PW_REGEX = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
-   // private Logg logg = new Logg();
 
     /**
      * checks that the person trying to login are using a valid combination of
@@ -40,7 +40,8 @@ public class RecruitmentController {
      * @return
      */
     public boolean login(String username, String password, RecruitmentManager manager) {
-        //logg.logInvalidLogInAttempt(username, password);
+
+
         if(validateLoginParameters(username, password)){
             try {
                 TypedQuery<PersonEntity> getUser = em.createNamedQuery("PersonEntity.findByUsername", PersonEntity.class)
