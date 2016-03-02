@@ -3,7 +3,7 @@ package model;
 import javax.persistence.*;
 
 /**
- * Created by Henrik on 2016-02-29.
+ * Table with competence names.
  */
 @Entity
 @Table(name = "competence", schema = "recruitdb")

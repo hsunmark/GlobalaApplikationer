@@ -3,7 +3,7 @@ package model;
 import javax.persistence.*;
 
 /**
- * Created by Henrik on 2016-02-29.
+ * Table holding all information on a user.
  */
 @Entity
 @NamedQueries({
@@ -22,8 +22,22 @@ public class PersonEntity {
     private AvailabilityEntity availability_fk;
     private CompetenceProfileEntity competence_fk;
 
+    /**
+     * Creates a new instance of PersonEntity.
+     */
     public PersonEntity(){}
 
+    /**
+     * Creates a new instance of PersonEntity.
+     *
+     * @param role
+     * @param firstname
+     * @param lastname
+     * @param ssn
+     * @param email
+     * @param username
+     * @param password
+     */
     public PersonEntity(RoleEntity role, String firstname, String lastname,
                         String ssn, String email, String username, String password) {
         this.role_id = role;

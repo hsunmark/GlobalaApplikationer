@@ -1,7 +1,7 @@
 package model;
 
 /**
- * Creates a data transfer object represntring an application user
+ * Creates a data transfer object representing an application user
  */
 public class RegisterDTO {
     private String role;
@@ -13,6 +13,7 @@ public class RegisterDTO {
     private String password;
 
     /**
+     * Creates a DTO holding all information needed for a new user.
      *
      * @param role
      * @param firstname
