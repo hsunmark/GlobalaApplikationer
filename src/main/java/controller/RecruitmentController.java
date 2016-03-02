@@ -43,7 +43,7 @@ public class RecruitmentController {
     public boolean login(String username, String password, RecruitmentManager manager) {
 
 
-        if(validateLoginParameters(username, password)){
+        if (validateLoginParameters(username, password)) {
             try {
                 TypedQuery<PersonEntity> getUser = em.createNamedQuery("PersonEntity.findByUsername", PersonEntity.class)
                         .setParameter("username", username);
@@ -58,8 +58,7 @@ public class RecruitmentController {
                 manager.setMessage("Database error");
                 return false;
             }
-        }
-        else{
+        } else {
             manager.setMessage("login failed due to invalid parameters");
             return false;
         }
@@ -72,30 +71,33 @@ public class RecruitmentController {
      */
     public boolean register(RegisterDTO registerDTO, RecruitmentManager manager) {
         if (validateRegisterParameters(registerDTO, manager)) {
-            TypedQuery<PersonEntity> usernameCheck = em.createNamedQuery("PersonEntity.findByUsername", PersonEntity.class)
-                    .setParameter("username", registerDTO.getUsername());
+            try {
+                TypedQuery<PersonEntity> usernameCheck = em.createNamedQuery("PersonEntity.findByUsername", PersonEntity.class)
+                        .setParameter("username", registerDTO.getUsername());
 
-            TypedQuery<RoleEntity> role = em.createNamedQuery("RoleEntity.findByName", RoleEntity.class)
-                    .setParameter("name", registerDTO.getRole());
+                roleEntity = em.createNamedQuery("RoleEntity.findByName", RoleEntity.class)
+                        .setParameter("name", registerDTO.getRole()).getSingleResult();
 
-            roleEntity = role.getSingleResult();
-            if (usernameCheck.getResultList().isEmpty()) {
-                try {
+
+                if (usernameCheck.getResultList().isEmpty()) {
+
                     personEntity = new PersonEntity(roleEntity, registerDTO.getFirstname(), registerDTO.getLastname(),
                             registerDTO.getSsn(), registerDTO.getEmail(), registerDTO.getUsername(),
                             registerDTO.getPassword());
                     em.persist(personEntity);
-                } catch (Exception e) {
+
+                } else {
+                    manager.setMessage("Username taken");
                     return false;
                 }
-            } else {
-                manager.setMessage("Username taken");
+            } catch (Exception e) {
                 return false;
             }
         } else {
             manager.setMessage("registration failed due to invalid paramters");
             return false;
         }
+
 
         return true;
     }
@@ -136,11 +138,11 @@ public class RecruitmentController {
             return false;
         }
 
-        if(!manager.isValidEmailAddress(registerDTO.getEmail())) {
+        if (!manager.isValidEmailAddress(registerDTO.getEmail())) {
             return false;
         }
 
-        if(!registerDTO.getSsn().matches(SSN_REGEX) || (registerDTO.getSsn().length() != 10)) {
+        if (!registerDTO.getSsn().matches(SSN_REGEX) || (registerDTO.getSsn().length() != 10)) {
             return false;
         }
         return true;
