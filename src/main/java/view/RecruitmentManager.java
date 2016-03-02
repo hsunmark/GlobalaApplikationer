@@ -237,7 +237,7 @@ public class RecruitmentManager implements Serializable {
     }
 
     //method that validates if a string is a valid email address.
-    public boolean isValidEmailAddress(String email) {
+    private boolean isValidEmailAddress(String email) {
         boolean result = true;
         try {
             InternetAddress emailAddr = new InternetAddress(email);

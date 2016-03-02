@@ -100,7 +100,8 @@ public class RecruitmentController {
     }
 
     //method that validates login parametrs 
-    private boolean validateLoginParameters(String loginName, String loginPw) {
+    //public for testing (remove later)
+    public boolean validateLoginParameters(String loginName, String loginPw) {
         if (loginPw.equals("") || loginName.equals("")) {
             return false;
         }
@@ -112,6 +113,9 @@ public class RecruitmentController {
 
     }
 
+    public boolean returnTrue() {
+        return true;
+    }
     //method that validates register parameters 
     //public for testing (remove later)
     public boolean validateRegisterParameters(RegisterDTO registerDTO, RecruitmentManager manager) {
@@ -124,24 +128,27 @@ public class RecruitmentController {
                 || registerDTO.getEmail().equals("")) {
             return false;
         }
-
+        System.out.println("Passed 1");
         if (registerDTO.getPassword().length() < 6) {
             return false;
         }
+        System.out.println("Passed 2");
         if (!registerDTO.getUsername().matches(USER_REGEX)
                 || !registerDTO.getPassword().matches(PW_REGEX)
                 || !registerDTO.getFirstname().matches(NAME_REGEX)
                 || !registerDTO.getLastname().matches(NAME_REGEX)) {
             return false;
         }
-
+        System.out.println("Passed 3: ");
         if(!manager.isValidEmailAddress(registerDTO.getEmail())) {
             return false;
         }
-
+        System.out.println("Passed 4");
         if(!registerDTO.getSsn().matches(SSN_REGEX) || (registerDTO.getSsn().length() != 10)) {
             return false;
         }
+        System.out.println("Passed 5, retun true");
         return true;
     }
+
 }
