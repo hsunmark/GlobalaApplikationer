@@ -3,9 +3,6 @@ package controller;
 import model.PersonEntity;
 import model.RegisterDTO;
 import model.RoleEntity;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import slf4jLog.Logg;
 import view.RecruitmentManager;
 
 import javax.ejb.Stateful;
@@ -18,25 +15,27 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.Collection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * A controller. Handles all calls to the database and the requests
  * from the Manager.
  */
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+@Stateful
 public class RecruitmentController {
     @PersistenceContext(unitName = "recruitPU")
     private EntityManager em;
     private PersonEntity personEntity;
     private RoleEntity roleEntity;
     private RecruitmentManager manager;
-    private Logg logg;
-
+    Logger logger = Logger.getLogger(getClass().getName());
 
     private String NAME_REGEX = "^[a-zA-Z]+$";
     private String USER_REGEX = "^[a-zA-Z0-9]+$";
     private String SSN_REGEX = "^[0-9]+$";
     private String PW_REGEX = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
-
 
     /**
      * Checks that the person trying to login are using a valid combination of
@@ -47,6 +46,7 @@ public class RecruitmentController {
      * @return true if login is successful, false otherwise.
      */
     public boolean login(String username, String password, RecruitmentManager manager) {
+        logger.info("LOGGING TEST");
         this.manager = manager;
         if (validateLoginParameters(username, password)) {
             try {
@@ -112,7 +112,8 @@ public class RecruitmentController {
     }
 
     //method that validates login parametrs 
-    private boolean validateLoginParameters(String loginName, String loginPw) {
+    //public for testing (remove later)
+    public boolean validateLoginParameters(String loginName, String loginPw) {
         if (loginPw.equals("") || loginName.equals("")) {
             return false;
         }

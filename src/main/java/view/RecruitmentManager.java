@@ -7,8 +7,11 @@ import slf4jLog.Logg;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
+import javax.servlet.http.HttpServletResponse;
 import java.io.Serializable;
 
 /**
@@ -35,6 +38,7 @@ public class RecruitmentManager implements Serializable {
     private boolean loginSuccess;
     private boolean applicant;
     private boolean recruit;
+    private boolean logOutSuccess;
 
     private String NAME_REGEX = "^[a-zA-Z]+$";
     private String USER_REGEX = "^[a-zA-Z0-9]+$";
@@ -153,9 +157,31 @@ public class RecruitmentManager implements Serializable {
         return error;
     }
 
+    public boolean isLogOutSuccess() { return logOutSuccess; }
+
+    public void setLogOutSuccess(boolean logOutSuccess) { this.logOutSuccess = logOutSuccess; }
+
     private void handleException(Exception e) {
         e.printStackTrace(System.err);
         error = e;
+    }
+
+    /**
+     * Method used to log out a user.
+     *
+     * @return returns an empty string due to jsf22bugfix
+     */
+    public String logOut() {
+        try {
+            error = null;
+            logOutSuccess = true;
+            FacesContext context = FacesContext.getCurrentInstance();
+            HttpServletResponse response = (HttpServletResponse)context.getExternalContext().getResponse();
+            response.sendRedirect("/WEB-INF/logOut.xhtml");
+        } catch (Exception e) {
+            handleException(e);
+        }
+        return "";
     }
 
     /**
