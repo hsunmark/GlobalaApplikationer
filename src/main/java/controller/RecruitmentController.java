@@ -46,7 +46,6 @@ public class RecruitmentController {
      * @return true if login is successful, false otherwise.
      */
     public boolean login(String username, String password, RecruitmentManager manager) {
-        logger.info("LOGGING TEST");
         this.manager = manager;
         if (validateLoginParameters(username, password)) {
             try {
@@ -55,9 +54,13 @@ public class RecruitmentController {
                 personEntity = getUser.getSingleResult();
                 setPermission(personEntity);
                 if (personEntity != null && personEntity.getPassword().equals(password)) {
+                    logger.info(username + " logged in succesfully");
                     return true;
                 }
-
+                if (personEntity != null && !personEntity.getPassword().equals(password)) {
+                    logger.info("Someone used a WRONG password for user: "+username+ " at login");
+                    return true;
+                }
                 manager.setMessage("invalid username or password");
                 return false;
             } catch (Exception e) {
@@ -89,7 +92,6 @@ public class RecruitmentController {
                         .setParameter("name", registerDTO.getRole()).getSingleResult();
 
                 if (usernameCheck.getResultList().isEmpty()) {
-
                     personEntity = new PersonEntity(roleEntity, registerDTO.getFirstname(), registerDTO.getLastname(),
                             registerDTO.getSsn(), registerDTO.getEmail(), registerDTO.getUsername(),
                             registerDTO.getPassword());
@@ -107,7 +109,7 @@ public class RecruitmentController {
             return false;
         }
 
-
+        logger.info("new user registered: "+registerDTO.getUsername());
         return true;
     }
 
