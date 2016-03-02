@@ -31,6 +31,7 @@ public class RecruitmentManager implements Serializable {
     private Exception error;
     private boolean loginSuccess;
     private boolean applicant;
+    private boolean recruit;
 
     private String NAME_REGEX = "^[a-zA-Z]+$";
     private String USER_REGEX = "^[a-zA-Z0-9]+$";
@@ -137,6 +138,10 @@ public class RecruitmentManager implements Serializable {
 
     public void setApplicant(boolean applicant) { this.applicant = applicant; }
 
+    public boolean isRecruit() { return recruit; }
+
+    public void setRecruit(boolean recruit) { this.recruit = recruit; }
+
     public boolean getError() {
         return error == null;
     }
@@ -158,8 +163,7 @@ public class RecruitmentManager implements Serializable {
     public String login() {
         try {
             error = null;
-            message = validateLoginParameters();
-            if (message.equals("ok")) {
+            if (validateLoginParameters().equals("ok")) {
                 if (controller.login(loginName, loginPw, this)) {
                     loginSuccess = true;
                 }
@@ -183,8 +187,7 @@ public class RecruitmentManager implements Serializable {
     public String register() {
         try {
             error = null;
-            message = validateRegisterParameters();
-            if (message.equals("ok")) {
+            if (validateRegisterParameters().equals("ok")) {
                 loginSuccess = controller.register(new RegisterDTO(role, firstname, lastname, ssn, email, username, password), this);
             }
         } catch (Exception e) {
@@ -252,5 +255,4 @@ public class RecruitmentManager implements Serializable {
         }
         return result;
     }
-
 }

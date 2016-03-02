@@ -25,6 +25,7 @@ public class RecruitmentController {
     private EntityManager em;
     private PersonEntity personEntity;
     private RoleEntity roleEntity;
+    private RecruitmentManager manager;
 
 
     private String NAME_REGEX = "^[a-zA-Z]+$";
@@ -41,13 +42,14 @@ public class RecruitmentController {
      * @return
      */
     public boolean login(String username, String password, RecruitmentManager manager) {
-
+        this.manager = manager;
 
         if (validateLoginParameters(username, password)) {
             try {
                 TypedQuery<PersonEntity> getUser = em.createNamedQuery("PersonEntity.findByUsername", PersonEntity.class)
                         .setParameter("username", username);
                 personEntity = getUser.getSingleResult();
+                setPermission(personEntity);
                 if (personEntity != null && personEntity.getPassword().equals(password)) {
                     return true;
                 }
@@ -64,13 +66,24 @@ public class RecruitmentController {
         }
     }
 
+    private void setPermission(PersonEntity personEntity) {
+        RoleEntity role = personEntity.getRole_id();
+        String roleName = role.getName();
+        if (roleName.equals("applicant")) {
+            manager.setApplicant(true);
+        } else if (roleName.equals("recruit")) {
+            manager.setRecruit(true);
+        }
+    }
+
     /**
      * registers a user account and persists it in database
      *
      * @param registerDTO
      */
     public boolean register(RegisterDTO registerDTO, RecruitmentManager manager) {
-        if (validateRegisterParameters(registerDTO, manager)) {
+        this.manager = manager;
+        if (validateRegisterParameters(registerDTO)) {
             try {
                 TypedQuery<PersonEntity> usernameCheck = em.createNamedQuery("PersonEntity.findByUsername", PersonEntity.class)
                         .setParameter("username", registerDTO.getUsername());
@@ -78,14 +91,13 @@ public class RecruitmentController {
                 roleEntity = em.createNamedQuery("RoleEntity.findByName", RoleEntity.class)
                         .setParameter("name", registerDTO.getRole()).getSingleResult();
 
-
                 if (usernameCheck.getResultList().isEmpty()) {
 
                     personEntity = new PersonEntity(roleEntity, registerDTO.getFirstname(), registerDTO.getLastname(),
                             registerDTO.getSsn(), registerDTO.getEmail(), registerDTO.getUsername(),
                             registerDTO.getPassword());
                     em.persist(personEntity);
-
+                    setPermission(personEntity);
                 } else {
                     manager.setMessage("Username taken");
                     return false;
@@ -117,7 +129,7 @@ public class RecruitmentController {
 
     //method that validates register parameters 
     //public for testing (remove later)
-    public boolean validateRegisterParameters(RegisterDTO registerDTO, RecruitmentManager manager) {
+    public boolean validateRegisterParameters(RegisterDTO registerDTO) {
         if (registerDTO.getUsername().equals("")
                 || registerDTO.getPassword().equals("")
                 || registerDTO.getFirstname().equals("")

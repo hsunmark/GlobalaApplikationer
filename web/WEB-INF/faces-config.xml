@@ -20,15 +20,29 @@
     <navigation-rule>
         <from-view-id>/index.xhtml</from-view-id>
         <navigation-case>
-            <if>#{recruitmentManager.loginSuccess}</if>
-            <to-view-id>/WEB-INF/welcome.xhtml</to-view-id>
+            <if>#{recruitmentManager.loginSuccess and recruitmentManager.applicant}</if>
+            <to-view-id>/WEB-INF/welcomeApplicant.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/index.xhtml</from-view-id>
+        <navigation-case>
+            <if>#{recruitmentManager.loginSuccess and recruitmentManager.recruit}</if>
+            <to-view-id>/WEB-INF/welcomeRecruiter.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
         <from-view-id>/register.xhtml</from-view-id>
         <navigation-case>
-            <if>#{recruitmentManager.loginSuccess}</if>
-            <to-view-id>/WEB-INF/welcome.xhtml</to-view-id>
+            <if>#{recruitmentManager.loginSuccess and recruitmentManager.applicant}</if>
+            <to-view-id>/WEB-INF/welcomeApplicant.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/register.xhtml</from-view-id>
+        <navigation-case>
+            <if>#{recruitmentManager.loginSuccess and recruitmentManager.recruit}</if>
+            <to-view-id>/WEB-INF/welcomeRecruiter.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
 </faces-config>
