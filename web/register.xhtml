@@ -13,7 +13,7 @@
     <div align="center">
     <p>
         <h:outputLabel for="registration" rendered="#{recruitmentManager.message != null}" value=""/>
-        <h:outputText id="registration" value="#{recruitmentManager.message}"/>
+        <h:outputText id="registration" value="#{recruitmentManager.message}" style="color:red"/>
         <h:outputText rendered="#{recruitmentManager.message == null}" value="Register new user"/>
     </p>
 
@@ -27,33 +27,38 @@
         </p>
 
         <p>
-            <h:outputLabel for="firstname" value="Firstname: "/><br></br>
-            <h:inputText id="firstname" value="#{recruitmentManager.firstname}"/>
+            <h:outputLabel for="firstname" value="Firstname: "/>
+            <h:message for="firstname" style="color:red"/><br></br>
+            <h:inputText id="firstname" value="#{recruitmentManager.firstname}" required="true" requiredMessage="Please enter firstname"/>
         </p>
         <p>
-            <h:outputLabel for="lastname" value="Lastname: "/><br></br>
-            <h:inputText id="lastname" value="#{recruitmentManager.lastname}"/>
+            <h:outputLabel for="lastname" value="Lastname: "/>
+            <h:message for="lastname" style="color:red"/><br></br>
+            <h:inputText id="lastname" value="#{recruitmentManager.lastname}" required="true" requiredMessage="Please enter your lastname"/>
         </p>
 
         <p>
-            <h:outputLabel for="ssc" value="Social security number: "/><br></br>
-            <h:inputText id="ssc" value="#{recruitmentManager.ssn}"/>
+            <h:outputLabel for="ssc" value="Social security number: "/>
+            <h:message for="ssc" style="color:red"/><br></br>
+            <h:inputText id="ssc" value="#{recruitmentManager.ssn}" required="true" requiredMessage="Please enter your social security number"/>
         </p>
         <p>
-            <h:outputLabel for="email" value="E-mail: "/><br></br>
-            <h:inputText id="email" value="#{recruitmentManager.email}"/>
+            <h:outputLabel for="email" value="E-mail: "/>
+            <h:message for="email" style="color:red"/><br></br>
+            <h:inputText id="email" value="#{recruitmentManager.email}" required="true" requiredMessage="Please enter your e-mail"/>
         </p>
 
         <em:form username = "#{recruitmentManager.username}"
                  password = "#{recruitmentManager.password}"/>
 
         <p>
-            <h:outputLabel for="password2" value="Confirm password: "/><br></br>
-            <h:inputSecret id="password2" value="#{recruitmentManager.password2}"/>
+            <h:outputLabel for="password2" value="Confirm password: "/>
+            <h:message for="password2" style="color:red"/><br></br>
+            <h:inputSecret id="password2" value="#{recruitmentManager.password2}" required="true" requiredMessage="Please enter a password"/>
         </p>
 
         <p>
-            <h:commandButton value="Register" action="#{recruitmentManager.register}"/>
+            <h:commandButton value="Register" action="#{recruitmentManager.register}" required="true" requiredMessage="Please confirm password"/>
         </p>
     </h:form>
         <p>

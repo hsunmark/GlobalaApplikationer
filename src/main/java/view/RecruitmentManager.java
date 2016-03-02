@@ -31,6 +31,7 @@ public class RecruitmentManager implements Serializable {
     private String message;
     private Exception error;
     private boolean loginSuccess;
+    private boolean applicant;
 
     private String NAME_REGEX = "^[a-zA-Z]+$";
     private String USER_REGEX = "^[a-zA-Z0-9]+$";
@@ -133,10 +134,9 @@ public class RecruitmentManager implements Serializable {
         this.password2 = password2;
     }
 
-    private void handleException(Exception e) {
-        e.printStackTrace(System.err);
-        error = e;
-    }
+    public boolean isApplicant() { return applicant; }
+
+    public void setApplicant(boolean applicant) { this.applicant = applicant; }
 
     public boolean getError() {
         return error == null;
@@ -144,6 +144,11 @@ public class RecruitmentManager implements Serializable {
 
     public Exception getException() {
         return error;
+    }
+
+    private void handleException(Exception e) {
+        e.printStackTrace(System.err);
+        error = e;
     }
 
     /**
@@ -248,4 +253,5 @@ public class RecruitmentManager implements Serializable {
         }
         return result;
     }
+
 }
