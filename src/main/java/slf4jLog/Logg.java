@@ -12,7 +12,7 @@ public class Logg {
     private static final Logger slf4jLogger = LoggerFactory.getLogger(Logg.class);
 
     public Logg(){
-        System.out.println("penis");
+        System.out.println("Now in constructor at Logg class");
     };
 
     /**

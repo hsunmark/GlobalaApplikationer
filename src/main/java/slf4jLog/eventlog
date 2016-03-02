@@ -1,0 +1,7 @@
+Waiting for domain1 to start .....
+Successfully started the domain : domain1
+domain  Location: /Users/michaelt/Downloads/glassfish4/glassfish/domains/domain1
+Log File: /Users/michaelt/Downloads/glassfish4/glassfish/domains/domain1/logs/server.log
+Admin Port: 4848
+Command start-domain executed successfully.
+Connected to server

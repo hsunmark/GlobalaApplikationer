@@ -5,7 +5,7 @@ import model.RegisterDTO;
 import model.RoleEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import slf4j.Logg;
+import slf4jLog.Logg;
 import view.RecruitmentManager;
 
 import javax.ejb.Stateful;
@@ -23,20 +23,20 @@ import java.util.Collection;
  * A controller. Handles all calls to the database and the requests
  * from the Manager.
  */
-@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-@Stateful
 public class RecruitmentController {
     @PersistenceContext(unitName = "recruitPU")
     private EntityManager em;
     private PersonEntity personEntity;
     private RoleEntity roleEntity;
     private RecruitmentManager manager;
+    private Logg logg;
 
 
     private String NAME_REGEX = "^[a-zA-Z]+$";
     private String USER_REGEX = "^[a-zA-Z0-9]+$";
     private String SSN_REGEX = "^[0-9]+$";
     private String PW_REGEX = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
+
 
     /**
      * Checks that the person trying to login are using a valid combination of
@@ -48,7 +48,6 @@ public class RecruitmentController {
      */
     public boolean login(String username, String password, RecruitmentManager manager) {
         this.manager = manager;
-
         if (validateLoginParameters(username, password)) {
             try {
                 TypedQuery<PersonEntity> getUser = em.createNamedQuery("PersonEntity.findByUsername", PersonEntity.class)
