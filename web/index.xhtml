@@ -13,7 +13,7 @@
 
             <p>
                 <h:outputLabel for="login" rendered="#{recruitmentManager.message != null}" value=""/>
-                <h:outputText id="login" value="#{recruitmentManager.message}"/>
+                <h:outputText id="login" value="#{recruitmentManager.message}" style="color:red"/>
                 <h:outputText rendered="#{recruitmentManager.message == null}" value="Please login or register"/>
             </p>
 
