@@ -58,7 +58,6 @@ public class RecruitmentController {
             personEntity = user.getSingleResult();
             setPermission(personEntity);
 
-
             if (personEntity.getPassword().equals(password)) {
                 logger.info(username + " logged in succesfully");
                 return true;
@@ -68,9 +67,9 @@ public class RecruitmentController {
                 return false;
             }
 
-
         } else {
             manager.setMessage("invalid username or password");
+            logger.info("logging attempt with invalid parameters from user: " + username);
             return false;
         }
     }
