@@ -45,28 +45,32 @@ public class RecruitmentController {
     public boolean login(String username, String password, RecruitmentManager manager) {
         this.manager = manager;
         if (validateLoginParameters(username, password)) {
+            TypedQuery<PersonEntity> user;
             try {
-                TypedQuery<PersonEntity> getUser = em.createNamedQuery(
+                user = em.createNamedQuery(
                         "PersonEntity.findByUsername", PersonEntity.class)
                         .setParameter("username", username);
-                personEntity = getUser.getSingleResult();
-                setPermission(personEntity);
-                if (personEntity != null && personEntity.getPassword().equals(password)) {
-                    logger.info(username + " logged in succesfully");
-                    return true;
-                }
-                if (personEntity != null && !personEntity.getPassword().equals(password)) {
-                    logger.info("Someone used a WRONG password for user: "+username+ " at login");
-                    return true;
-                }
-                manager.setMessage("invalid username or password");
-                return false;
             } catch (Exception e) {
-                manager.setMessage("Database error");
+                manager.setMessage("invalid username or password");
+                logger.info("Someone used a WRONG username: " + username + " at login");
                 return false;
             }
+            personEntity = user.getSingleResult();
+            setPermission(personEntity);
+
+
+            if (personEntity.getPassword().equals(password)) {
+                logger.info(username + " logged in succesfully");
+                return true;
+            } else {
+                manager.setMessage("invalid username or password");
+                logger.info("Someone used a WRONG password for user: " + username + " at login");
+                return false;
+            }
+
+
         } else {
-            manager.setMessage("login failed due to invalid parameters");
+            manager.setMessage("invalid username or password");
             return false;
         }
     }
@@ -107,7 +111,7 @@ public class RecruitmentController {
             return false;
         }
 
-        logger.info("new user registered: "+registerDTO.getUsername());
+        logger.info("new user registered: " + registerDTO.getUsername());
         return true;
     }
 
