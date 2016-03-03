@@ -54,10 +54,8 @@ public class RecruitmentController {
                     logger.info(username + " logged in succesfully");
                     return true;
                 }
-                if (personEntity != null && !personEntity.getPassword().equals(password)) {
-                    logger.info("Someone used a WRONG password for user: "+username+ " at login");
-                    return true;
-                }
+
+                logger.info("Someone used a WRONG password for user: "+username+ " at login");
                 manager.setMessage("invalid username or password");
                 return false;
             } catch (Exception e) {
