@@ -3,6 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
     http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+
     <navigation-rule>
         <from-view-id>/register.xhtml</from-view-id>
         <navigation-case>
@@ -10,6 +11,7 @@
             <to-view-id>/WEB-INF/error.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+
     <navigation-rule>
         <from-view-id>/index.xhtml</from-view-id>
         <navigation-case>
@@ -17,6 +19,7 @@
             <to-view-id>/WEB-INF/error.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+
     <navigation-rule>
         <from-view-id>/index.xhtml</from-view-id>
         <navigation-case>
@@ -24,6 +27,7 @@
             <to-view-id>/WEB-INF/welcomeApplicant.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+
     <navigation-rule>
         <from-view-id>/index.xhtml</from-view-id>
         <navigation-case>
@@ -31,13 +35,15 @@
             <to-view-id>/WEB-INF/welcomeRecruiter.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+
     <navigation-rule>
         <from-view-id>/register.xhtml</from-view-id>
         <navigation-case>
             <if>#{recruitmentManager.loginSuccess and recruitmentManager.applicant}</if>
-            <to-view-id>welcomeApplicant.xhtml</to-view-id>
+            <to-view-id>/WEB-INF/welcomeApplicant.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+
     <navigation-rule>
         <from-view-id>/register.xhtml</from-view-id>
         <navigation-case>
@@ -45,4 +51,5 @@
             <to-view-id>/WEB-INF/welcomeRecruiter.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+
 </faces-config>
