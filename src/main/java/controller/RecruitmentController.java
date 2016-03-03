@@ -3,9 +3,6 @@ package controller;
 import model.PersonEntity;
 import model.RegisterDTO;
 import model.RoleEntity;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import slf4j.Logg;
 import view.RecruitmentManager;
 
 import javax.ejb.Stateful;
@@ -13,11 +10,10 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
-import javax.management.relation.Role;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import java.util.Collection;
+import java.util.logging.Logger;
 
 /**
  * A controller. Handles all calls to the database and the requests
@@ -31,7 +27,7 @@ public class RecruitmentController {
     private PersonEntity personEntity;
     private RoleEntity roleEntity;
     private RecruitmentManager manager;
-
+    Logger logger = Logger.getLogger(getClass().getName());
 
     private String NAME_REGEX = "^[a-zA-Z]+$";
     private String USER_REGEX = "^[a-zA-Z0-9]+$";
@@ -48,7 +44,6 @@ public class RecruitmentController {
      */
     public boolean login(String username, String password, RecruitmentManager manager) {
         this.manager = manager;
-
         if (validateLoginParameters(username, password)) {
             try {
                 TypedQuery<PersonEntity> getUser = em.createNamedQuery(
@@ -57,9 +52,13 @@ public class RecruitmentController {
                 personEntity = getUser.getSingleResult();
                 setPermission(personEntity);
                 if (personEntity != null && personEntity.getPassword().equals(password)) {
+                    logger.info(username + " logged in succesfully");
                     return true;
                 }
-
+                if (personEntity != null && !personEntity.getPassword().equals(password)) {
+                    logger.info("Someone used a WRONG password for user: "+username+ " at login");
+                    return true;
+                }
                 manager.setMessage("invalid username or password");
                 return false;
             } catch (Exception e) {
@@ -91,7 +90,6 @@ public class RecruitmentController {
                         .setParameter("name", registerDTO.getRole()).getSingleResult();
 
                 if (usernameCheck.getResultList().isEmpty()) {
-
                     personEntity = new PersonEntity(roleEntity, registerDTO.getFirstname(), registerDTO.getLastname(),
                             registerDTO.getSsn(), registerDTO.getEmail(), registerDTO.getUsername(),
                             registerDTO.getPassword());
@@ -109,7 +107,7 @@ public class RecruitmentController {
             return false;
         }
 
-
+        logger.info("new user registered: "+registerDTO.getUsername());
         return true;
     }
 
