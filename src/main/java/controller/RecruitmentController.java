@@ -27,7 +27,7 @@ public class RecruitmentController {
     private PersonEntity personEntity;
     private RoleEntity roleEntity;
     private RecruitmentManager manager;
-    Logger logger = Logger.getLogger(getClass().getName());
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     private String NAME_REGEX = "^[a-zA-Z]+$";
     private String USER_REGEX = "^[a-zA-Z0-9]+$";
