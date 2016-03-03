@@ -51,7 +51,8 @@ public class RecruitmentController {
 
         if (validateLoginParameters(username, password)) {
             try {
-                TypedQuery<PersonEntity> getUser = em.createNamedQuery("PersonEntity.findByUsername", PersonEntity.class)
+                TypedQuery<PersonEntity> getUser = em.createNamedQuery(
+                        "PersonEntity.findByUsername", PersonEntity.class)
                         .setParameter("username", username);
                 personEntity = getUser.getSingleResult();
                 setPermission(personEntity);
