@@ -52,20 +52,4 @@
         </navigation-case>
     </navigation-rule>
 
-    <navigation-rule>
-        <from-view-id>/resources/welcomeRecruiter.xhtml</from-view-id>
-        <navigation-case>
-            <if>#{!recruitmentManager.loginSuccess}</if>
-            <to-view-id>/index.xhtml</to-view-id>
-        </navigation-case>
-    </navigation-rule>
-
-    <navigation-rule>
-        <from-view-id>/resources/welcomeApplicant.xhtml</from-view-id>
-        <navigation-case>
-            <if>#{!recruitmentManager.loginSuccess}</if>
-            <to-view-id>/index.xhtml</to-view-id>
-        </navigation-case>
-    </navigation-rule>
-
 </faces-config>

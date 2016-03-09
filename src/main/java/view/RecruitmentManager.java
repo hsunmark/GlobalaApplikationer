@@ -11,6 +11,7 @@ import javax.faces.context.FacesContext;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.Serializable;
 
 /**
@@ -168,7 +169,9 @@ public class RecruitmentManager implements Serializable {
     public String logOut() {
         try {
             error = null;
-            loginSuccess = false;
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+            session.invalidate();
         } catch (Exception e) {
             handleException(e);
         }
