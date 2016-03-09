@@ -27,7 +27,7 @@ public class RecruitmentController {
     private PersonEntity personEntity;
     private RoleEntity roleEntity;
     private RecruitmentManager manager;
-    Logger logger = Logger.getLogger(getClass().getName());
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     private String NAME_REGEX = "^[a-zA-Z]+$";
     private String USER_REGEX = "^[a-zA-Z0-9]+$";
@@ -45,29 +45,31 @@ public class RecruitmentController {
     public boolean login(String username, String password, RecruitmentManager manager) {
         this.manager = manager;
         if (validateLoginParameters(username, password)) {
+            TypedQuery<PersonEntity> user;
             try {
-                TypedQuery<PersonEntity> getUser = em.createNamedQuery("PersonEntity.findByUsername", PersonEntity.class)
+                user = em.createNamedQuery(
+                        "PersonEntity.findByUsername", PersonEntity.class)
                         .setParameter("username", username);
-                personEntity = getUser.getSingleResult();
-                setPermission(personEntity);
-                if (personEntity != null && personEntity.getPassword().equals(password)) {
-                    logger.info(username + " logged in succesfully");
-                    return true;
-                }
-                if (personEntity != null && !personEntity.getPassword().equals(password)) {
-                    logger.info("Someone used a WRONG password for user: "+username+ " at login");
-                    return false;
-                }
-
-                manager.setMessage("invalid username or password");
-                return false;
             } catch (Exception e) {
-                logger.info("Someone used a WRONG username: "+username+ " at login");
-                manager.setMessage("Database error");
+                manager.setMessage("invalid username or password");
+                logger.info("Someone used a WRONG username: " + username + " at login");
                 return false;
             }
+            personEntity = user.getSingleResult();
+            setPermission(personEntity);
+
+            if (personEntity.getPassword().equals(password)) {
+                logger.info(username + " logged in succesfully");
+                return true;
+            } else {
+                manager.setMessage("invalid username or password");
+                logger.info("Someone used a WRONG password for user: " + username + " at login");
+                return false;
+            }
+
         } else {
-            manager.setMessage("login failed due to invalid parameters");
+            manager.setMessage("invalid username or password");
+            logger.info("logging attempt with invalid parameters from user: " + username);
             return false;
         }
     }
@@ -108,7 +110,7 @@ public class RecruitmentController {
             return false;
         }
 
-        logger.info("new user registered: "+registerDTO.getUsername());
+        logger.info("new user registered: " + registerDTO.getUsername());
         return true;
     }
 

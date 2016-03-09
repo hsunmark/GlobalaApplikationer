@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class RoleEntity {
     private long roleId;
     private String name;
-    private PersonEntity role_id;
+    //private PersonEntity role_id;
 
     /**
      * Creates a new instance of PersonEntity.
@@ -61,12 +61,12 @@ public class RoleEntity {
         return result;
     }
 
-    @OneToOne(mappedBy = "role_id")
+  /*  @OneToOne(mappedBy = "role_id")
     public PersonEntity getRole_id() {
         return role_id;
     }
 
     public void setRole_id(PersonEntity role_id) {
         this.role_id = role_id;
-    }
+    }*/
 }
