@@ -56,11 +56,13 @@ public class RecruitmentController {
                 }
                 if (personEntity != null && !personEntity.getPassword().equals(password)) {
                     logger.info("Someone used a WRONG password for user: "+username+ " at login");
-                    return true;
+                    return false;
                 }
+
                 manager.setMessage("invalid username or password");
                 return false;
             } catch (Exception e) {
+                logger.info("Someone used a WRONG username: "+username+ " at login");
                 manager.setMessage("Database error");
                 return false;
             }
