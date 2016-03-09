@@ -96,7 +96,7 @@ public class RecruitmentController {
                 return false;
             }
             personEntity = user.getSingleResult();
-            if(!personEntity.getRole_id().getName().equals("recruit")) {
+            if (!personEntity.getRole_id().getName().equals("recruit")) {
                 logger.info("login attempt from non-recruiter: " + username);
                 return false;
             }
@@ -156,6 +156,7 @@ public class RecruitmentController {
 
     /**
      * Returns a list of all persons with the role applicants
+     *
      * @return List of PersonEntity classes
      */
     public List<PersonEntity> getApplicants() {
@@ -165,6 +166,7 @@ public class RecruitmentController {
 
     /**
      * Returns a list of all persons by the role selected
+     *
      * @param role
      * @return List of PersonEntities
      */
