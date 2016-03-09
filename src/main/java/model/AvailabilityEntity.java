@@ -2,6 +2,7 @@ package model;
 
 import javax.persistence.*;
 import java.sql.Date;
+import com.google.gson.*;
 
 /**
  * Table holding a date-span where person is available.
@@ -10,9 +11,9 @@ import java.sql.Date;
 @Table(name = "availability", schema = "recruitdb")
 public class AvailabilityEntity {
     private long availabilityId;
-    private Date fromDate;
-    private Date toDate;
-    private PersonEntity person_fk;
+    private String  fromDate;
+    private String toDate;
+    private transient PersonEntity person_fk;
 
     @Id
     @Column(name = "availability_id", nullable = false)
@@ -26,21 +27,21 @@ public class AvailabilityEntity {
 
     @Basic
     @Column(name = "from_date", nullable = true)
-    public Date getFromDate() {
-        return fromDate;
+    public String getFromDate() {
+        return fromDate.toString();
     }
 
-    public void setFromDate(Date fromDate) {
+    public void setFromDate(String fromDate) {
         this.fromDate = fromDate;
     }
 
     @Basic
     @Column(name = "to_date", nullable = true)
-    public Date getToDate() {
+    public String getToDate() {
         return toDate;
     }
 
-    public void setToDate(Date toDate) {
+    public void setToDate(String toDate) {
         this.toDate = toDate;
     }
 
@@ -66,7 +67,7 @@ public class AvailabilityEntity {
         return result;
     }
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "person_id", referencedColumnName = "person_id")
     public PersonEntity getPerson_fk() {
         return person_fk;
@@ -75,4 +76,5 @@ public class AvailabilityEntity {
     public void setPerson_fk(PersonEntity person_fk) {
         this.person_fk = person_fk;
     }
+
 }

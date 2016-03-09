@@ -8,14 +8,12 @@ import view.RecruitmentManager;
 import javax.ejb.Stateful;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
-import javax.faces.context.FacesContext;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.security.auth.Subject;
-import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -43,6 +41,7 @@ public class RecruitmentController {
      *
      * @param username
      * @param password
+     * @param manager
      * @return true if login is successful, false otherwise.
      */
     public boolean login(String username, String password, RecruitmentManager manager) {
@@ -72,6 +71,44 @@ public class RecruitmentController {
 
         } else {
             manager.setMessage("invalid username or password");
+            logger.info("logging attempt with invalid parameters from user: " + username);
+            return false;
+        }
+    }
+
+    /**
+     * Checks that the person trying to login are using a valid combination of
+     * username and password. Use this method for RestServices
+     *
+     * @param username
+     * @param password
+     * @return true if login is successful, false otherwise.
+     */
+    public boolean login(String username, String password) {
+        if (validateLoginParameters(username, password)) {
+            TypedQuery<PersonEntity> user;
+            try {
+                user = em.createNamedQuery(
+                        "PersonEntity.findByUsername", PersonEntity.class)
+                        .setParameter("username", username);
+            } catch (Exception e) {
+                logger.info("Someone used a WRONG username: " + username + " at login");
+                return false;
+            }
+            personEntity = user.getSingleResult();
+            if(!personEntity.getRole_id().getName().equals("recruit")) {
+                logger.info("login attempt from non-recruiter: " + username);
+                return false;
+            }
+            if (personEntity.getPassword().equals(password)) {
+                logger.info(username + " logged in succesfully");
+                return true;
+            } else {
+                logger.info("Someone used a WRONG password for user: " + username + " at login");
+                return false;
+            }
+
+        } else {
             logger.info("logging attempt with invalid parameters from user: " + username);
             return false;
         }
@@ -115,6 +152,29 @@ public class RecruitmentController {
 
         logger.info("new user registered: " + registerDTO.getUsername());
         return true;
+    }
+
+    /**
+     * Returns a list of all persons with the role applicants
+     * @return List of PersonEntity classes
+     */
+    public List<PersonEntity> getApplicants() {
+        List<PersonEntity> result = getPersonsByRole("applicant").getResultList();
+        return result;
+    }
+
+    /**
+     * Returns a list of all persons by the role selected
+     * @param role
+     * @return List of PersonEntities
+     */
+    public TypedQuery<PersonEntity> getPersonsByRole(String role) {
+        roleEntity = em.createNamedQuery("RoleEntity.findByName", RoleEntity.class)
+                .setParameter("name", role).getSingleResult();
+        TypedQuery<PersonEntity> resultSet = em.createNamedQuery("PersonEntity.findAllByRole", PersonEntity.class)
+                .setParameter("role", roleEntity);
+
+        return resultSet;
     }
 
     //method that validates login parametrs 
