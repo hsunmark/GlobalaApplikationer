@@ -1,6 +1,8 @@
 package model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Table holding all information on a user.
@@ -8,7 +10,8 @@ import javax.persistence.*;
 @Entity
 @NamedQueries({
         @NamedQuery(name = "PersonEntity.findAll", query = "SELECT c FROM PersonEntity c"),
-        @NamedQuery(name = "PersonEntity.findByUsername", query = "SELECT c FROM PersonEntity c WHERE c.username = :username")})
+        @NamedQuery(name = "PersonEntity.findByUsername", query = "SELECT c FROM PersonEntity c WHERE c.username = :username"),
+        @NamedQuery(name = "PersonEntity.findAllByRole", query = "SELECT c FROM PersonEntity c WHERE c.role_id = :role")})
 @Table(name = "person", schema = "recruitdb")
 public class PersonEntity {
     private long personId;
@@ -19,8 +22,8 @@ public class PersonEntity {
     private String password;
     private String username;
     private RoleEntity role_id;
-    private AvailabilityEntity availability_fk;
-    private CompetenceProfileEntity competence_fk;
+    private List<AvailabilityEntity> availability_fk = new ArrayList<AvailabilityEntity>();
+    //private CompetenceProfileEntity competence_fk;
 
     /**
      * Creates a new instance of PersonEntity.
@@ -159,15 +162,18 @@ public class PersonEntity {
         this.role_id = role_id;
     }
 
-    @OneToOne(mappedBy = "person_fk")
-    public AvailabilityEntity getAvailability_fk() {
+
+    //@OneToMany(targetEntity = AvailabilityEntity.class)
+    @OneToMany(mappedBy = "person_fk")
+    @JoinColumn(name = "availability_id")
+    public List<AvailabilityEntity> getAvailability_fk() {
         return availability_fk;
     }
 
-    public void setAvailability_fk(AvailabilityEntity availability_fk) {
+    public void setAvailability_fk(List<AvailabilityEntity> availability_fk) {
         this.availability_fk = availability_fk;
     }
-
+    /*
     @OneToOne(mappedBy = "person_fk")
     public CompetenceProfileEntity getCompetence_fk() {
         return competence_fk;
@@ -176,4 +182,5 @@ public class PersonEntity {
     public void setCompetence_fk(CompetenceProfileEntity competence_fk) {
         this.competence_fk = competence_fk;
     }
+    */
 }
