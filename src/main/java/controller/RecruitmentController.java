@@ -8,11 +8,14 @@ import view.RecruitmentManager;
 import javax.ejb.Stateful;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.faces.context.FacesContext;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.security.auth.Subject;
+import javax.servlet.http.HttpSession;
 import java.util.logging.Logger;
 
 /**
