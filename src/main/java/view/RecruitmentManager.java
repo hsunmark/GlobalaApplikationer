@@ -2,7 +2,6 @@ package view;
 
 import controller.RecruitmentController;
 import model.RegisterDTO;
-import slf4jLog.Logg;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
