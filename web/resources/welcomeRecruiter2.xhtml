@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:body>
+    <ui:composition template="/template/layout.xhtml">
+        <ui:define name="content">
+            <h1>Welcome recruiter</h1>
+            <p>
+                <h:form id="form">
+                    <h:commandButton id="button" value="Log out" action="logOut?faces-redirect=true">
+                        <f:actionListener binding="#{recruitmentManager.logOut()}"/>
+                    </h:commandButton>
+                </h:form>
+            </p>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>
