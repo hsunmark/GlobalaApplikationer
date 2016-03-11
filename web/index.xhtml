@@ -5,12 +5,13 @@
       xmlns:em="http://java.sun.com/jsf/composite/emcomp">
 
 <h:head>
-    <em:header/>
 </h:head>
 <h:body>
+        <h:commandButton image="/resources/swe.png" value="swe" action="#{recruitmentManager.setCurrentLocale}"/>
+        <h:commandButton image="/resources/eng.png" value="eng" action="#{recruitmentManager.setCurrentLocale}"/>
+    <em:header/>
     <div align="center">
         <h:form>
-
             <p>
                 <h:outputLabel for="login" rendered="#{recruitmentManager.message != null}" value=""/>
                 <h:outputText id="login" value="#{recruitmentManager.message}" style="color:red"/>

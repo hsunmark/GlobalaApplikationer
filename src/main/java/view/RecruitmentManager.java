@@ -40,7 +40,6 @@ public class RecruitmentManager implements Serializable {
     private boolean loginSuccess;
     private boolean applicant;
     private boolean recruit;
-    private String language;
     private Locale currentLocale = Locale.ENGLISH;
     public ResourceBundle labels = ResourceBundle.getBundle("labelsbundle", currentLocale);
 
