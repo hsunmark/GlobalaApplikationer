@@ -15,19 +15,19 @@
     <composite:implementation>
         <div align="center">
         <p>
-            <h:outputLabel value="Username: "></h:outputLabel>
+            <h:outputLabel value="#{msg.username}"></h:outputLabel>
             <h:message for="username" style="color:red"/><br></br>
             <h:inputText id="username" value="#{cc.attrs.username}"
                          required = "true"
-                         requiredMessage = "Please enter your username">
+                         requiredMessage = "#{msg.formmessage1}">
             </h:inputText>
         </p>
         <p>
-            <h:outputLabel value="Password: "></h:outputLabel>
+            <h:outputLabel value="#{msg.password}"></h:outputLabel>
             <h:message for="password" style="color:red"/><br></br>
             <h:inputSecret id="password" value="#{cc.attrs.password}"
                            required = "true"
-                           requiredMessage = "Please enter your password" />
+                           requiredMessage = "#{msg.formmessage2}" />
         </p>
         </div>
     </composite:implementation>

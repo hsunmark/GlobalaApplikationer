@@ -13,6 +13,8 @@ import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.Serializable;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 /**
  * A Manager. Handles all interactions from the client interface.
@@ -38,11 +40,24 @@ public class RecruitmentManager implements Serializable {
     private boolean loginSuccess;
     private boolean applicant;
     private boolean recruit;
+    private Locale currentLocale;
+    public ResourceBundle labels = ResourceBundle.getBundle("labelsbundle", currentLocale);
 
     private String NAME_REGEX = "^[a-zA-Z]+$";
     private String USER_REGEX = "^[a-zA-Z0-9]+$";
     private String SSN_REGEX = "^[0-9]+$";
     private String PW_REGEX = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
+
+    public void setCurrentLocale(String lang) {
+        if(lang.equals("swe")){
+            currentLocale = new Locale("sv", "SE");
+            labels = ResourceBundle.getBundle("labelsbundle", currentLocale);
+        }
+        if(lang.equals("eng")){
+            currentLocale = new Locale("en", "US");
+            labels = ResourceBundle.getBundle("labelsbundle", currentLocale);
+        }
+    }
 
     public boolean getLoginSuccess() {
         return loginSuccess;
@@ -73,7 +88,7 @@ public class RecruitmentManager implements Serializable {
     }
 
     public void setMessage(String message) {
-        this.message = message;
+        this.message = labels.getString(message);
     }
 
     public String getRole() {
@@ -192,8 +207,6 @@ public class RecruitmentManager implements Serializable {
                     message = null;
                     loginSuccess = true;
                 }
-            } else {
-                message = msg;
             }
         } catch (Exception e) {
             handleException(e);
@@ -217,8 +230,6 @@ public class RecruitmentManager implements Serializable {
             if (msg.equals("ok")) {
                 loginSuccess = controller.register(new RegisterDTO(role, firstname, lastname, ssn, email, username, password), this);
                 message = null;
-            } else {
-                message = msg;
             }
         } catch (Exception e) {
             handleException(e);
@@ -237,12 +248,15 @@ public class RecruitmentManager implements Serializable {
                 || role.equals("")
                 || ssn.equals("")
                 || email.equals("")) {
+            setMessage("RegisterMessage1");
             return "You have not filled all the fields.";
         }
         if (!password.equals(password2)) {
+            setMessage("RegisterMessage2");
             return "Passwords does not match";
         }
         if (password.length() < 6) {
+            setMessage("RegisterMessage3");
             return "Password must be atleast 6 charachters long";
         }
 
@@ -250,14 +264,17 @@ public class RecruitmentManager implements Serializable {
                 || !password.matches(PW_REGEX)
                 || !firstname.matches(NAME_REGEX)
                 || !lastname.matches(NAME_REGEX)) {
+            setMessage("RegisterMessage4");
             return "You are using invalid characters.. " +
                     "(aA-zZ allowed for names and aA-zZ + 0-9 allowed for username and password)";
         }
         if (!isValidEmailAddress(email)) {
+            setMessage("RegisterMessage5");
             return "Your email is not a valid email address";
         }
 
         if ((!ssn.matches(SSN_REGEX) || (ssn.length() != 10))) {
+            setMessage("RegisterMessage6");
             return "Your social security number should be 10 numbers";
         }
         return "ok";
@@ -266,9 +283,11 @@ public class RecruitmentManager implements Serializable {
     //method that validates parameters for login
     private String validateLoginParameters() {
         if (loginPw.equals("") || loginName.equals("")) {
+            setMessage("LoginMessage3");
             return "Enter login credentials";
         }
         if (!loginPw.matches(PW_REGEX) || !loginName.matches(USER_REGEX)) {
+            setMessage("LoginMessage1");
             return "Invalid login";
         }
         return "ok";
@@ -285,4 +304,6 @@ public class RecruitmentManager implements Serializable {
         }
         return result;
     }
+
+
 }
