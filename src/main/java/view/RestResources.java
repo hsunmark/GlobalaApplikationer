@@ -3,6 +3,7 @@ package view;
 
 import com.google.gson.Gson;
 import controller.RecruitmentController;
+import controller.RestController;
 import model.PersonEntity;
 
 import javax.ejb.EJB;
@@ -20,7 +21,7 @@ public class RestResources {
     Gson gson = new Gson();
 
     @EJB
-    private RecruitmentController controller;
+    private RestController controller;
 
     /**
      * Attempts to login with given parameters. 1 is returned on
