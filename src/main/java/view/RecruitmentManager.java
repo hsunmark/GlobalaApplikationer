@@ -40,8 +40,9 @@ public class RecruitmentManager implements Serializable {
     private boolean loginSuccess;
     private boolean applicant;
     private boolean recruit;
-    private Locale currentLocale;
-    public ResourceBundle labels;
+    private Locale currentLocale = FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();
+    private ResourceBundle labels;
+
 
     private String NAME_REGEX = "^[a-zA-Z]+$";
     private String USER_REGEX = "^[a-zA-Z0-9]+$";
@@ -191,6 +192,7 @@ public class RecruitmentManager implements Serializable {
         } catch (Exception e) {
             handleException(e);
         }
+        System.out.println("country: " + currentLocale.getCountry());
         return "";
     }
 
@@ -322,6 +324,4 @@ public class RecruitmentManager implements Serializable {
         }
         return result;
     }
-
-
 }

@@ -3,17 +3,15 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <body>
 <ui:composition>
     <h:form>
-    <h:commandButton id="swe" image="/resources/swe.png" value="swe" action="#{recruitmentManager.setCurrentLocale('swe')}">
-
-    </h:commandButton>
-    <h:commandButton id="eng" image="/resources/eng.png" value="eng" action="#{recruitmentManager.setCurrentLocale('eng')}">
-
-    </h:commandButton>
+        <f:view locale="#{recruitmentManager.currentLocale}"/>
+    <h:commandButton id="swe" image="/resources/swe.png" value="swe" action="#{recruitmentManager.setCurrentLocale('swe')}"/>
+    <h:commandButton id="eng" image="/resources/eng.png" value="eng" action="#{recruitmentManager.setCurrentLocale('eng')}"/>
     </h:form>
 </ui:composition>
 </body>
