@@ -9,10 +9,10 @@
 <h:body>
     <ui:composition template="/template/layout.xhtml">
         <ui:define name="content">
-            <h1>Welcome recruiter</h1>
+            <h1>#{msg.welcomerec}</h1>
             <p>
                 <h:form id="form">
-                    <h:commandButton id="button" value="Log out" action="logOut?faces-redirect=true">
+                    <h:commandButton id="button" value="#{msg.logout}" action="logOut?faces-redirect=true">
                         <f:actionListener binding="#{recruitmentManager.logOut()}"/>
                     </h:commandButton>
                 </h:form>
