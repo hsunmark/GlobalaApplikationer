@@ -14,18 +14,18 @@
             <p>
                 <h:outputLabel for="login" rendered="#{recruitmentManager.message != null}" value=""/>
                 <h:outputText id="login" value="#{recruitmentManager.message}" style="color:red"/>
-                <h:outputText rendered="#{recruitmentManager.message == null}" value="Please login or register"/>
+                <h:outputText rendered="#{recruitmentManager.message == null}" value="#{msg.LoginRegistertext}"/>
             </p>
 
             <em:form username = "#{recruitmentManager.loginName}"
                      password = "#{recruitmentManager.loginPw}"/>
 
       <p>
-         <h:commandButton id="LoginButton" value="#{msg.LoginButton}" action="#{recruitmentManager.login}"/>
+         <h:commandButton value="#{msg.LoginButton}" action="#{recruitmentManager.login}"/>
       </p>
    </h:form>
    <p>
-      <a href="register.xhtml">Register</a>
+      <a href="register.xhtml" >#{msg.Register}</a>
    </p>
         <em:footer/>
     </div>

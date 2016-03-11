@@ -13,6 +13,8 @@ import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.Serializable;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 /**
  * A Manager. Handles all interactions from the client interface.
@@ -38,6 +40,9 @@ public class RecruitmentManager implements Serializable {
     private boolean loginSuccess;
     private boolean applicant;
     private boolean recruit;
+    private String language;
+    private Locale currentLocale = Locale.ENGLISH;
+    public ResourceBundle labels = ResourceBundle.getBundle("labelsbundle", currentLocale);
 
     private String NAME_REGEX = "^[a-zA-Z]+$";
     private String USER_REGEX = "^[a-zA-Z0-9]+$";
@@ -193,7 +198,7 @@ public class RecruitmentManager implements Serializable {
                     loginSuccess = true;
                 }
             } else {
-                message = msg;
+                message = labels.getString("LoginMessage1");
             }
         } catch (Exception e) {
             handleException(e);

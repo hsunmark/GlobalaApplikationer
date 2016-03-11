@@ -53,7 +53,7 @@ public class RecruitmentController {
                         "PersonEntity.findByUsername", PersonEntity.class)
                         .setParameter("username", username);
             } catch (Exception e) {
-                manager.setMessage("invalid username or password");
+                manager.setMessage("LoginMessage2");
                 logger.info("Someone used a WRONG username: " + username + " at login");
                 return false;
             }
@@ -64,13 +64,13 @@ public class RecruitmentController {
                 logger.info(username + " logged in succesfully");
                 return true;
             } else {
-                manager.setMessage("invalid username or password");
+                manager.setMessage("LoginMessage2");
                 logger.info("Someone used a WRONG password for user: " + username + " at login");
                 return false;
             }
 
         } else {
-            manager.setMessage("invalid username or password");
+            manager.setMessage("LoginMessage2");
             logger.info("logging attempt with invalid parameters from user: " + username);
             return false;
         }
