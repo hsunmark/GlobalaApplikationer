@@ -139,14 +139,14 @@ public class RecruitmentController {
                     em.persist(personEntity);
                     setPermission(personEntity);
                 } else {
-                    manager.setMessage("Username taken");
+                    manager.setMessage("RegisterMessage7");
                     return false;
                 }
             } catch (Exception e) {
                 return false;
             }
         } else {
-            manager.setMessage("registration failed due to invalid paramters");
+            manager.setMessage("RegisterMessage8");
             return false;
         }
 
