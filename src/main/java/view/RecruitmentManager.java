@@ -41,7 +41,7 @@ public class RecruitmentManager implements Serializable {
     private boolean applicant;
     private boolean recruit;
     private Locale currentLocale;
-    public ResourceBundle labels = ResourceBundle.getBundle("labelsbundle", currentLocale);
+    public ResourceBundle labels;
 
     private String NAME_REGEX = "^[a-zA-Z]+$";
     private String USER_REGEX = "^[a-zA-Z0-9]+$";
