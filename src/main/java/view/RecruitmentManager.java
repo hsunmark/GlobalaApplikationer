@@ -181,10 +181,12 @@ public class RecruitmentManager implements Serializable {
             if (lang.equals("swe")) {
                 currentLocale = new Locale("sv", "SE");
                 labels = ResourceBundle.getBundle("labelsbundle", currentLocale);
+                System.out.println(currentLocale.getLanguage());
             }
             if (lang.equals("eng")) {
                 currentLocale = new Locale("en", "US");
                 labels = ResourceBundle.getBundle("labelsbundle", currentLocale);
+                System.out.println(currentLocale.getLanguage());
             }
         } catch (Exception e) {
             handleException(e);
