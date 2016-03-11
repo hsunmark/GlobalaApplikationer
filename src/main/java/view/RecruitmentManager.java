@@ -3,6 +3,7 @@ package view;
 import controller.RecruitmentController;
 import model.RegisterDTO;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -41,7 +42,7 @@ public class RecruitmentManager implements Serializable {
     private boolean applicant;
     private boolean recruit;
     private Locale currentLocale;
-    public ResourceBundle labels = ResourceBundle.getBundle("labelsbundle", currentLocale);
+    public ResourceBundle labels;
 
     private String NAME_REGEX = "^[a-zA-Z]+$";
     private String USER_REGEX = "^[a-zA-Z0-9]+$";
@@ -52,11 +53,30 @@ public class RecruitmentManager implements Serializable {
         if(lang.equals("swe")){
             currentLocale = new Locale("sv", "SE");
             labels = ResourceBundle.getBundle("labelsbundle", currentLocale);
+            System.out.println(getLanguage());
         }
         if(lang.equals("eng")){
             currentLocale = new Locale("en", "US");
             labels = ResourceBundle.getBundle("labelsbundle", currentLocale);
+            System.out.println(getLanguage());
         }
+    }
+
+    public Locale getCurrentLocale(){
+        return this.currentLocale;
+    }
+    @PostConstruct
+    public void init() {
+        currentLocale = FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();
+    }
+
+    public String getLanguage() {
+        return currentLocale.getLanguage();
+    }
+
+    public void setLanguage(String language) {
+        currentLocale = new Locale(language);
+        FacesContext.getCurrentInstance().getViewRoot().setLocale(currentLocale);
     }
 
     public boolean getLoginSuccess() {
