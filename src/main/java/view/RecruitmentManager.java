@@ -40,7 +40,7 @@ public class RecruitmentManager implements Serializable {
     private boolean loginSuccess;
     private boolean applicant;
     private boolean recruit;
-    private Locale currentLocale = FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();
+    private Locale currentLocale;
     private ResourceBundle labels;
 
 
@@ -176,18 +176,22 @@ public class RecruitmentManager implements Serializable {
         error = e;
     }
 
+    /**
+     * Sets the language chosen by user.
+     *
+     * @return returns an empty string due to jsf22bugfix
+     */
     public String setCurrentLocale(String lang) {
         try {
             error = null;
             if (lang.equals("swe")) {
                 currentLocale = new Locale("sv", "SE");
                 labels = ResourceBundle.getBundle("labelsbundle", currentLocale);
-                System.out.println(currentLocale.getLanguage());
+
             }
             if (lang.equals("eng")) {
                 currentLocale = new Locale("en", "US");
                 labels = ResourceBundle.getBundle("labelsbundle", currentLocale);
-                System.out.println(currentLocale.getLanguage());
             }
         } catch (Exception e) {
             handleException(e);
