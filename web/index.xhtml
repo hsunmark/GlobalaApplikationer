@@ -6,8 +6,8 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:em="http://java.sun.com/jsf/composite/emcomp">
 
-    <h:body>
-    	<ui:composition template="/template/layout.xhtml">
+<h:body>
+<ui:composition template="/template/layout.xhtml">
     		<ui:define name="content">
                 <h:form>
 
@@ -23,10 +23,11 @@
                     <p>
                         <h:commandButton id="LoginButton" value="#{msg.LoginButton}" action="#{recruitmentManager.login}"/>
                     </p>
-                </h:form>
+
                 <p>
                     <a href="register.xhtml">#{msg.Register}</a>
                 </p>
+                </h:form>
     		</ui:define>
     	</ui:composition>
     </h:body>

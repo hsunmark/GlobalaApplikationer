@@ -8,8 +8,8 @@
 <body>
 <ui:composition>
     <h:form>
-    <h:commandButton image="/resources/swe.png" value="swe" action="#{recruitmentManager.setCurrentLocale}"/>
-    <h:commandButton image="/resources/eng.png" value="eng" action="#{recruitmentManager.setCurrentLocale}"/>
+    <h:commandButton id="swe" image="/resources/swe.png" value="swe" action="#{recruitmentManager.setCurrentLocale(swe)}"/>
+    <h:commandButton id="eng" image="/resources/eng.png" value="eng" action="#{recruitmentManager.setCurrentLocale(eng)}"/>
     </h:form>
 </ui:composition>
 </body>

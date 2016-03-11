@@ -48,17 +48,6 @@ public class RecruitmentManager implements Serializable {
     private String SSN_REGEX = "^[0-9]+$";
     private String PW_REGEX = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
 
-    public void setCurrentLocale(String lang) {
-        if(lang.equals("swe")){
-            currentLocale = new Locale("sv", "SE");
-            labels = ResourceBundle.getBundle("labelsbundle", currentLocale);
-        }
-        if(lang.equals("eng")){
-            currentLocale = new Locale("en", "US");
-            labels = ResourceBundle.getBundle("labelsbundle", currentLocale);
-        }
-    }
-
     public boolean getLoginSuccess() {
         return loginSuccess;
     }
@@ -155,13 +144,23 @@ public class RecruitmentManager implements Serializable {
         this.password2 = password2;
     }
 
-    public boolean isApplicant() { return applicant; }
+    public Locale getCurrentLocale() { return currentLocale; }
 
-    public void setApplicant(boolean applicant) { this.applicant = applicant; }
+    public boolean isApplicant() {
+        return applicant;
+    }
 
-    public boolean isRecruit() { return recruit; }
+    public void setApplicant(boolean applicant) {
+        this.applicant = applicant;
+    }
 
-    public void setRecruit(boolean recruit) { this.recruit = recruit; }
+    public boolean isRecruit() {
+        return recruit;
+    }
+
+    public void setRecruit(boolean recruit) {
+        this.recruit = recruit;
+    }
 
     public boolean getError() {
         return error == null;
@@ -174,6 +173,23 @@ public class RecruitmentManager implements Serializable {
     private void handleException(Exception e) {
         e.printStackTrace(System.err);
         error = e;
+    }
+
+    public String setCurrentLocale(String lang) {
+        try {
+            error = null;
+            if (lang.equals("swe")) {
+                currentLocale = new Locale("sv", "SE");
+                labels = ResourceBundle.getBundle("labelsbundle", currentLocale);
+            }
+            if (lang.equals("eng")) {
+                currentLocale = new Locale("en", "US");
+                labels = ResourceBundle.getBundle("labelsbundle", currentLocale);
+            }
+        } catch (Exception e) {
+            handleException(e);
+        }
+        return "";
     }
 
     /**
