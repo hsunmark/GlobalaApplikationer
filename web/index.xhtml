@@ -1,34 +1,33 @@
-<!DOCTYPE html>
-<html lang="en"
-      xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:em="http://java.sun.com/jsf/composite/emcomp">
 
-<h:head>
-</h:head>
-<h:body>
-        <h:commandButton image="/resources/swe.png" value="swe" action="#{recruitmentManager.setCurrentLocale}"/>
-        <h:commandButton image="/resources/eng.png" value="eng" action="#{recruitmentManager.setCurrentLocale}"/>
-    <em:header/>
-    <div align="center">
-        <h:form>
-            <p>
-                <h:outputLabel for="login" rendered="#{recruitmentManager.message != null}" value=""/>
-                <h:outputText id="login" value="#{recruitmentManager.message}" style="color:red"/>
-                <h:outputText rendered="#{recruitmentManager.message == null}" value="#{msg.LoginRegistertext}"/>
-            </p>
+    <h:body>
+    	<ui:composition template="/template/layout.xhtml">
+    		<ui:define name="content">
+                <h:form>
 
-            <em:form username = "#{recruitmentManager.loginName}"
-                     password = "#{recruitmentManager.loginPw}"/>
+                    <p>
+                        <h:outputLabel for="login" rendered="#{recruitmentManager.message != null}" value=""/>
+                        <h:outputText id="login" value="#{recruitmentManager.message}" style="color:red"/>
+                        <h:outputText rendered="#{recruitmentManager.message == null}" value="#{msg.LoginRegistertext}"/>
+                    </p>
 
-      <p>
-         <h:commandButton value="#{msg.LoginButton}" action="#{recruitmentManager.login}"/>
-      </p>
-   </h:form>
-   <p>
-      <a href="register.xhtml" >#{msg.Register}</a>
-   </p>
-        <em:footer/>
-    </div>
-</h:body>
+                    <em:form username = "#{recruitmentManager.loginName}"
+                             password = "#{recruitmentManager.loginPw}"/>
+
+                    <p>
+                        <h:commandButton id="LoginButton" value="#{msg.LoginButton}" action="#{recruitmentManager.login}"/>
+                    </p>
+                </h:form>
+                <p>
+                    <a href="register.xhtml">#{msg.Register}</a>
+                </p>
+    		</ui:define>
+    	</ui:composition>
+    </h:body>
 </html>

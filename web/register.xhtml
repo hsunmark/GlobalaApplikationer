@@ -1,70 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:em="http://java.sun.com/jsf/composite/emcomp">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:em="http://java.sun.com/jsf/composite/emcomp"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-<h:head>
-    <em:header/>
-</h:head>
-<h:body>
-    <div align="center">
-    <p>
-        <h:outputLabel for="registration" rendered="#{recruitmentManager.message != null}" value=""/>
-        <h:outputText id="registration" value="#{recruitmentManager.message}" style="color:red"/>
-        <h:outputText rendered="#{recruitmentManager.message == null}" value="#{msg.Register}"/>
-    </p>
+    <h:body>
+    	<ui:composition template="template/layout.xhtml">
+            <ui:define name="content">
+            <p>
+                <h:outputLabel for="registration" rendered="#{recruitmentManager.message != null}" value=""/>
+                <h:outputText id="registration" value="#{recruitmentManager.message}" style="color:red"/>
+                <h:outputText rendered="#{recruitmentManager.message == null}" value="#{msg.Register}"/>
+            </p>
 
-    <h:form>
-        <p>
-            <h:outputLabel for="role" value="#{msg.role}"/><br></br>
-            <h:selectOneMenu id="role" value="#{recruitmentManager.role}">
-                <f:selectItem itemValue="Recruit" itemLabel="#{msg.recruit}"/>
-                <f:selectItem itemValue="Applicant" itemLabel="#{msg.applicant}"/>
-            </h:selectOneMenu>
-        </p>
+            <h:form>
+                <p>
+                    <h:outputLabel for="role" value="#{msg.role}"/><br></br>
+                    <h:selectOneMenu id="role" value="#{recruitmentManager.role}">
+                        <f:selectItem itemValue="Recruit" itemLabel="#{msg.recruit}"/>
+                        <f:selectItem itemValue="Applicant" itemLabel="#{msg.applicant}"/>
+                    </h:selectOneMenu>
+                </p>
 
-        <p>
-            <h:outputLabel for="firstname" value="#{msg.firstname}"/>
-            <h:message for="firstname" style="color:red"/><br></br>
-            <h:inputText id="firstname" value="#{recruitmentManager.firstname}" required="true" requiredMessage="#{msg.blankfirstname}"/>
-        </p>
-        <p>
-            <h:outputLabel for="lastname" value="#{msg.lastname}"/>
-            <h:message for="lastname" style="color:red"/><br></br>
-            <h:inputText id="lastname" value="#{recruitmentManager.lastname}" required="true" requiredMessage="#{msg.blanklastname}"/>
-        </p>
+                <p>
+                    <h:outputLabel for="firstname" value="#{msg.firstname}"/>
+                    <h:message for="firstname" style="color:red"/><br></br>
+                    <h:inputText id="firstname" value="#{recruitmentManager.firstname}" required="true" requiredMessage="#{msg.blankfirstname}"/>
+                </p>
+                <p>
+                    <h:outputLabel for="lastname" value="Lastname: "/>
+                    <h:message for="lastname" style="color:red"/><br></br>
+                    <h:inputText id="lastname" value="#{recruitmentManager.lastname}" required="true" requiredMessage="#{msg.blanklastname}"/>
+                </p>
 
-        <p>
-            <h:outputLabel for="ssc" value="#{msg.ssn}"/>
-            <h:message for="ssc" style="color:red"/><br></br>
-            <h:inputText id="ssc" value="#{recruitmentManager.ssn}" required="true" requiredMessage="#{msg.blankssn}"/>
-        </p>
-        <p>
-            <h:outputLabel for="email" value="#{msg.mail}"/>
-            <h:message for="email" style="color:red"/><br></br>
-            <h:inputText id="email" value="#{recruitmentManager.email}" required="true" requiredMessage="#{msg.blankmail}"/>
-        </p>
+                <p>
+                    <h:outputLabel for="ssc" value="#{msg.ssn}"/>
+                    <h:message for="ssc" style="color:red"/><br></br>
+                    <h:inputText id="ssc" value="#{recruitmentManager.ssn}" required="true" requiredMessage="#{msg.blankssn}"/>
+                </p>
+                <p>
+                    <h:outputLabel for="email" value="#{msg.mail}"/>
+                    <h:message for="email" style="color:red"/><br></br>
+                    <h:inputText id="email" value="#{recruitmentManager.email}" required="true" requiredMessage="#{msg.blankmail}"/>
+                </p>
 
-        <em:form username = "#{recruitmentManager.username}"
-                 password = "#{recruitmentManager.password}"/>
+                <em:form username = "#{recruitmentManager.username}"
+                         password = "#{recruitmentManager.password}"/>
 
-        <p>
-            <h:outputLabel for="password2" value="#{msg.confirmpassword}"/>
-            <h:message for="password2" style="color:red"/><br></br>
-            <h:inputSecret id="password2" value="#{recruitmentManager.password2}" required="true" requiredMessage="#{msg.blankconfirmpassword}"/>
-        </p>
+                <p>
+                    <h:outputLabel for="password2" value="#{msg.confirmpassword}"/>
+                    <h:message for="password2" style="color:red"/><br></br>
+                    <h:inputSecret id="password2" value="#{recruitmentManager.password2}" required="true" requiredMessage="#{msg.blankconfirmpassword}"/>
+                </p>
 
-        <p>
-            <h:commandButton value="#{msg.Register}" action="#{recruitmentManager.register}"/>
-        </p>
-    </h:form>
-        <p>
-    <a href="index.xhtml">#{msg.mainpage}</a>
-        </p>
-        <em:footer/>
-    </div>
-</h:body>
+                <p>
+                    <h:commandButton value="Register" action="#{recruitmentManager.register}"/>
+                </p>
+            </h:form>
+            <p>
+                <a href="index.xhtml">#{msg.mainpage}</a>
+            </p>
+            </ui:define>
+    	</ui:composition>
+    </h:body>
 </html>
