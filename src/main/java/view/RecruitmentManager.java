@@ -40,14 +40,25 @@ public class RecruitmentManager implements Serializable {
     private boolean loginSuccess;
     private boolean applicant;
     private boolean recruit;
-    private String language;
-    private Locale currentLocale = Locale.ENGLISH;
+    private Locale currentLocale;
     public ResourceBundle labels = ResourceBundle.getBundle("labelsbundle", currentLocale);
 
     private String NAME_REGEX = "^[a-zA-Z]+$";
     private String USER_REGEX = "^[a-zA-Z0-9]+$";
     private String SSN_REGEX = "^[0-9]+$";
     private String PW_REGEX = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
+
+    public void setCurrentLocale(String lang) {
+        if(lang.equals("swe")){
+            currentLocale = new Locale("sv", "SE");
+            labels = ResourceBundle.getBundle("labelsbundle", currentLocale);
+        }
+        if(lang.equals("eng")){
+            currentLocale = new Locale("en", "US");
+            labels = ResourceBundle.getBundle("labelsbundle", currentLocale);
+        }
+        this.currentLocale = currentLocale;
+    }
 
     public boolean getLoginSuccess() {
         return loginSuccess;
@@ -294,4 +305,6 @@ public class RecruitmentManager implements Serializable {
         }
         return result;
     }
+
+
 }
