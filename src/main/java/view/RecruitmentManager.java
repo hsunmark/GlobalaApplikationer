@@ -57,7 +57,6 @@ public class RecruitmentManager implements Serializable {
             currentLocale = new Locale("en", "US");
             labels = ResourceBundle.getBundle("labelsbundle", currentLocale);
         }
-        this.currentLocale = currentLocale;
     }
 
     public boolean getLoginSuccess() {
