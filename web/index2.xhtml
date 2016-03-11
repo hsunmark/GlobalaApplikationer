@@ -14,7 +14,7 @@
                     <p>
                         <h:outputLabel for="login" rendered="#{recruitmentManager.message != null}" value=""/>
                         <h:outputText id="login" value="#{recruitmentManager.message}" style="color:red"/>
-                        <h:outputText rendered="#{recruitmentManager.message == null}" value="Please login or register"/>
+                        <h:outputText rendered="#{recruitmentManager.message == null}" value="#{msg.LoginRegistertext}"/>
                     </p>
 
                     <em:form username = "#{recruitmentManager.loginName}"
@@ -25,7 +25,7 @@
                     </p>
                 </h:form>
                 <p>
-                    <a href="register2.xhtml">Register</a>
+                    <a href="register2.xhtml">#{msg.Register}</a>
                 </p>
     		</ui:define>
     	</ui:composition>
