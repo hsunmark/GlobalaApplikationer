@@ -13,7 +13,6 @@ import javax.persistence.*;
 @Table(name = "role", schema = "recruitdb")
 public class RoleEntity {
     private long roleId;
-    private String name;
     //private PersonEntity role_id;
 
     /**
