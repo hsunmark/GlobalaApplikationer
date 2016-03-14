@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+    <ui:composition template="/template/layout.xhtml">
+        <ui:define name="content">
+            <h1>#{msg.welcomeapp}</h1>
+            <p>
+                    <h:form id="form">
+                        <p:growl id="msgs" showDetail="true" />
+
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <p:outputLabel for="inline" value="#{msg.fromDate}" />
+                            <p:calendar id="inline" value="#{recruitmentManager.fromDate}" />
+
+                            <p:outputLabel for="inline2" value="#{msg.toDate}" />
+                            <p:calendar id="inline2" value="#{recruitmentManager.toDate}" />
+
+                        </h:panelGrid>
+
+                        <p:commandButton value="Submit" update="msgs" actionListener="#{recruitmentManager.click}" icon="ui-icon-check" />
+
+                        <p:commandButton value="#{msg.logout}" action="#{recruitmentManager.logOut}" icon="ui-icon-check" />
+                    </h:form>
+            </p>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>
