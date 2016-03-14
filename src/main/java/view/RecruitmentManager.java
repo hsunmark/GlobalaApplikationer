@@ -12,8 +12,11 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.net.URL;
 import java.util.Locale;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 /**
@@ -40,7 +43,7 @@ public class RecruitmentManager implements Serializable {
     private boolean loginSuccess;
     private boolean applicant;
     private boolean recruit;
-    private Locale currentLocale = FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();
+    private Locale currentLocale;
     private ResourceBundle labels;
 
 
@@ -176,12 +179,18 @@ public class RecruitmentManager implements Serializable {
         error = e;
     }
 
+    /**
+     * Sets the language chosen by user.
+     *
+     * @return returns an empty string due to jsf22bugfix
+     */
     public String setCurrentLocale(String lang) {
         try {
             error = null;
             if (lang.equals("swe")) {
                 currentLocale = new Locale("sv", "SE");
                 labels = ResourceBundle.getBundle("labelsbundle", currentLocale);
+
             }
             if (lang.equals("eng")) {
                 currentLocale = new Locale("en", "US");
@@ -190,7 +199,6 @@ public class RecruitmentManager implements Serializable {
         } catch (Exception e) {
             handleException(e);
         }
-        System.out.println("country: " + currentLocale.getCountry());
         return "";
     }
 
