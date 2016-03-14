@@ -5,7 +5,8 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:em="http://java.sun.com/jsf/composite/emcomp"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <h:body>
     	<ui:composition template="template/layout.xhtml">
@@ -13,52 +14,61 @@
             <p>
                 <h:outputLabel for="registration" rendered="#{recruitmentManager.message != null}" value=""/>
                 <h:outputText id="registration" value="#{recruitmentManager.message}" style="color:red"/>
-                <h:outputText rendered="#{recruitmentManager.message == null}" value="#{msg.Register}"/>
+                <h:outputText rendered="#{recruitmentManager.message == null}" value="#{msg.Register}" style="font-size: x-large"/>
             </p>
 
             <h:form>
-                <p>
-                    <h:outputLabel for="role" value="#{msg.role}"/><br></br>
-                    <h:selectOneMenu id="role" value="#{recruitmentManager.role}">
-                        <f:selectItem itemValue="Recruit" itemLabel="#{msg.recruit}"/>
-                        <f:selectItem itemValue="Applicant" itemLabel="#{msg.applicant}"/>
-                    </h:selectOneMenu>
-                </p>
+                <p:messages id="messages" autoUpdate="true" closable="true" />
+
+                <h:panelGrid columns="2" cellpadding="5">
+
+                    <p:outputLabel for="role" value="#{msg.role}" />
+                    <p:selectOneMenu id="role" value="#{recruitmentManager.role}" style="width:125px">
+                        <f:selectItem itemLabel="#{msg.recruit}" itemValue="Recruit" />
+                        <f:selectItem itemLabel="#{msg.applicant}" itemValue="Applicant" />
+                    </p:selectOneMenu>
+
+                    <p:outputLabel for="firstname" value="#{msg.firstname}" />
+                    <p:inputText id="firstname" value="#{recruitmentManager.firstname}"
+                                 required = "true"
+                                 requiredMessage = "#{msg.blankfirstname}" />
+
+                    <p:outputLabel for="lastname" value="#{msg.lastname}" />
+                    <p:inputText id="lastname" value="#{recruitmentManager.lastname}"
+                                 required = "true"
+                                 requiredMessage = "#{msg.blanklastname}" />
+
+                    <p:outputLabel for="ssn" value="#{msg.ssn}" />
+                    <p:inputText id="ssn" value="#{recruitmentManager.ssn}"
+                                 required = "true"
+                                 requiredMessage = "#{msg.blankssn}" />
+
+                    <p:outputLabel for="email" value="#{msg.mail}" />
+                    <p:inputText id="email" value="#{recruitmentManager.email}"
+                                 required = "true"
+                                 requiredMessage = "#{msg.blankmail}" />
+
+                    <p:outputLabel for="username" value="#{msg.username}" />
+                    <p:inputText id="username" value="#{recruitmentManager.username}"
+                                 required = "true"
+                                 requiredMessage = "#{msg.formmessage1}" />
+
+
+                    <p:outputLabel for="password" value="#{msg.password}" />
+                    <p:password  id="password" value="#{recruitmentManager.password}"
+                                 required = "true"
+                                 requiredMessage = "#{msg.formmessage2}" />
+
+
+                    <p:outputLabel for="password2" value="#{msg.confirmpassword}" />
+                    <p:password  id="password2" value="#{recruitmentManager.password2}"
+                                 required = "true"
+                                 requiredMessage = "#{msg.formmessage2}" />
 
                 <p>
-                    <h:outputLabel for="firstname" value="#{msg.firstname}"/>
-                    <h:message for="firstname" style="color:red"/><br></br>
-                    <h:inputText id="firstname" value="#{recruitmentManager.firstname}" required="true" requiredMessage="#{msg.blankfirstname}"/>
+                    <p:commandButton value="#{msg.RegisterButton}" action="#{recruitmentManager.register}" icon="ui-icon-check" />
                 </p>
-                <p>
-                    <h:outputLabel for="lastname" value="Lastname: "/>
-                    <h:message for="lastname" style="color:red"/><br></br>
-                    <h:inputText id="lastname" value="#{recruitmentManager.lastname}" required="true" requiredMessage="#{msg.blanklastname}"/>
-                </p>
-
-                <p>
-                    <h:outputLabel for="ssc" value="#{msg.ssn}"/>
-                    <h:message for="ssc" style="color:red"/><br></br>
-                    <h:inputText id="ssc" value="#{recruitmentManager.ssn}" required="true" requiredMessage="#{msg.blankssn}"/>
-                </p>
-                <p>
-                    <h:outputLabel for="email" value="#{msg.mail}"/>
-                    <h:message for="email" style="color:red"/><br></br>
-                    <h:inputText id="email" value="#{recruitmentManager.email}" required="true" requiredMessage="#{msg.blankmail}"/>
-                </p>
-
-                <em:form username = "#{recruitmentManager.username}"
-                         password = "#{recruitmentManager.password}"/>
-
-                <p>
-                    <h:outputLabel for="password2" value="#{msg.confirmpassword}"/>
-                    <h:message for="password2" style="color:red"/><br></br>
-                    <h:inputSecret id="password2" value="#{recruitmentManager.password2}" required="true" requiredMessage="#{msg.blankconfirmpassword}"/>
-                </p>
-
-                <p>
-                    <h:commandButton value="Register" action="#{recruitmentManager.register}"/>
-                </p>
+                </h:panelGrid>
             </h:form>
             <p>
                 <a href="index.xhtml">#{msg.mainpage}</a>

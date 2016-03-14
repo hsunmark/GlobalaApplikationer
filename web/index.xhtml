@@ -4,7 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:em="http://java.sun.com/jsf/composite/emcomp">
+      xmlns:em="http://java.sun.com/jsf/composite/emcomp"
+      xmlns:p="http://primefaces.org/ui">
 
 <h:body>
 <ui:composition template="/template/layout.xhtml">
@@ -12,16 +13,16 @@
                 <h:form>
 
                     <p>
-                        <h:outputLabel for="login" rendered="#{recruitmentManager.message != null}" value=""/>
+                        <p:outputLabel for="login" rendered="#{recruitmentManager.message != null}" value=""/>
                         <h:outputText id="login" value="#{recruitmentManager.message}" style="color:red"/>
-                        <h:outputText rendered="#{recruitmentManager.message == null}" value="#{msg.LoginRegistertext}"/>
+                        <h:outputText rendered="#{recruitmentManager.message == null}" value="#{msg.LoginRegistertext}" style="font-size: x-large"/>
                     </p>
 
                     <em:form username = "#{recruitmentManager.loginName}"
                              password = "#{recruitmentManager.loginPw}"/>
 
                     <p>
-                        <h:commandButton id="LoginButton" value="#{msg.LoginButton}" action="#{recruitmentManager.login}"/>
+                        <p:commandButton value="#{msg.LoginButton}" action="#{recruitmentManager.login}" icon="ui-icon-check" />
                     </p>
 
                 <p>
