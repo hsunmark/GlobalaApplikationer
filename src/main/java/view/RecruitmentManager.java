@@ -45,6 +45,7 @@ public class RecruitmentManager implements Serializable {
     private boolean recruit;
     private Locale currentLocale;
     private ResourceBundle labels;
+    private InternetAddress emailAddr;
 
 
     private String NAME_REGEX = "^[a-zA-Z]+$";
@@ -263,6 +264,17 @@ public class RecruitmentManager implements Serializable {
         return "";
     }
 
+    /**
+     * Sets a controller for the recruitmentManager
+     * @param controller
+     */
+    public void setRecruitmentController(RecruitmentController controller) {
+        this.controller = controller;
+    }
+
+    public void setInternetAdress(InternetAddress adress) {
+        this.emailAddr = adress;
+    }
 
     //method that validates parameters for registration.
     private String validateRegisterParameters() {
@@ -323,7 +335,7 @@ public class RecruitmentManager implements Serializable {
     private boolean isValidEmailAddress(String email) {
         boolean result = true;
         try {
-            InternetAddress emailAddr = new InternetAddress(email);
+            emailAddr = new InternetAddress(email);
             emailAddr.validate();
         } catch (AddressException ex) {
             result = false;
