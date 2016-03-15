@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -51,6 +52,8 @@ public class RecruitmentManager implements Serializable {
     private ResourceBundle labels;
     private Date fromDate;
     private Date toDate;
+    private String competence;
+    private BigDecimal years;
 
 
     private String NAME_REGEX = "^[a-zA-Z]+$";
@@ -194,6 +197,22 @@ public class RecruitmentManager implements Serializable {
 
     public void setFromDate(Date fromDate) {
         this.fromDate = fromDate;
+    }
+
+    public String getCompetence() {
+        return competence;
+    }
+
+    public void setCompetence(String competence) {
+        this.competence = competence;
+    }
+
+    public BigDecimal getYears() {
+        return years;
+    }
+
+    public void setYears(BigDecimal years) {
+        this.years = years;
     }
 
     private void handleException(Exception e) {
@@ -372,16 +391,31 @@ public class RecruitmentManager implements Serializable {
         return result;
     }
 
-    public void onDateSelect(SelectEvent event) {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
+    public String addDates() {
+        try {
+            error = null;
+            RequestContext requestContext = RequestContext.getCurrentInstance();
+            requestContext.update("form:display");
+            requestContext.execute("PF('dlg').show()");
+            if (controller.addDates(fromDate, toDate)) {
+                //TODO set confirmation msg
+            }
+        } catch (Exception e) {
+            handleException(e);
+        }
+        return "";
     }
 
-    public void click() {
-        RequestContext requestContext = RequestContext.getCurrentInstance();
-
-        requestContext.update("form:display");
-        requestContext.execute("PF('dlg').show()");
+    public String addCompetence () {
+        try {
+            error = null;
+            //TODO validate competence?
+            if (controller.addCompetence(competence, years)) {
+                //TODO set confirmation msg
+            }
+        } catch (Exception e) {
+            handleException(e);
+        }
+        return "";
     }
 }
