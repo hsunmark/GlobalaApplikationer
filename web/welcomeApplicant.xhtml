@@ -25,11 +25,14 @@
 
                     </h:panelGrid>
 
+                    <p>
                     <p:commandButton value="#{msg.add}" action="#{recruitmentManager.addCompetence}"
                                      icon="ui-icon-check"/>
+                    </p>
 
-
+                    <p>
                     <h:outputText value="#{msg.dateMsg}" style="font-size: x-large"/>
+                    </p>
 
                     <h:panelGrid columns="2" cellpadding="5">
 
@@ -41,8 +44,10 @@
 
                     </h:panelGrid>
 
+                    <p>
                     <p:commandButton value="#{msg.addDates}" action="#{recruitmentManager.addDates}"
                                      icon="ui-icon-check"/>
+                    </p>
 
                     <p:commandButton value="#{msg.logout}" action="#{recruitmentManager.logOut}" icon="ui-icon-check"/>
                 </h:form>
