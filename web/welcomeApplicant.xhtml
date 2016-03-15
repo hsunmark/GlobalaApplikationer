@@ -11,39 +11,41 @@
         <ui:define name="content">
             <h1>#{msg.welcomeapp}</h1>
             <p>
-                    <h:form id="form">
+                <h:form id="form">
 
-                        <h:outputText value="#{msg.competenceMsg}" style="font-size: x-large"/>
+                    <h:outputText value="#{msg.competenceMsg}" style="font-size: x-large"/>
 
-                        <h:panelGrid columns="2" cellpadding="5">
+                    <h:panelGrid columns="2" cellpadding="5">
 
-                            <p:outputLabel for="competence" value="#{msg.competence}"/>
-                            <p:inputText id="competence" value="#{recruitmentManager.competence}"/>
+                        <p:outputLabel for="competence" value="#{msg.competence}"/>
+                        <p:inputText id="competence" value="#{recruitmentManager.competence}"/>
 
-                            <p:outputLabel for="years" value="#{msg.years}"/>
-                            <p:inputText id="years" value="#{recruitmentManager.years}"/>
+                        <p:outputLabel for="years" value="#{msg.years}"/>
+                        <p:inputText id="years" value="#{recruitmentManager.years}"/>
 
-                        </h:panelGrid>
+                    </h:panelGrid>
 
-                        <p:commandButton value="#{msg.add}" action="#{recruitmentManager.addCompetence}" icon="ui-icon-check" />
+                    <p:commandButton value="#{msg.add}" action="#{recruitmentManager.addCompetence}"
+                                     icon="ui-icon-check"/>
 
 
-                        <h:outputText value="#{msg.dateMsg}" style="font-size: x-large"/>
+                    <h:outputText value="#{msg.dateMsg}" style="font-size: x-large"/>
 
-                        <h:panelGrid columns="2" cellpadding="5">
+                    <h:panelGrid columns="2" cellpadding="5">
 
-                        <p:outputLabel for="fromDate" value="#{msg.fromDate}" />
-                        <p:calendar id="fromDate" value="#{recruitmentManager.fromDate}" />
+                        <p:outputLabel for="fromDate" value="#{msg.fromDate}"/>
+                        <p:calendar id="fromDate" value="#{recruitmentManager.fromDate}"/>
 
-                        <p:outputLabel for="toDate" value="#{msg.toDate}" />
-                        <p:calendar id="toDate" value="#{recruitmentManager.toDate}" />
+                        <p:outputLabel for="toDate" value="#{msg.toDate}"/>
+                        <p:calendar id="toDate" value="#{recruitmentManager.toDate}"/>
 
-                        </h:panelGrid>
+                    </h:panelGrid>
 
-                        <p:commandButton value="#{msg.addDates}" action="#{recruitmentManager.addDates}" icon="ui-icon-check" />
+                    <p:commandButton value="#{msg.addDates}" action="#{recruitmentManager.addDates}"
+                                     icon="ui-icon-check"/>
 
-                        <p:commandButton value="#{msg.logout}" action="#{recruitmentManager.logOut}" icon="ui-icon-check" />
-                    </h:form>
+                    <p:commandButton value="#{msg.logout}" action="#{recruitmentManager.logOut}" icon="ui-icon-check"/>
+                </h:form>
             </p>
         </ui:define>
     </ui:composition>
