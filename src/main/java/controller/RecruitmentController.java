@@ -189,7 +189,8 @@ public class RecruitmentController {
     public boolean addCompetence(String competence, BigDecimal years) {
         try {
             CompetenceEntity comp = em.createNamedQuery("CompetenceEntity.findByName", CompetenceEntity.class).setParameter("name", competence).getSingleResult();
-            em.persist(new CompetenceProfileEntity(years, comp, personEntity));
+            CompetenceProfileEntity cpe = new CompetenceProfileEntity(years, comp, personEntity);
+            //em.persist();
         } catch (Exception e) {
             return false;
         }

@@ -332,8 +332,8 @@ public class RecruitmentManager implements Serializable {
             error = null;
             String msgCheck = validateRegisterParameters();
             if (msgCheck.equals("ok")) {
-                setCompetenceList();
                 loginSuccess = controller.register(new RegisterDTO(role, firstname, lastname, ssn, email, username, password), this);
+                setCompetenceList();
                 message = null;
                 msg = null;
             }
@@ -453,7 +453,9 @@ public class RecruitmentManager implements Serializable {
             error = null;
             //TODO validate competence?
             if (controller.addCompetence(competence, years)) {
-                //TODO set confirmation msg
+                setMessage("competenceAdded");
+            } else {
+                setMessage("invalidYears");
             }
         } catch (Exception e) {
             handleException(e);
