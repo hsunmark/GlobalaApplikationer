@@ -2,9 +2,9 @@ import controller.RecruitmentController;
 import model.PersonEntity;
 import model.RegisterDTO;
 import model.RoleEntity;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import view.RecruitmentManager;
 
 import javax.mail.internet.InternetAddress;
@@ -31,7 +31,7 @@ public class RegisterTest {
     private TypedQuery<RoleEntity> roleResult;
     private TypedQuery<PersonEntity> personResult;
 
-    @BeforeMethod
+    @Before
     public void setupTest() {
         System.out.println("Before...");
         controller = new RecruitmentController();
@@ -48,7 +48,7 @@ public class RegisterTest {
         personResult = mock(TypedQuery.class);
     }
 
-    @AfterMethod
+    @After
     public void destroy() {
         System.out.println("After...");
         controller = null;
