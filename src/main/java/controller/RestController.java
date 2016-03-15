@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 @Stateful
 public class RestController {
     @PersistenceContext(unitName = "recruitPU")
-    private EntityManager em;
+    public  EntityManager em;
     private PersonEntity personEntity;
     private RoleEntity roleEntity;
     private Logger logger = Logger.getLogger(getClass().getName());
@@ -83,8 +83,11 @@ public class RestController {
      * @return List of PersonEntities
      */
     public TypedQuery<PersonEntity> getPersonsByRole(String role) {
-        roleEntity = em.createNamedQuery("RoleEntity.findByName", RoleEntity.class)
-                .setParameter("name", role).getSingleResult();
+        TypedQuery<RoleEntity> roleQuery = em.createNamedQuery("RoleEntity.findByName", RoleEntity.class);
+        roleQuery.setParameter("name", role);
+        roleEntity = roleQuery.getSingleResult();
+        /*roleEntity = em.createNamedQuery("RoleEntity.findByName", RoleEntity.class)
+                .setParameter("name", role).getSingleResult();*/
         TypedQuery<PersonEntity> resultSet = em.createNamedQuery("PersonEntity.findAllByRole", PersonEntity.class)
                 .setParameter("role", roleEntity);
 

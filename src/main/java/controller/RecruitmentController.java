@@ -12,6 +12,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.NamedQuery;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -181,5 +183,15 @@ public class RecruitmentController {
             result = false;
         }
         return result;
+    }
+
+    public boolean addCompetence(String competence, BigDecimal years) {
+        //TODO add competence to db
+        return true;
+    }
+
+    public boolean addDates(Date fromDate, Date toDate) {
+        //TODO add dates to db
+        return true;
     }
 }

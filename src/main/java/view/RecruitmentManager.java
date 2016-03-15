@@ -2,17 +2,20 @@ package view;
 
 import controller.RecruitmentController;
 import model.RegisterDTO;
+import org.primefaces.context.RequestContext;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -42,6 +45,10 @@ public class RecruitmentManager implements Serializable {
     private boolean recruit;
     private Locale currentLocale;
     private ResourceBundle labels;
+    private Date fromDate;
+    private Date toDate;
+    private String competence;
+    private BigDecimal years;
 
 
     private String NAME_REGEX = "^[a-zA-Z]+$";
@@ -171,6 +178,38 @@ public class RecruitmentManager implements Serializable {
         return error;
     }
 
+    public Date getToDate() {
+        return toDate;
+    }
+
+    public void setToDate(Date toDate) {
+        this.toDate = toDate;
+    }
+
+    public Date getFromDate() {
+        return fromDate;
+    }
+
+    public void setFromDate(Date fromDate) {
+        this.fromDate = fromDate;
+    }
+
+    public String getCompetence() {
+        return competence;
+    }
+
+    public void setCompetence(String competence) {
+        this.competence = competence;
+    }
+
+    public BigDecimal getYears() {
+        return years;
+    }
+
+    public void setYears(BigDecimal years) {
+        this.years = years;
+    }
+
     private void handleException(Exception e) {
         e.printStackTrace(System.err);
         error = e;
@@ -196,7 +235,6 @@ public class RecruitmentManager implements Serializable {
         } catch (Exception e) {
             handleException(e);
         }
-        System.out.println("country: " + currentLocale.getCountry());
         return "";
     }
 
@@ -207,10 +245,29 @@ public class RecruitmentManager implements Serializable {
      */
     public String logOut() {
         try {
+
             error = null;
-            FacesContext facesContext = FacesContext.getCurrentInstance();
-            HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
-            session.invalidate();
+            //"logOut?faces-redirect=true"
+//            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+//            HttpSession session = (HttpSession) externalContext.getSession(false);
+
+//            Subject subject = SecurityContext.getCurrent().getSubject();
+//            Set<Principal> principals = subject.getPrincipals();
+//            System.out.println("**********************" + principals.size());
+//            for (Principal i : principals) {
+//                System.out.println("**********************" + i.getName() + "**" + i.getName());
+//            }
+//
+            HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+            HttpServletResponse response = (HttpServletResponse)FacesContext.getCurrentInstance().getExternalContext().getResponse();
+
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("logOut.xhtml");
+            requestDispatcher.forward(request, response);
+
+
+            //requestDispatcher.include(request, response);
+            //session.invalidate();
+
         } catch (Exception e) {
             handleException(e);
         }
@@ -259,6 +316,14 @@ public class RecruitmentManager implements Serializable {
             handleException(e);
         }
         return "";
+    }
+
+    /**
+     * Sets a controller for the recruitmentManager
+     * @param controller
+     */
+    public void setRecruitmentController(RecruitmentController controller) {
+        this.controller = controller;
     }
 
 
@@ -327,5 +392,47 @@ public class RecruitmentManager implements Serializable {
             result = false;
         }
         return result;
+    }
+
+//    public String addDates() {
+//        try {
+//            error = null;
+//            RequestContext requestContext = RequestContext.getCurrentInstance();
+//            requestContext.update("form:display");
+//            requestContext.execute("PF('dlg').show()");
+//            if (controller.addDates(fromDate, toDate)) {
+//                //TODO set confirmation msg
+//            }
+//        } catch (Exception e) {
+//            handleException(e);
+//        }
+//        return "";
+//    }
+    /*public String addDates() {
+        try {
+            error = null;
+            RequestContext requestContext = RequestContext.getCurrentInstance();
+            requestContext.update("form:display");
+            requestContext.execute("PF('dlg').show()");
+            if (controller.addDates(fromDate, toDate)) {
+                //TODO set confirmation msg
+            }
+        } catch (Exception e) {
+            handleException(e);
+        }
+        return "";
+    }*/
+
+    public String addCompetence () {
+        try {
+            error = null;
+            //TODO validate competence?
+            if (controller.addCompetence(competence, years)) {
+                //TODO set confirmation msg
+            }
+        } catch (Exception e) {
+            handleException(e);
+        }
+        return "";
     }
 }

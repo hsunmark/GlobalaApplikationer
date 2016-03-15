@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="common-util">
+    <CLASSES>
+      <root url="jar://C:/glassfish4/glassfish/modules/common-util.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
