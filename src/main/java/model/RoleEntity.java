@@ -1,6 +1,8 @@
 package model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Table with names of roles.
@@ -13,6 +15,8 @@ import javax.persistence.*;
 @Table(name = "role", schema = "recruitdb")
 public class RoleEntity {
     private long roleId;
+    private String name;
+    private List<Role_TranslationEntity> translations_fk = new ArrayList<Role_TranslationEntity>();
     //private PersonEntity role_id;
 
     /**
@@ -40,6 +44,16 @@ public class RoleEntity {
         this.name = name;
     }
 
+    @OneToMany
+    @JoinColumn(name = "role_id")
+    public List<Role_TranslationEntity> getTranslations_fk() {
+        return translations_fk;
+    }
+
+    public void setTranslations_fk(List<Role_TranslationEntity> translations_fk) {
+        this.translations_fk = translations_fk;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -58,6 +72,16 @@ public class RoleEntity {
         int result = (int) (roleId ^ (roleId >>> 32));
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
+    }
+
+    public String toString(){
+        StringBuilder br = new StringBuilder();
+        List<Role_TranslationEntity> translations = getTranslations_fk();
+        for(int i = 0; i < translations.size(); i++){
+            br.append(translations.get(i).getName()+ ", ");
+        }
+        String x = br.toString();
+        return "{ ID: "+getRoleId()+" words:  "+x+" }";
     }
 
   /*  @OneToOne(mappedBy = "role_id")
