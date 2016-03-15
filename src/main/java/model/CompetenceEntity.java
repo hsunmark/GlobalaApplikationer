@@ -9,8 +9,8 @@ import java.util.List;
  */
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "CompetenceEntity.findGrill", query = "SELECT c FROM CompetenceEntity c where c.competenceId=1"),
-        @NamedQuery(name = "CompetenceEntity.findKarusell", query = "SELECT c FROM CompetenceEntity c where c.competenceId=2"),
+        @NamedQuery(name = "CompetenceEntity.findAll", query = "SELECT c FROM CompetenceEntity c"),
+        @NamedQuery(name = "CompetenceEntity.findByName", query = "SELECT c FROM CompetenceEntity c WHERE c.name = :name"),
 })
 @Table(name = "competence", schema = "recruitdb")
 public class CompetenceEntity {
@@ -18,6 +18,7 @@ public class CompetenceEntity {
     private String name;
     private List<Competence_TranslationEntity> translations_fk = new ArrayList<Competence_TranslationEntity>();
     private CompetenceProfileEntity competence_fk;
+
 
     @Id
     @Column(name = "competence_id", nullable = false)

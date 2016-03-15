@@ -50,6 +50,7 @@ public class RecruitmentManager implements Serializable {
     private String competence;
     private BigDecimal years;
     private List<String> competenceList;
+    private String msg;
 
 
     private String NAME_REGEX = "^[a-zA-Z]+$";
@@ -86,6 +87,11 @@ public class RecruitmentManager implements Serializable {
     }
 
     public void setMessage(String message) {
+        msg = message;
+        if (currentLocale == null) {
+            currentLocale = new Locale("sv", "SE");
+            labels = ResourceBundle.getBundle("labelsbundle", currentLocale);
+        }
         this.message = labels.getString(message);
     }
 
@@ -211,6 +217,14 @@ public class RecruitmentManager implements Serializable {
         this.years = years;
     }
 
+    public List<String> getCompetenceList() {
+        return competenceList;
+    }
+
+    public void setCompetenceList() {
+        competenceList = controller.getCompetenceList();
+    }
+
     private void handleException(Exception e) {
         e.printStackTrace(System.err);
         error = e;
@@ -232,6 +246,12 @@ public class RecruitmentManager implements Serializable {
             if (lang.equals("eng")) {
                 currentLocale = new Locale("en", "US");
                 labels = ResourceBundle.getBundle("labelsbundle", currentLocale);
+            }
+            if (loginSuccess) {
+                setCompetenceList();
+            }
+            if (msg != null) {
+                setMessage(msg);
             }
         } catch (Exception e) {
             handleException(e);
@@ -283,10 +303,12 @@ public class RecruitmentManager implements Serializable {
     public String login() {
         try {
             error = null;
-            String msg = validateLoginParameters();
-            if (msg.equals("ok")) {
+            String msgCheck = validateLoginParameters();
+            if (msgCheck.equals("ok")) {
                 if (controller.login(loginName, loginPw, this)) {
+                    setCompetenceList();
                     message = null;
+                    msg = null;
                     loginSuccess = true;
                 }
             }
@@ -308,10 +330,12 @@ public class RecruitmentManager implements Serializable {
     public String register() {
         try {
             error = null;
-            String msg = validateRegisterParameters();
-            if (msg.equals("ok")) {
+            String msgCheck = validateRegisterParameters();
+            if (msgCheck.equals("ok")) {
+                setCompetenceList();
                 loginSuccess = controller.register(new RegisterDTO(role, firstname, lastname, ssn, email, username, password), this);
                 message = null;
+                msg = null;
             }
         } catch (Exception e) {
             handleException(e);
@@ -437,11 +461,11 @@ public class RecruitmentManager implements Serializable {
         return "";
     }
 
-    public List<String> getCompetenceList() {
-        return competenceList;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setCompetenceList(List<String> competenceList) {
-        this.competenceList = controller.getCompetenceList();
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 }

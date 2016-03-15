@@ -13,6 +13,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -186,7 +187,12 @@ public class RecruitmentController {
     }
 
     public boolean addCompetence(String competence, BigDecimal years) {
-        //TODO add competence to db
+        try {
+            CompetenceEntity comp = em.createNamedQuery("CompetenceEntity.findByName", CompetenceEntity.class).setParameter("name", competence).getSingleResult();
+            em.persist(new CompetenceProfileEntity(years, comp, personEntity));
+        } catch (Exception e) {
+            return false;
+        }
         return true;
     }
 
@@ -196,6 +202,25 @@ public class RecruitmentController {
     }
 
     public List<String> getCompetenceList() {
-        return null;
+
+        List<String> competenceList = new ArrayList<String>();
+        TypedQuery<CompetenceEntity> competences = em.createNamedQuery("CompetenceEntity.findAll", CompetenceEntity.class);
+        List<CompetenceEntity> result = competences.getResultList();
+
+        for (CompetenceEntity i : result) {
+            for (Competence_TranslationEntity j : i.getTranslations_fk()) {
+                if (manager.getCurrentLocale() != null) {
+                    if (j.getLocale().equals(manager.getCurrentLocale().toString())) {
+                        competenceList.add(j.getName());
+                    }
+                } else {
+                    // Default value
+                    if (j.getLocale().equals("sv_SE")) {
+                        competenceList.add(j.getName());
+                    }
+                }
+            }
+        }
+        return competenceList;
     }
 }
