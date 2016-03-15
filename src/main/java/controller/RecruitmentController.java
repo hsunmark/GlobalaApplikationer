@@ -1,8 +1,6 @@
 package controller;
 
-import model.PersonEntity;
-import model.RegisterDTO;
-import model.RoleEntity;
+import model.*;
 import view.RecruitmentManager;
 
 import javax.ejb.Stateful;
@@ -11,6 +9,7 @@ import javax.ejb.TransactionAttributeType;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.persistence.EntityManager;
+import javax.persistence.NamedQuery;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.math.BigDecimal;
@@ -29,6 +28,7 @@ public class RecruitmentController {
     private EntityManager em;
     private PersonEntity personEntity;
     private RoleEntity roleEntity;
+    private CompetenceEntity compEntity;
     private RecruitmentManager manager;
     private Logger logger = Logger.getLogger(getClass().getName());
 
@@ -193,5 +193,9 @@ public class RecruitmentController {
     public boolean addDates(Date fromDate, Date toDate) {
         //TODO add dates to db
         return true;
+    }
+
+    public List<String> getCompetenceList() {
+        return null;
     }
 }

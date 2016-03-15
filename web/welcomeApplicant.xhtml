@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui" xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <h:body>
     <ui:composition template="/template/layout.xhtml">
@@ -17,8 +17,11 @@
 
                     <h:panelGrid columns="2" cellpadding="5">
 
-                        <p:outputLabel for="competence" value="#{msg.competence}"/>
-                        <p:inputText id="competence" value="#{recruitmentManager.competence}"/>
+
+                        <p:outputLabel for="competence" value="#{msg.competence}" />
+                        <p:selectOneMenu id="competence" value="#{recruitmentManager.competence}" style="width:125px">
+                            <f:selectItems value="#{recruitmentManager.competenceList}" itemValue="#{recruitmentManager.competence}" />
+                        </p:selectOneMenu>
 
                         <p:outputLabel for="years" value="#{msg.years}"/>
                         <p:inputText id="years" value="#{recruitmentManager.years}"/>

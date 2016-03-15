@@ -11,8 +11,8 @@
         <locale-config>
             <default-locale>en_US</default-locale>
             <supported-locale>sv_SE</supported-locale>
+            <supported-locale>en_US</supported-locale>
         </locale-config>
-
     </application>
 
     <navigation-rule>
