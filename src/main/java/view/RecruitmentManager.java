@@ -309,6 +309,7 @@ public class RecruitmentManager implements Serializable {
         try {
             error = null;
             String msg = validateRegisterParameters();
+            System.out.println(msg + "---------------");
             if (msg.equals("ok")) {
                 loginSuccess = controller.register(new RegisterDTO(role, firstname, lastname, ssn, email, username, password), this);
                 message = null;
@@ -330,6 +331,7 @@ public class RecruitmentManager implements Serializable {
 
     //method that validates parameters for registration.
     private String validateRegisterParameters() {
+
         if (username.equals("")
                 || password.equals("")
                 || password2.equals("")
@@ -345,6 +347,7 @@ public class RecruitmentManager implements Serializable {
             setMessage("RegisterMessage2");
             return "Passwords does not match";
         }
+
         if (password.length() < 6) {
             setMessage("RegisterMessage3");
             return "Password must be atleast 6 charachters long";
@@ -358,14 +361,15 @@ public class RecruitmentManager implements Serializable {
             return "You are using invalid characters.. " +
                     "(aA-zZ allowed for names and aA-zZ + 0-9 allowed for username and password)";
         }
-        if (!isValidEmailAddress(email)) {
-            setMessage("RegisterMessage5");
-            return "Your email is not a valid email address";
-        }
 
         if ((!ssn.matches(SSN_REGEX) || (ssn.length() != 10))) {
             setMessage("RegisterMessage6");
             return "Your social security number should be 10 numbers";
+        }
+
+        if (!isValidEmailAddress(email)) {
+            setMessage("RegisterMessage5");
+            return "Your email is not a valid email address";
         }
         return "ok";
     }

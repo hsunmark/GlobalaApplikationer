@@ -120,7 +120,7 @@ public class RecruitmentController {
 
     //method that validates login parametrs 
     //public for testing (remove later)
-    public boolean validateLoginParameters(String loginName, String loginPw) {
+    private boolean validateLoginParameters(String loginName, String loginPw) {
         if (loginPw.equals("") || loginName.equals("")) {
             return false;
         }
