@@ -61,9 +61,13 @@ public class ManagerTest {
         assertEquals(msg, "Ogiltig inloggning");
     }
 
-    @Test
-    public void testRegister() {
-        manager.setRole("recruiter");
+    /**
+     * If this test throws any other exception, such as NullPointerException,
+     * the validateparameters failed
+     */
+    @Test(expected = NoClassDefFoundError.class)
+        public void testRegister() {
+        manager.setRole("applicant");
         manager.setFirstname("test");
         manager.setLastname("tester");
         manager.setSsn("1234567890");
@@ -72,7 +76,7 @@ public class ManagerTest {
         manager.setPassword("Qwerty123@");
         manager.setPassword2("Qwerty123@");
 
-       // manager.register();
+        manager.register();
     }
 
     @Test

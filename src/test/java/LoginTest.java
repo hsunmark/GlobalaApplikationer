@@ -65,15 +65,6 @@ public class LoginTest {
         when(this.mockController.login(mockPerson.getUsername(), mockPerson.getPassword(), manager)).thenReturn(true);
         assertTrue(this.mockController.login("testuser", "Qwerty123@", manager));
     }
-
-    @Test
-    public void testLoginParams() {
-        boolean trueResult = controller.validateLoginParameters("testusr", "Qwerty123@");
-        boolean falseResult = controller.validateLoginParameters("testusr", "qwerty");
-        assertEquals(true, trueResult);
-        assertEquals(false, falseResult);
-
-    }
 }
 
 

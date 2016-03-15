@@ -419,20 +419,6 @@ public class RecruitmentManager implements Serializable {
         return result;
     }
 
-//    public String addDates() {
-//        try {
-//            error = null;
-//            RequestContext requestContext = RequestContext.getCurrentInstance();
-//            requestContext.update("form:display");
-//            requestContext.execute("PF('dlg').show()");
-//            if (controller.addDates(fromDate, toDate)) {
-//                //TODO set confirmation msg
-//            }
-//        } catch (Exception e) {
-//            handleException(e);
-//        }
-//        return "";
-//    }
     /*public String addDates() {
         try {
             error = null;

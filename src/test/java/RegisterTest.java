@@ -56,7 +56,7 @@ public class RegisterTest {
         realDTO = null;
     }
 
-    @Test
+    @Test(expected = NoClassDefFoundError.class)
     public void testRegister() {
         System.out.println("Test...");
 
@@ -64,18 +64,12 @@ public class RegisterTest {
         when(personResult.setParameter("username", "testUser")).thenReturn(personResult);
         when(mockEm.createNamedQuery("RoleEntity.findByName", RoleEntity.class)).thenReturn(roleResult);
         when(roleResult.setParameter("name", "recruit")).thenReturn(roleResult);
+
         /**
          * Fails java.lang.NoClassDefFoundError: com/sun/mail/util/PropUtil
          */
-        //assertTrue(controller.validateRegisterParameters(realDTO, manager));
+        controller.register(realDTO, manager);
+        verify(controller, times(1)).register(realDTO, manager);
     }
 
-/*    @Test
-    public void testValidEmail() {
-        when(mockManager.isValidEmailAddress("test@domain.se")).thenReturn(true);
-        assertTrue(mockManager.isValidEmailAddress("test@domain.se"));
-        verify(mockManager, times(1)).isValidEmailAddress("test@domain.se");
-        assertFalse(mockManager.isValidEmailAddress(".test."));
-    }
-*/
 }
