@@ -2,7 +2,6 @@ package view;
 
 import controller.RecruitmentController;
 import model.RegisterDTO;
-import org.primefaces.context.RequestContext;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
