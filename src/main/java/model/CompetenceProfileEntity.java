@@ -15,6 +15,14 @@ public class CompetenceProfileEntity {
     private CompetenceEntity competence_profile_fk;
     private PersonEntity person_fk;
 
+    public CompetenceProfileEntity () {}
+
+    public CompetenceProfileEntity (BigDecimal yearsOfExperience, CompetenceEntity competence_profile_fk, PersonEntity person_fk) {
+        this.yearsOfExperience = yearsOfExperience;
+        this.competence_profile_fk = competence_profile_fk;
+        this.person_fk = person_fk;
+    }
+
     @Id
     @Column(name = "competence_profile_id", nullable = false)
     public long getCompetenceProfileId() {

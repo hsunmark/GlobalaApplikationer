@@ -12,11 +12,11 @@
             <h:form>
 
                 <p>
-                    <p:outputLabel for="login" rendered="#{recruitmentManager.message != null}" value=""/>
-                    <h:outputText id="login" value="#{recruitmentManager.message}" style="color:red"/>
-                    <h:outputText rendered="#{recruitmentManager.message == null}" value="#{msg.LoginRegistertext}"
-                                  style="font-size: x-large"/>
+                    <p:outputLabel id="login" rendered="#{recruitmentManager.message == null}" value="#{msg.LoginRegistertext}" style="font-size: x-large"/>
+                    <p:outputLabel id="login2" rendered="#{recruitmentManager.message != null}" value="#{recruitmentManager.message}" style="font-size: x-large"/>
+
                 </p>
+
 
                 <h:panelGrid columns="2" cellpadding="5">
                     <p:outputLabel for="username" value="#{msg.username}"/>
@@ -33,12 +33,12 @@
                 <p:messages id="messages" autoUpdate="true" closable="true"/>
 
                 <p>
-                    <p:commandButton value="#{msg.LoginButton}" actionListener="#{recruitmentManager.login()}"
+                    <p:commandButton value="#{msg.LoginButton}" action="#{recruitmentManager.login}" update="@form"
                                      icon="ui-icon-check"/>
                 </p>
 
                 <p>
-                    <a href="register.xhtml">#{msg.Register}</a>
+                    <a href="register.xhtml">#{msg.Register} </a>
                 </p>
             </h:form>
         </ui:define>
