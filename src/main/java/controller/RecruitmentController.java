@@ -190,7 +190,7 @@ public class RecruitmentController {
         try {
             CompetenceEntity comp = em.createNamedQuery("CompetenceEntity.findByName", CompetenceEntity.class).setParameter("name", competence).getSingleResult();
             CompetenceProfileEntity cpe = new CompetenceProfileEntity(years, comp, personEntity);
-            //em.persist();
+            em.persist(cpe);
         } catch (Exception e) {
             return false;
         }
