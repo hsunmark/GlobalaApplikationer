@@ -3,23 +3,18 @@ package view;
 import controller.RecruitmentController;
 import model.RegisterDTO;
 import org.primefaces.context.RequestContext;
-import org.primefaces.event.SelectEvent;
 
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
-import javax.security.auth.Subject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -399,12 +394,7 @@ public class RecruitmentManager implements Serializable {
         return result;
     }
 
-    public void click() {
-        RequestContext requestContext = RequestContext.getCurrentInstance();
-
-        requestContext.update("form:display");
-        requestContext.execute("PF('dlg').show()");
-    public String addDates() {
+    /*public String addDates() {
         try {
             error = null;
             RequestContext requestContext = RequestContext.getCurrentInstance();
@@ -417,7 +407,7 @@ public class RecruitmentManager implements Serializable {
             handleException(e);
         }
         return "";
-    }
+    }*/
 
     public String addCompetence () {
         try {
