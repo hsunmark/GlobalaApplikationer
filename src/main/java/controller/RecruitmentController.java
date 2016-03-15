@@ -194,4 +194,8 @@ public class RecruitmentController {
         //TODO add dates to db
         return true;
     }
+
+    public List<String> getCompetenceList() {
+        return null;
+    }
 }
