@@ -1,35 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"   
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:em="http://java.sun.com/jsf/composite/emcomp"
       xmlns:p="http://primefaces.org/ui">
 
 <h:body>
-<ui:composition template="/template/layout.xhtml">
-    		<ui:define name="content">
-                <h:form>
+    <ui:composition template="/template/layout.xhtml">
+        <ui:define name="content">
+            <h:form>
 
-                    <p>
-                        <p:outputLabel for="login" rendered="#{recruitmentManager.message != null}" value=""/>
-                        <h:outputText id="login" value="#{recruitmentManager.message}" style="color:red"/>
-                        <h:outputText rendered="#{recruitmentManager.message == null}" value="#{msg.LoginRegistertext}" style="font-size: x-large"/>
-                    </p>
+                <p>
+                    <p:outputLabel for="login" rendered="#{recruitmentManager.message != null}" value=""/>
+                    <h:outputText id="login" value="#{recruitmentManager.message}" style="color:red"/>
+                    <h:outputText rendered="#{recruitmentManager.message == null}" value="#{msg.LoginRegistertext}"
+                                  style="font-size: x-large"/>
+                </p>
 
-                    <em:form username = "#{recruitmentManager.loginName}"
-                             password = "#{recruitmentManager.loginPw}"/>
+                <h:panelGrid columns="2" cellpadding="5">
+                    <p:outputLabel for="username" value="#{msg.username}"/>
+                    <p:inputText id="username" value="#{recruitmentManager.loginName}"
+                                 required="true"
+                                 requiredMessage="#{msg.formmessage1}"/>
 
-                    <p>
-                        <p:commandButton value="#{msg.LoginButton}" action="#{recruitmentManager.login}" icon="ui-icon-check" />
-                    </p>
+
+                    <p:outputLabel for="password" value="#{msg.password}"/>
+                    <p:password id="password" value="#{recruitmentManager.loginPw}"
+                                required="true"
+                                requiredMessage="#{msg.formmessage2}"/>
+                </h:panelGrid>
+                <p:messages id="messages" autoUpdate="true" closable="true"/>
+
+                <p>
+                    <p:commandButton value="#{msg.LoginButton}" action="#{recruitmentManager.login}"
+                                     icon="ui-icon-check"/>
+                </p>
 
                 <p>
                     <a href="register.xhtml">#{msg.Register}</a>
                 </p>
-                </h:form>
-    		</ui:define>
-    	</ui:composition>
-    </h:body>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</h:body>
 </html>
