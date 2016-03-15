@@ -3,7 +3,6 @@ package view;
 import controller.RecruitmentController;
 import model.RegisterDTO;
 import org.primefaces.context.RequestContext;
-import org.primefaces.event.SelectEvent;
 
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -312,9 +311,6 @@ public class RecruitmentManager implements Serializable {
         this.controller = controller;
     }
 
-    public void setInternetAdress(InternetAddress adress) {
-        this.emailAddr = adress;
-    }
 
     //method that validates parameters for registration.
     private String validateRegisterParameters() {
@@ -381,12 +377,6 @@ public class RecruitmentManager implements Serializable {
             result = false;
         }
         return result;
-    }
-
-    public void onDateSelect(SelectEvent event) {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
     }
 
     public void click() {

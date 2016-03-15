@@ -85,7 +85,7 @@ public class RestController {
     public TypedQuery<PersonEntity> getPersonsByRole(String role) {
         TypedQuery<RoleEntity> roleQuery = em.createNamedQuery("RoleEntity.findByName", RoleEntity.class);
         roleQuery.setParameter("name", role);
-        roleEntity = em.createNamedQuery("RoleEntity.findByName", RoleEntity.class).getSingleResult();
+        roleEntity = roleQuery.getSingleResult();
         /*roleEntity = em.createNamedQuery("RoleEntity.findByName", RoleEntity.class)
                 .setParameter("name", role).getSingleResult();*/
         TypedQuery<PersonEntity> resultSet = em.createNamedQuery("PersonEntity.findAllByRole", PersonEntity.class)
