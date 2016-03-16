@@ -188,7 +188,9 @@ public class RecruitmentController {
 
     public boolean addCompetence(String competence, BigDecimal years) {
         try {
-            CompetenceEntity comp = em.createNamedQuery("CompetenceEntity.findByName", CompetenceEntity.class).setParameter("name", competence).getSingleResult();
+            TypedQuery<CompetenceEntity> result = em.createNamedQuery("CompetenceEntity.findByName", CompetenceEntity.class);
+            result.setParameter("name", competence);
+            CompetenceEntity comp = result.getSingleResult();
             CompetenceProfileEntity cpe = new CompetenceProfileEntity(years, comp, personEntity);
             em.persist(cpe);
         } catch (Exception e) {
@@ -223,5 +225,13 @@ public class RecruitmentController {
             }
         }
         return competenceList;
+    }
+
+    public void setEm(EntityManager em) {
+        this.em = em;
+    }
+
+    public EntityManager getEm() {
+        return em;
     }
 }
