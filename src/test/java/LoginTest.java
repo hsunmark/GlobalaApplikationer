@@ -1,9 +1,9 @@
 import controller.RecruitmentController;
 import model.PersonEntity;
 
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import view.RecruitmentManager;
 
 import javax.persistence.EntityManager;
@@ -20,7 +20,7 @@ public class LoginTest {
     private EntityManager mockEm;
     private TypedQuery<PersonEntity> mockPersonResult;
 
-    @BeforeMethod
+    @Before
     public void setupMock() {
         System.out.println("Before...");
         controller = new RecruitmentController();
@@ -32,7 +32,7 @@ public class LoginTest {
         mockPersonResult = mock(TypedQuery.class);
     }
 
-    @AfterMethod
+    @After
     public void destroy() {
         System.out.println("After...");
 
@@ -64,15 +64,6 @@ public class LoginTest {
         when(this.mockPerson.getPassword()).thenReturn("Qwerty123@");
         when(this.mockController.login(mockPerson.getUsername(), mockPerson.getPassword(), manager)).thenReturn(true);
         assertTrue(this.mockController.login("testuser", "Qwerty123@", manager));
-    }
-
-    @Test
-    public void testLoginParams() {
-        boolean trueResult = controller.validateLoginParameters("testusr", "Qwerty123@");
-        boolean falseResult = controller.validateLoginParameters("testusr", "qwerty");
-        assertEquals(true, trueResult);
-        assertEquals(false, falseResult);
-
     }
 }
 

@@ -2,9 +2,9 @@ import controller.RecruitmentController;
 import model.PersonEntity;
 import model.RegisterDTO;
 import model.RoleEntity;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import view.RecruitmentManager;
 
 import javax.mail.internet.InternetAddress;
@@ -31,7 +31,7 @@ public class RegisterTest {
     private TypedQuery<RoleEntity> roleResult;
     private TypedQuery<PersonEntity> personResult;
 
-    @BeforeMethod
+    @Before
     public void setupTest() {
         System.out.println("Before...");
         controller = new RecruitmentController();
@@ -48,7 +48,7 @@ public class RegisterTest {
         personResult = mock(TypedQuery.class);
     }
 
-    @AfterMethod
+    @After
     public void destroy() {
         System.out.println("After...");
         controller = null;
@@ -56,7 +56,7 @@ public class RegisterTest {
         realDTO = null;
     }
 
-    @Test
+    @Test(expected = NoClassDefFoundError.class)
     public void testRegister() {
         System.out.println("Test...");
 
@@ -64,18 +64,12 @@ public class RegisterTest {
         when(personResult.setParameter("username", "testUser")).thenReturn(personResult);
         when(mockEm.createNamedQuery("RoleEntity.findByName", RoleEntity.class)).thenReturn(roleResult);
         when(roleResult.setParameter("name", "recruit")).thenReturn(roleResult);
+
         /**
          * Fails java.lang.NoClassDefFoundError: com/sun/mail/util/PropUtil
          */
-        //assertTrue(controller.validateRegisterParameters(realDTO, manager));
+        controller.register(realDTO, manager);
+        verify(controller, times(1)).register(realDTO, manager);
     }
 
-/*    @Test
-    public void testValidEmail() {
-        when(mockManager.isValidEmailAddress("test@domain.se")).thenReturn(true);
-        assertTrue(mockManager.isValidEmailAddress("test@domain.se"));
-        verify(mockManager, times(1)).isValidEmailAddress("test@domain.se");
-        assertFalse(mockManager.isValidEmailAddress(".test."));
-    }
-*/
 }

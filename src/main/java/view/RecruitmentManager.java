@@ -2,24 +2,20 @@ package view;
 
 import controller.RecruitmentController;
 import model.RegisterDTO;
-import org.primefaces.context.RequestContext;
-import org.primefaces.event.SelectEvent;
 
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
-import javax.security.auth.Subject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -51,6 +47,10 @@ public class RecruitmentManager implements Serializable {
     private ResourceBundle labels;
     private Date fromDate;
     private Date toDate;
+    private String competence;
+    private BigDecimal years;
+    private List<String> competenceList;
+    private String msg;
 
 
     private String NAME_REGEX = "^[a-zA-Z]+$";
@@ -87,6 +87,11 @@ public class RecruitmentManager implements Serializable {
     }
 
     public void setMessage(String message) {
+        msg = message;
+        if (currentLocale == null) {
+            currentLocale = new Locale("sv", "SE");
+            labels = ResourceBundle.getBundle("labelsbundle", currentLocale);
+        }
         this.message = labels.getString(message);
     }
 
@@ -196,6 +201,30 @@ public class RecruitmentManager implements Serializable {
         this.fromDate = fromDate;
     }
 
+    public String getCompetence() {
+        return competence;
+    }
+
+    public void setCompetence(String competence) {
+        this.competence = competence;
+    }
+
+    public BigDecimal getYears() {
+        return years;
+    }
+
+    public void setYears(BigDecimal years) {
+        this.years = years;
+    }
+
+    public List<String> getCompetenceList() {
+        return competenceList;
+    }
+
+    public void setCompetenceList() {
+        competenceList = controller.getCompetenceList();
+    }
+
     private void handleException(Exception e) {
         e.printStackTrace(System.err);
         error = e;
@@ -217,6 +246,12 @@ public class RecruitmentManager implements Serializable {
             if (lang.equals("eng")) {
                 currentLocale = new Locale("en", "US");
                 labels = ResourceBundle.getBundle("labelsbundle", currentLocale);
+            }
+            if (loginSuccess) {
+                setCompetenceList();
+            }
+            if (msg != null) {
+                setMessage(msg);
             }
         } catch (Exception e) {
             handleException(e);
@@ -268,10 +303,12 @@ public class RecruitmentManager implements Serializable {
     public String login() {
         try {
             error = null;
-            String msg = validateLoginParameters();
-            if (msg.equals("ok")) {
+            String msgCheck = validateLoginParameters();
+            if (msgCheck.equals("ok")) {
                 if (controller.login(loginName, loginPw, this)) {
+                    setCompetenceList();
                     message = null;
+                    msg = null;
                     loginSuccess = true;
                 }
             }
@@ -293,15 +330,25 @@ public class RecruitmentManager implements Serializable {
     public String register() {
         try {
             error = null;
-            String msg = validateRegisterParameters();
-            if (msg.equals("ok")) {
+            String msgCheck = validateRegisterParameters();
+            if (msgCheck.equals("ok")) {
                 loginSuccess = controller.register(new RegisterDTO(role, firstname, lastname, ssn, email, username, password), this);
+                setCompetenceList();
                 message = null;
+                msg = null;
             }
         } catch (Exception e) {
             handleException(e);
         }
         return "";
+    }
+
+    /**
+     * Sets a controller for the recruitmentManager
+     * @param controller
+     */
+    public void setRecruitmentController(RecruitmentController controller) {
+        this.controller = controller;
     }
 
 
@@ -372,16 +419,41 @@ public class RecruitmentManager implements Serializable {
         return result;
     }
 
-    public void onDateSelect(SelectEvent event) {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
+    /*public String addDates() {
+        try {
+            error = null;
+            RequestContext requestContext = RequestContext.getCurrentInstance();
+            requestContext.update("form:display");
+            requestContext.execute("PF('dlg').show()");
+            if (controller.addDates(fromDate, toDate)) {
+                //TODO set confirmation msg
+            }
+        } catch (Exception e) {
+            handleException(e);
+        }
+        return "";
+    }*/
+
+    public String addCompetence () {
+        try {
+            error = null;
+            //TODO validate competence?
+            if (controller.addCompetence(competence, years)) {
+                setMessage("competenceAdded");
+            } else {
+                setMessage("invalidYears");
+            }
+        } catch (Exception e) {
+            handleException(e);
+        }
+        return "";
     }
 
-    public void click() {
-        RequestContext requestContext = RequestContext.getCurrentInstance();
+    public String getMsg() {
+        return msg;
+    }
 
-        requestContext.update("form:display");
-        requestContext.execute("PF('dlg').show()");
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 }

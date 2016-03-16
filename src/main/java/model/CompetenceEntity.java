@@ -1,16 +1,24 @@
 package model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Table with competence names.
  */
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "CompetenceEntity.findAll", query = "SELECT c FROM CompetenceEntity c"),
+        @NamedQuery(name = "CompetenceEntity.findByName", query = "SELECT c FROM CompetenceEntity c WHERE c.name = :name"),
+})
 @Table(name = "competence", schema = "recruitdb")
 public class CompetenceEntity {
     private long competenceId;
     private String name;
+    private List<Competence_TranslationEntity> translations_fk = new ArrayList<Competence_TranslationEntity>();
     private CompetenceProfileEntity competence_fk;
+
 
     @Id
     @Column(name = "competence_id", nullable = false)
@@ -59,5 +67,16 @@ public class CompetenceEntity {
 
     public void setCompetence_fk(CompetenceProfileEntity competence_fk) {
         this.competence_fk = competence_fk;
+    }
+
+
+    @OneToMany
+    @JoinColumn(name = "competence_id")
+    public List<Competence_TranslationEntity> getTranslations_fk() {
+        return translations_fk;
+    }
+
+    public void setTranslations_fk(List<Competence_TranslationEntity> translations_fk) {
+        this.translations_fk = translations_fk;
     }
 }

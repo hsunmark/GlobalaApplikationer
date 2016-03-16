@@ -9,8 +9,11 @@
         <class>model.AvailabilityEntity</class>
         <class>model.CompetenceEntity</class>
         <class>model.CompetenceProfileEntity</class>
+        <class>model.Role2Entity</class>
+        <class>model.Role_TranslationEntity</class>
+        <class>model.Competence_TranslationEntity</class>
         <properties>
-            <property name="eclipselink.jdbc.url" value="jdbc:mysql://81.224.134.26:3306/recruitdb"/>
+            <property name="eclipselink.jdbc.url" value="jdbc:mysql://192.168.0.17:3306/recruitdb"/>
             <property name="eclipselink.jdbc.driver" value="com.mysql.jdbc.Driver"/>
             <property name="eclipselink.jdbc.user" value="root"/>
             <property name="eclipselink.jdbc.password" value="adminglobal"/>

@@ -1,8 +1,6 @@
 package controller;
 
-import model.PersonEntity;
-import model.RegisterDTO;
-import model.RoleEntity;
+import model.*;
 import view.RecruitmentManager;
 
 import javax.ejb.Stateful;
@@ -11,8 +9,12 @@ import javax.ejb.TransactionAttributeType;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.persistence.EntityManager;
+import javax.persistence.NamedQuery;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -27,6 +29,7 @@ public class RecruitmentController {
     private EntityManager em;
     private PersonEntity personEntity;
     private RoleEntity roleEntity;
+    private CompetenceEntity compEntity;
     private RecruitmentManager manager;
     private Logger logger = Logger.getLogger(getClass().getName());
 
@@ -118,7 +121,7 @@ public class RecruitmentController {
 
     //method that validates login parametrs 
     //public for testing (remove later)
-    public boolean validateLoginParameters(String loginName, String loginPw) {
+    private boolean validateLoginParameters(String loginName, String loginPw) {
         if (loginPw.equals("") || loginName.equals("")) {
             return false;
         }
@@ -181,5 +184,44 @@ public class RecruitmentController {
             result = false;
         }
         return result;
+    }
+
+    public boolean addCompetence(String competence, BigDecimal years) {
+        try {
+            CompetenceEntity comp = em.createNamedQuery("CompetenceEntity.findByName", CompetenceEntity.class).setParameter("name", competence).getSingleResult();
+            CompetenceProfileEntity cpe = new CompetenceProfileEntity(years, comp, personEntity);
+            em.persist(cpe);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean addDates(Date fromDate, Date toDate) {
+        //TODO add dates to db
+        return true;
+    }
+
+    public List<String> getCompetenceList() {
+
+        List<String> competenceList = new ArrayList<String>();
+        TypedQuery<CompetenceEntity> competences = em.createNamedQuery("CompetenceEntity.findAll", CompetenceEntity.class);
+        List<CompetenceEntity> result = competences.getResultList();
+
+        for (CompetenceEntity i : result) {
+            for (Competence_TranslationEntity j : i.getTranslations_fk()) {
+                if (manager.getCurrentLocale() != null) {
+                    if (j.getLocale().equals(manager.getCurrentLocale().toString())) {
+                        competenceList.add(j.getName());
+                    }
+                } else {
+                    // Default value
+                    if (j.getLocale().equals("sv_SE")) {
+                        competenceList.add(j.getName());
+                    }
+                }
+            }
+        }
+        return competenceList;
     }
 }

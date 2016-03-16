@@ -4,29 +4,57 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui" xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <h:body>
     <ui:composition template="/template/layout.xhtml">
         <ui:define name="content">
             <h1>#{msg.welcomeapp}</h1>
             <p>
-                    <h:form id="form">
-                        <p:growl id="msgs" showDetail="true" />
+                <h:form id="form">
 
-                        <h:panelGrid columns="2" cellpadding="5">
-                            <p:outputLabel for="inline" value="#{msg.fromDate}" />
-                            <p:calendar id="inline" value="#{recruitmentManager.fromDate}" />
+                    <h:outputText value="#{msg.competenceMsg}" style="font-size: x-large"/>
+                    <p:outputLabel id="msg" rendered="#{recruitmentManager.message != null}" value="#{recruitmentManager.message}" style="font-size: x-large"/>
 
-                            <p:outputLabel for="inline2" value="#{msg.toDate}" />
-                            <p:calendar id="inline2" value="#{recruitmentManager.toDate}" />
+                    <h:panelGrid columns="2" cellpadding="5">
 
-                        </h:panelGrid>
 
-                        <p:commandButton value="Submit" update="msgs" actionListener="#{recruitmentManager.click}" icon="ui-icon-check" />
+                        <p:outputLabel for="competence" value="#{msg.competence}" />
+                        <p:selectOneMenu id="competence" value="#{recruitmentManager.competence}" style="width:125px">
+                            <f:selectItems value="#{recruitmentManager.competenceList}" itemValue="#{recruitmentManager.competence}" />
+                        </p:selectOneMenu>
 
-                        <p:commandButton value="#{msg.logout}" action="#{recruitmentManager.logOut}" icon="ui-icon-check" />
-                    </h:form>
+                        <p:outputLabel for="years" value="#{msg.years}"/>
+                        <p:inputText id="years" value="#{recruitmentManager.years}"/>
+
+                    </h:panelGrid>
+
+                    <p>
+                    <p:commandButton value="#{msg.add}" action="#{recruitmentManager.addCompetence}"
+                                     icon="ui-icon-check" update="msg"/>
+                    </p>
+
+                    <p>
+                    <h:outputText value="#{msg.dateMsg}" style="font-size: x-large"/>
+                    </p>
+
+                    <h:panelGrid columns="2" cellpadding="5">
+
+                        <p:outputLabel for="fromDate" value="#{msg.fromDate}"/>
+                        <p:calendar id="fromDate" value="#{recruitmentManager.fromDate}"/>
+
+                        <p:outputLabel for="toDate" value="#{msg.toDate}"/>
+                        <p:calendar id="toDate" value="#{recruitmentManager.toDate}"/>
+
+                    </h:panelGrid>
+
+                    <p>
+                    <p:commandButton value="#{msg.addDates}" action="#{recruitmentManager.addDates}"
+                                     icon="ui-icon-check"/>
+                    </p>
+
+                    <p:commandButton value="#{msg.logout}" action="#{recruitmentManager.logOut}" icon="ui-icon-check"/>
+                </h:form>
             </p>
         </ui:define>
     </ui:composition>
