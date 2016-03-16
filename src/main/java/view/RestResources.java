@@ -49,6 +49,7 @@ public class RestResources {
     public String getApplications() {
         List<PersonEntity> resultSet = controller.getApplicants();
         String jsonResultSet = gson.toJson(resultSet);
+
         return jsonResultSet;
     }
 

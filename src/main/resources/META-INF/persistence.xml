@@ -9,7 +9,6 @@
         <class>model.AvailabilityEntity</class>
         <class>model.CompetenceEntity</class>
         <class>model.CompetenceProfileEntity</class>
-        <class>model.Role2Entity</class>
         <class>model.Role_TranslationEntity</class>
         <class>model.Competence_TranslationEntity</class>
         <properties>

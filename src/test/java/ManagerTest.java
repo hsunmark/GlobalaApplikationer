@@ -5,6 +5,7 @@ import org.junit.Test;
 import view.RecruitmentManager;
 
 import javax.mail.internet.InternetAddress;
+import java.math.BigDecimal;
 import java.util.Locale;
 
 import static org.mockito.Mockito.*;
@@ -13,15 +14,16 @@ import static org.junit.Assert.*;
 
 public class ManagerTest {
     private RecruitmentManager manager;
+    private RecruitmentController mockController;
+    private BigDecimal bigDecimal;
 
     @Before
     public void setupTest() {
         System.out.println("Before...");
         manager = new RecruitmentManager();
         manager.setRecruitmentController(mock(RecruitmentController.class));
-       /* NoClassDefFoundError ???
-        manager.setInternetAdress(new InternetAddress());
-        */
+        mockController = mock(RecruitmentController.class);
+        bigDecimal = new BigDecimal(2.50);
     }
 
     @After
@@ -67,6 +69,7 @@ public class ManagerTest {
      */
     @Test(expected = NoClassDefFoundError.class)
         public void testRegister() {
+        System.out.println("testRegister:");
         manager.setRole("applicant");
         manager.setFirstname("test");
         manager.setLastname("tester");
@@ -81,6 +84,8 @@ public class ManagerTest {
 
     @Test
     public void testLocale() {
+        System.out.println("testLocale:");
+
         manager.setCurrentLocale("swe");
         manager.setMessage("RegisterMessage5");
         assertEquals(manager.getMessage(), "Ogiltig mailaddress");
@@ -89,11 +94,17 @@ public class ManagerTest {
         manager.setMessage("RegisterMessage5");
         assertEquals(manager.getMessage(), "Your email is not a valid email address");
     }
+
+    @Test
+    public void testAddCompetence() {
+        System.out.println("testAddCompetence:");
+        when(mockController.addCompetence("someCompetence", bigDecimal)).thenReturn(true);
+        manager.setRecruitmentController(mockController);
+        manager.setCompetence("someCompetence");
+        manager.setYears(bigDecimal);
+
+        manager.addCompetence();
+        verify(mockController, times(1)).addCompetence(manager.getCompetence(), bigDecimal);
+        assertEquals("Kompetens sparad", manager.getMessage());
+    }
 }
-
-
-
-
-
-
-
