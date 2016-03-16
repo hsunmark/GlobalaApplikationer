@@ -4,7 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui" xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <h:body>
     <ui:composition template="/template/layout.xhtml">
@@ -53,8 +54,7 @@
                                      icon="ui-icon-check"/>
                     </p>
 
-                    <p:commandButton value="#{msg.logout}" action="logOut?faces-redirect=true" actionListener="#{recruitmentManager.logOut}" icon="ui-icon-check">
-                            </p:commandButton>
+                    <p:commandButton value="#{msg.logout}" action="logOut?faces-redirect=true" actionListener="#{recruitmentManager.logOut}" icon="ui-icon-check"/>
                 </h:form>
             </p>
         </ui:define>

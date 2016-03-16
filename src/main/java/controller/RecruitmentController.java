@@ -210,15 +210,9 @@ public class RecruitmentController {
 
         for (CompetenceEntity i : result) {
             for (Competence_TranslationEntity j : i.getTranslations_fk()) {
-                if (manager.getCurrentLocale() != null) {
-                    if (j.getLocale().equals(manager.getCurrentLocale().toString())) {
-                        competenceList.add(j.getName());
-                    }
-                } else {
-                    // Default value
-                    if (j.getLocale().equals("sv_SE")) {
-                        competenceList.add(j.getName());
-                    }
+                if (j.getLocale().equals(manager.getCurrentLocale().toString())) {
+                    competenceList.add(j.getName());
+
                 }
             }
         }

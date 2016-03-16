@@ -9,7 +9,7 @@
             <var>msg</var>
         </resource-bundle>
         <locale-config>
-            <default-locale>en_US</default-locale>
+            <default-locale>sv_SE</default-locale>
             <supported-locale>sv_SE</supported-locale>
             <supported-locale>en_US</supported-locale>
         </locale-config>
