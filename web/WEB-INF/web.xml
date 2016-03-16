@@ -21,7 +21,8 @@
     </filter>
     <filter-mapping>
         <filter-name>LoginFilter</filter-name>
-        <url-pattern>/resources/*</url-pattern>
+        <url-pattern>/resources/welcomeApplicant.xhtml</url-pattern>
+        <url-pattern>/resources/welcomeRecruiter.xhtml</url-pattern>
     </filter-mapping>
 
     <display-name>REST Web Application Demo</display-name>

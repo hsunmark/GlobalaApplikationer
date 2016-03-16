@@ -3,6 +3,7 @@ package view;
 import controller.RecruitmentController;
 import model.RegisterDTO;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -90,10 +91,6 @@ public class RecruitmentManager implements Serializable {
 
     public void setMessage(String message) {
         msg = message;
-        if (currentLocale == null) {
-            currentLocale = new Locale("sv", "SE");
-            labels = ResourceBundle.getBundle("labelsbundle", currentLocale);
-        }
         this.message = labels.getString(message);
     }
 
@@ -234,6 +231,12 @@ public class RecruitmentManager implements Serializable {
         error = e;
     }
 
+    @PostConstruct
+    public void init() {
+        currentLocale = FacesContext.getCurrentInstance().getApplication().getDefaultLocale();
+        labels = ResourceBundle.getBundle("labelsbundle", currentLocale);
+    }
+
     /**
      * Sets the language chosen by user.
      *
@@ -288,8 +291,7 @@ public class RecruitmentManager implements Serializable {
     public String login() {
         try {
             error = null;
-            String msgCheck = validateLoginParameters();
-            if (msgCheck.equals("ok")) {
+            if (validateLoginParameters()) {
                 if (controller.login(loginName, loginPw, this)) {
                     setCompetenceList();
                     message = null;
@@ -315,8 +317,7 @@ public class RecruitmentManager implements Serializable {
     public String register() {
         try {
             error = null;
-            String msgCheck = validateRegisterParameters();
-            if (msgCheck.equals("ok")) {
+            if (validateRegisterParameters()) {
                 loginSuccess = controller.register(new RegisterDTO(role, firstname, lastname, ssn, email, username, password), this);
                 setCompetenceList();
                 message = null;
@@ -339,7 +340,7 @@ public class RecruitmentManager implements Serializable {
 
 
     //method that validates parameters for registration.
-    private String validateRegisterParameters() {
+    private boolean validateRegisterParameters() {
         if (username.equals("")
                 || password.equals("")
                 || password2.equals("")
@@ -349,15 +350,15 @@ public class RecruitmentManager implements Serializable {
                 || ssn.equals("")
                 || email.equals("")) {
             setMessage("RegisterMessage1");
-            return "You have not filled all the fields.";
+            return false;
         }
         if (!password.equals(password2)) {
             setMessage("RegisterMessage2");
-            return "Passwords does not match";
+            return false;
         }
         if (password.length() < 6) {
             setMessage("RegisterMessage3");
-            return "Password must be atleast 6 charachters long";
+            return false;
         }
 
         if (!username.matches(USER_REGEX)
@@ -365,32 +366,31 @@ public class RecruitmentManager implements Serializable {
                 || !firstname.matches(NAME_REGEX)
                 || !lastname.matches(NAME_REGEX)) {
             setMessage("RegisterMessage4");
-            return "You are using invalid characters.. " +
-                    "(aA-zZ allowed for names and aA-zZ + 0-9 allowed for username and password)";
+            return false;
         }
         if (!isValidEmailAddress(email)) {
             setMessage("RegisterMessage5");
-            return "Your email is not a valid email address";
+            return false;
         }
 
         if ((!ssn.matches(SSN_REGEX) || (ssn.length() != 10))) {
             setMessage("RegisterMessage6");
-            return "Your social security number should be 10 numbers";
+            return false;
         }
-        return "ok";
+        return true;
     }
 
     //method that validates parameters for login
-    private String validateLoginParameters() {
+    private boolean validateLoginParameters() {
         if (loginPw.equals("") || loginName.equals("")) {
             setMessage("LoginMessage3");
-            return "Enter login credentials";
+            return false;
         }
         if (!loginPw.matches(PW_REGEX) || !loginName.matches(USER_REGEX)) {
             setMessage("LoginMessage1");
-            return "Invalid login";
+            return false;
         }
-        return "ok";
+        return true;
     }
 
     //method that validates if a string is a valid email address.
