@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Table(name = "role_translation", schema = "recruitdb")
 public class Role_TranslationEntity implements Serializable {
 
-    private RoleEntity roleID;
+    private transient RoleEntity roleID;
     private String locale;
     private String name;
 

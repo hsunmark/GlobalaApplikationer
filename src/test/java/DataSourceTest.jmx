@@ -31,7 +31,7 @@
           <stringProp name="checkQuery">Select 1</stringProp>
           <stringProp name="connectionAge">5000</stringProp>
           <stringProp name="dataSource">DataSourceTest</stringProp>
-          <stringProp name="dbUrl">jdbc:mysql://130.229.132.165:3306/recruitdb</stringProp>
+          <stringProp name="dbUrl">jdbc:mysql://81.224.134.26:3306/recruitdb</stringProp>
           <stringProp name="driver">com.mysql.jdbc.Driver</stringProp>
           <boolProp name="keepAlive">true</boolProp>
           <stringProp name="password">adminglobal</stringProp>
@@ -98,7 +98,7 @@
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">130.229.132.165</stringProp>
+          <stringProp name="HTTPSampler.domain">81.224.134.26</stringProp>
           <stringProp name="HTTPSampler.port">8080</stringProp>
           <stringProp name="HTTPSampler.connect_timeout"></stringProp>
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
