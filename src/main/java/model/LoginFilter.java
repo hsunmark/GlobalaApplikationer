@@ -1,9 +1,15 @@
 package model;
 
-import javax.servlet.*;
+import view.RecruitmentManager;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
@@ -11,28 +17,21 @@ import java.io.IOException;
  */
 public class LoginFilter implements Filter {
 
-    @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-        HttpServletRequest req = (HttpServletRequest) request;
-        HttpSession session = req.getSession();
+        RecruitmentManager manager = (RecruitmentManager)((HttpServletRequest)request).getSession().getAttribute("recruitmentManager");
 
-        if (session.getAttribute("authenticated") != null || req.getRequestURI().endsWith("login.xhtml")) {
-            chain.doFilter(request, response);
-        } else {
-            HttpServletResponse res = (HttpServletResponse) response;
-            res.sendRedirect("login.xhtml");
-            return;
+        if (manager == null || !manager.getLoginSuccess()) {
+            String contextPath = ((HttpServletRequest)request).getContextPath();
+            ((HttpServletResponse)response).sendRedirect(contextPath + "/index.xhtml");
         }
-
+        chain.doFilter(request, response);
     }
 
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-
+    public void init(FilterConfig config) throws ServletException {
     }
 
-    @Override
     public void destroy() {
     }
+
 }

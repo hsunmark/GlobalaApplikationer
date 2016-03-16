@@ -6,12 +6,14 @@ import model.RegisterDTO;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -159,7 +161,9 @@ public class RecruitmentManager implements Serializable {
         this.password2 = password2;
     }
 
-    public Locale getCurrentLocale() { return currentLocale; }
+    public Locale getCurrentLocale() {
+        return currentLocale;
+    }
 
     public boolean isApplicant() {
         return applicant;
@@ -266,29 +270,10 @@ public class RecruitmentManager implements Serializable {
      */
     public String logOut() {
         try {
-
             error = null;
-            //"logOut?faces-redirect=true"
-//            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-//            HttpSession session = (HttpSession) externalContext.getSession(false);
-
-//            Subject subject = SecurityContext.getCurrent().getSubject();
-//            Set<Principal> principals = subject.getPrincipals();
-//            System.out.println("**********************" + principals.size());
-//            for (Principal i : principals) {
-//                System.out.println("**********************" + i.getName() + "**" + i.getName());
-//            }
-//
-            HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
-            HttpServletResponse response = (HttpServletResponse)FacesContext.getCurrentInstance().getExternalContext().getResponse();
-
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("logOut.xhtml");
-            requestDispatcher.forward(request, response);
-
-
-            //requestDispatcher.include(request, response);
-            //session.invalidate();
-
+            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+            HttpSession session = (HttpSession) externalContext.getSession(false);
+            session.invalidate();
         } catch (Exception e) {
             handleException(e);
         }
@@ -345,6 +330,7 @@ public class RecruitmentManager implements Serializable {
 
     /**
      * Sets a controller for the recruitmentManager
+     *
      * @param controller
      */
     public void setRecruitmentController(RecruitmentController controller) {
@@ -434,7 +420,7 @@ public class RecruitmentManager implements Serializable {
         return "";
     }*/
 
-    public String addCompetence () {
+    public String addCompetence() {
         try {
             error = null;
             //TODO validate competence?
