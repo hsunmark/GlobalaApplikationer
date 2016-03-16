@@ -15,6 +15,15 @@
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
 
+    <filter>
+        <filter-name>LoginFilter</filter-name>
+        <filter-class>model.LoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <url-pattern>/resources/*</url-pattern>
+    </filter-mapping>
+
     <display-name>REST Web Application Demo</display-name>
     <servlet>
         <servlet-name>jersey-serlvet</servlet-name>
@@ -30,35 +39,5 @@
         <url-pattern>/rest/*</url-pattern>
     </servlet-mapping>
 
-    <!-- Login filter -->
-    <filter>
-        <filter-name>LoginFilter</filter-name>
-        <filter-class>view.LoginFilter</filter-class>
-    </filter>
-    <!-- Set the login filter to secure all the pages in the /secured/* path of the application  -->
-    <filter-mapping>
-        <filter-name>LoginFilter</filter-name>
-        <url-pattern>/resources/*</url-pattern>
-    </filter-mapping>
 
-    <!-- By default go to secured welcome page -->
-    <welcome-file-list>
-        <welcome-file>resources/welcomeApplicant.xhtml</welcome-file>
-        <!-- Add recruiter here-->
-    </welcome-file-list>
-
-   <!--- <security-constraint>
-        <display-name>Protected</display-name>
-        <web-resource-collection>
-            <web-resource-name>Resources</web-resource-name>
-            <url-pattern>/resources/*</url-pattern>
-            <url-pattern>/template/*</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-            <role-name>user</role-name>
-        </auth-constraint>
-    </security-constraint>
-    <security-role>
-        <role-name>user</role-name>
-    </security-role> -->
 </web-app>

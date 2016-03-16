@@ -53,7 +53,8 @@
                                      icon="ui-icon-check"/>
                     </p>
 
-                    <p:commandButton value="#{msg.logout}" action="logOut?faces-redirect=true" icon="ui-icon-check"/>
+                    <p:commandButton value="#{msg.logout}" action="logOut?faces-redirect=true" actionListener="#{recruitmentManager.logOut}" icon="ui-icon-check">
+                            </p:commandButton>
                 </h:form>
             </p>
         </ui:define>
