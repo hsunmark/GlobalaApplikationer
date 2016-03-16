@@ -4,20 +4,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:em="http://java.sun.com/jsf/composite/emcomp"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
     <h:body>
     	<ui:composition template="template/layout.xhtml">
             <ui:define name="content">
-            <p>
-                <h:outputLabel for="registration" rendered="#{recruitmentManager.message != null}" value=""/>
-                <h:outputText id="registration" value="#{recruitmentManager.message}" style="color:red"/>
-                <h:outputText rendered="#{recruitmentManager.message == null}" value="#{msg.Register}" style="font-size: x-large"/>
-            </p>
 
             <h:form>
+                <p>
+                    <p:outputLabel id="register" rendered="#{recruitmentManager.message == null}" value="#{msg.Register}" style="font-size: x-large"/>
+                    <p:outputLabel id="register2" rendered="#{recruitmentManager.message != null}" value="#{recruitmentManager.message}" style="font-size: x-large"/>
+
+                </p>
                 <p:messages id="messages" autoUpdate="true" closable="true" />
 
                 <h:panelGrid columns="2" cellpadding="5">
@@ -66,7 +65,8 @@
                                  requiredMessage = "#{msg.formmessage2}" />
 
                 <p>
-                    <p:commandButton value="#{msg.RegisterButton}" actionListener="#{recruitmentManager.register()}" icon="ui-icon-check" />
+                    <p:commandButton value="#{msg.RegisterButton}" action="#{recruitmentManager.register}"
+                                     icon="ui-icon-check" update="@form" />
                 </p>
                 </h:panelGrid>
             </h:form>

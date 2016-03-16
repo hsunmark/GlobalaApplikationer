@@ -2,7 +2,6 @@ package view;
 
 
 import com.google.gson.Gson;
-import controller.RecruitmentController;
 import controller.RestController;
 import model.PersonEntity;
 
@@ -51,6 +50,19 @@ public class RestResources {
         List<PersonEntity> resultSet = controller.getApplicants();
         String jsonResultSet = gson.toJson(resultSet);
         return jsonResultSet;
+    }
+
+    /**
+     * Sets the controller for RestResources class.
+     * Requiered for testing with mock objects
+     * @param controller
+     */
+    public void setRestController(RestController controller) {
+        this.controller = controller;
+    }
+
+    public Gson getGson() {
+        return gson;
     }
 }
 

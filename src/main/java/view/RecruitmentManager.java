@@ -3,15 +3,18 @@ package view;
 import controller.RecruitmentController;
 import model.RegisterDTO;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -50,6 +53,7 @@ public class RecruitmentManager implements Serializable {
     private String competence;
     private BigDecimal years;
     private List<String> competenceList;
+    private String msg;
 
 
     private String NAME_REGEX = "^[a-zA-Z]+$";
@@ -86,6 +90,7 @@ public class RecruitmentManager implements Serializable {
     }
 
     public void setMessage(String message) {
+        msg = message;
         this.message = labels.getString(message);
     }
 
@@ -153,7 +158,9 @@ public class RecruitmentManager implements Serializable {
         this.password2 = password2;
     }
 
-    public Locale getCurrentLocale() { return currentLocale; }
+    public Locale getCurrentLocale() {
+        return currentLocale;
+    }
 
     public boolean isApplicant() {
         return applicant;
@@ -211,9 +218,23 @@ public class RecruitmentManager implements Serializable {
         this.years = years;
     }
 
+    public List<String> getCompetenceList() {
+        return competenceList;
+    }
+
+    public void setCompetenceList() {
+        competenceList = controller.getCompetenceList();
+    }
+
     private void handleException(Exception e) {
         e.printStackTrace(System.err);
         error = e;
+    }
+
+    @PostConstruct
+    public void init() {
+        currentLocale = FacesContext.getCurrentInstance().getApplication().getDefaultLocale();
+        labels = ResourceBundle.getBundle("labelsbundle", currentLocale);
     }
 
     /**
@@ -233,6 +254,12 @@ public class RecruitmentManager implements Serializable {
                 currentLocale = new Locale("en", "US");
                 labels = ResourceBundle.getBundle("labelsbundle", currentLocale);
             }
+            if (loginSuccess) {
+                setCompetenceList();
+            }
+            if (msg != null) {
+                setMessage(msg);
+            }
         } catch (Exception e) {
             handleException(e);
         }
@@ -246,29 +273,10 @@ public class RecruitmentManager implements Serializable {
      */
     public String logOut() {
         try {
-
             error = null;
-            //"logOut?faces-redirect=true"
-//            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-//            HttpSession session = (HttpSession) externalContext.getSession(false);
-
-//            Subject subject = SecurityContext.getCurrent().getSubject();
-//            Set<Principal> principals = subject.getPrincipals();
-//            System.out.println("**********************" + principals.size());
-//            for (Principal i : principals) {
-//                System.out.println("**********************" + i.getName() + "**" + i.getName());
-//            }
-//
-            HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
-            HttpServletResponse response = (HttpServletResponse)FacesContext.getCurrentInstance().getExternalContext().getResponse();
-
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("logOut.xhtml");
-            requestDispatcher.forward(request, response);
-
-
-            //requestDispatcher.include(request, response);
-            //session.invalidate();
-
+            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+            HttpSession session = (HttpSession) externalContext.getSession(false);
+            session.invalidate();
         } catch (Exception e) {
             handleException(e);
         }
@@ -283,10 +291,11 @@ public class RecruitmentManager implements Serializable {
     public String login() {
         try {
             error = null;
-            String msg = validateLoginParameters();
-            if (msg.equals("ok")) {
+            if (validateLoginParameters()) {
                 if (controller.login(loginName, loginPw, this)) {
+                    setCompetenceList();
                     message = null;
+                    msg = null;
                     loginSuccess = true;
                 }
             }
@@ -308,10 +317,11 @@ public class RecruitmentManager implements Serializable {
     public String register() {
         try {
             error = null;
-            String msg = validateRegisterParameters();
-            if (msg.equals("ok")) {
+            if (validateRegisterParameters()) {
                 loginSuccess = controller.register(new RegisterDTO(role, firstname, lastname, ssn, email, username, password), this);
+                setCompetenceList();
                 message = null;
+                msg = null;
             }
         } catch (Exception e) {
             handleException(e);
@@ -321,6 +331,7 @@ public class RecruitmentManager implements Serializable {
 
     /**
      * Sets a controller for the recruitmentManager
+     *
      * @param controller
      */
     public void setRecruitmentController(RecruitmentController controller) {
@@ -329,7 +340,7 @@ public class RecruitmentManager implements Serializable {
 
 
     //method that validates parameters for registration.
-    private String validateRegisterParameters() {
+    private boolean validateRegisterParameters() {
         if (username.equals("")
                 || password.equals("")
                 || password2.equals("")
@@ -339,15 +350,15 @@ public class RecruitmentManager implements Serializable {
                 || ssn.equals("")
                 || email.equals("")) {
             setMessage("RegisterMessage1");
-            return "You have not filled all the fields.";
+            return false;
         }
         if (!password.equals(password2)) {
             setMessage("RegisterMessage2");
-            return "Passwords does not match";
+            return false;
         }
         if (password.length() < 6) {
             setMessage("RegisterMessage3");
-            return "Password must be atleast 6 charachters long";
+            return false;
         }
 
         if (!username.matches(USER_REGEX)
@@ -355,32 +366,31 @@ public class RecruitmentManager implements Serializable {
                 || !firstname.matches(NAME_REGEX)
                 || !lastname.matches(NAME_REGEX)) {
             setMessage("RegisterMessage4");
-            return "You are using invalid characters.. " +
-                    "(aA-zZ allowed for names and aA-zZ + 0-9 allowed for username and password)";
+            return false;
         }
         if (!isValidEmailAddress(email)) {
             setMessage("RegisterMessage5");
-            return "Your email is not a valid email address";
+            return false;
         }
 
         if ((!ssn.matches(SSN_REGEX) || (ssn.length() != 10))) {
             setMessage("RegisterMessage6");
-            return "Your social security number should be 10 numbers";
+            return false;
         }
-        return "ok";
+        return true;
     }
 
     //method that validates parameters for login
-    private String validateLoginParameters() {
+    private boolean validateLoginParameters() {
         if (loginPw.equals("") || loginName.equals("")) {
             setMessage("LoginMessage3");
-            return "Enter login credentials";
+            return false;
         }
         if (!loginPw.matches(PW_REGEX) || !loginName.matches(USER_REGEX)) {
             setMessage("LoginMessage1");
-            return "Invalid login";
+            return false;
         }
-        return "ok";
+        return true;
     }
 
     //method that validates if a string is a valid email address.
@@ -395,20 +405,6 @@ public class RecruitmentManager implements Serializable {
         return result;
     }
 
-//    public String addDates() {
-//        try {
-//            error = null;
-//            RequestContext requestContext = RequestContext.getCurrentInstance();
-//            requestContext.update("form:display");
-//            requestContext.execute("PF('dlg').show()");
-//            if (controller.addDates(fromDate, toDate)) {
-//                //TODO set confirmation msg
-//            }
-//        } catch (Exception e) {
-//            handleException(e);
-//        }
-//        return "";
-//    }
     /*public String addDates() {
         try {
             error = null;
@@ -424,12 +420,14 @@ public class RecruitmentManager implements Serializable {
         return "";
     }*/
 
-    public String addCompetence () {
+    public String addCompetence() {
         try {
             error = null;
             //TODO validate competence?
             if (controller.addCompetence(competence, years)) {
-                //TODO set confirmation msg
+                setMessage("competenceAdded");
+            } else {
+                setMessage("invalidYears");
             }
         } catch (Exception e) {
             handleException(e);
@@ -437,11 +435,11 @@ public class RecruitmentManager implements Serializable {
         return "";
     }
 
-    public List<String> getCompetenceList() {
-        return competenceList;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setCompetenceList(List<String> competenceList) {
-        this.competenceList = controller.getCompetenceList();
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 }

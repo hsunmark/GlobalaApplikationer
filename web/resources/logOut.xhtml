@@ -3,19 +3,14 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:body>
     <ui:composition template="/template/layout.xhtml">
         <ui:define name="content">
-            <h1>#{msg.welcomerec}</h1>
+            <h1>#{msg.logoutref}</h1>
             <p>
-                <h:form id="form">
-                    <h:commandButton id="button" value="#{msg.logout}" action="logOut?faces-redirect=true">
-                        <f:actionListener binding="#{recruitmentManager.logOut()}"/>
-                    </h:commandButton>
-                </h:form>
+                <a href="../index.xhtml">#{msg.mainpage}</a>
             </p>
         </ui:define>
     </ui:composition>

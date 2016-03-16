@@ -15,6 +15,16 @@
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
 
+    <filter>
+        <filter-name>LoginFilter</filter-name>
+        <filter-class>model.LoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <url-pattern>/resources/welcomeApplicant.xhtml</url-pattern>
+        <url-pattern>/resources/welcomeRecruiter.xhtml</url-pattern>
+    </filter-mapping>
+
     <display-name>REST Web Application Demo</display-name>
     <servlet>
         <servlet-name>jersey-serlvet</servlet-name>
@@ -30,16 +40,5 @@
         <url-pattern>/rest/*</url-pattern>
     </servlet-mapping>
 
-
-    <security-constraint>
-        <display-name>Protected</display-name>
-        <web-resource-collection>
-            <web-resource-name>Resources</web-resource-name>
-            <url-pattern>/resources/*</url-pattern>
-            <url-pattern>/templates/*</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-        </auth-constraint>
-    </security-constraint>
 
 </web-app>

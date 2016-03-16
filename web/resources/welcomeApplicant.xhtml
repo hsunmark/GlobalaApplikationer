@@ -4,7 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui" xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <h:body>
     <ui:composition template="/template/layout.xhtml">
@@ -14,6 +15,7 @@
                 <h:form id="form">
 
                     <h:outputText value="#{msg.competenceMsg}" style="font-size: x-large"/>
+                    <p:outputLabel id="msg" rendered="#{recruitmentManager.message != null}" value="#{recruitmentManager.message}" style="font-size: x-large"/>
 
                     <h:panelGrid columns="2" cellpadding="5">
 
@@ -30,7 +32,7 @@
 
                     <p>
                     <p:commandButton value="#{msg.add}" action="#{recruitmentManager.addCompetence}"
-                                     icon="ui-icon-check"/>
+                                     icon="ui-icon-check" update="msg"/>
                     </p>
 
                     <p>
@@ -52,7 +54,7 @@
                                      icon="ui-icon-check"/>
                     </p>
 
-                    <p:commandButton value="#{msg.logout}" action="#{recruitmentManager.logOut}" icon="ui-icon-check"/>
+                    <p:commandButton value="#{msg.logout}" action="logOut?faces-redirect=true" actionListener="#{recruitmentManager.logOut}" icon="ui-icon-check"/>
                 </h:form>
             </p>
         </ui:define>
