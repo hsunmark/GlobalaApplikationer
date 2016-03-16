@@ -55,12 +55,13 @@ public class RecruitmentController {
                 user = em.createNamedQuery(
                         "PersonEntity.findByUsername", PersonEntity.class)
                         .setParameter("username", username);
+                personEntity = user.getSingleResult();
             } catch (Exception e) {
                 manager.setMessage("LoginMessage2");
                 logger.info("Someone used a WRONG username: " + username + " at login");
                 return false;
             }
-            personEntity = user.getSingleResult();
+
             setPermission(personEntity);
 
             if (personEntity.getPassword().equals(password)) {
