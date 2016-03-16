@@ -2,7 +2,6 @@ package view;
 
 import controller.RecruitmentController;
 import model.RegisterDTO;
-import org.primefaces.context.RequestContext;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -16,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -49,6 +49,7 @@ public class RecruitmentManager implements Serializable {
     private Date toDate;
     private String competence;
     private BigDecimal years;
+    private List<String> competenceList;
 
 
     private String NAME_REGEX = "^[a-zA-Z]+$";
@@ -434,5 +435,13 @@ public class RecruitmentManager implements Serializable {
             handleException(e);
         }
         return "";
+    }
+
+    public List<String> getCompetenceList() {
+        return competenceList;
+    }
+
+    public void setCompetenceList(List<String> competenceList) {
+        this.competenceList = controller.getCompetenceList();
     }
 }
