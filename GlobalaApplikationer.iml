@@ -69,6 +69,7 @@
     <orderEntry type="library" name="Maven: org.glassfish.common:internal-api:10.0-b28" level="project" />
     <orderEntry type="library" name="Maven: org.glassfish.external:grizzly-module:10.0-b28" level="project" />
     <orderEntry type="library" name="Maven: org.glassfish:javax.servlet:10.0-b28" level="project" />
+    <orderEntry type="library" name="Maven: org.primefaces.extensions:primefaces-extensions:0.3.0" level="project" />
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:5.1.38" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-log4j12:1.7.18" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.18" level="project" />

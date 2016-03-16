@@ -5,6 +5,7 @@ import model.RegisterDTO;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.mail.internet.AddressException;
@@ -57,6 +58,10 @@ public class RecruitmentManager implements Serializable {
     private String USER_REGEX = "^[a-zA-Z0-9]+$";
     private String SSN_REGEX = "^[0-9]+$";
     private String PW_REGEX = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
+
+
+    @ManagedProperty(value="#{navigationBean}")
+    private NavigationBean navigationBean;
 
     public boolean getLoginSuccess() {
         return loginSuccess;
@@ -225,6 +230,10 @@ public class RecruitmentManager implements Serializable {
         competenceList = controller.getCompetenceList();
     }
 
+    public void setNavigationBean(NavigationBean navigationBean) {
+        this.navigationBean = navigationBean;
+    }
+
     private void handleException(Exception e) {
         e.printStackTrace(System.err);
         error = e;
@@ -266,7 +275,7 @@ public class RecruitmentManager implements Serializable {
      */
     public String logOut() {
         try {
-
+            System.out.println("Clicked logout");
             error = null;
             //"logOut?faces-redirect=true"
 //            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
@@ -279,19 +288,19 @@ public class RecruitmentManager implements Serializable {
 //                System.out.println("**********************" + i.getName() + "**" + i.getName());
 //            }
 //
-            HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+           /* HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
             HttpServletResponse response = (HttpServletResponse)FacesContext.getCurrentInstance().getExternalContext().getResponse();
 
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("logOut.xhtml");
             requestDispatcher.forward(request, response);
-
+            */
 
             //requestDispatcher.include(request, response);
             //session.invalidate();
 
         } catch (Exception e) {
             handleException(e);
-        }
+        } //logOut?faces-redirect=true
         return "";
     }
 
@@ -315,7 +324,15 @@ public class RecruitmentManager implements Serializable {
         } catch (Exception e) {
             handleException(e);
         }
-        return "";
+       // return "";
+        if(loginSuccess) {
+            System.out.println("loginSuccess is true");
+            return navigationBean.redirectToWelcomeApplicant();
+        }
+        else {
+            System.out.println("loginSuccess is false");
+            return navigationBean.redirectToLogin();
+        }
     }
 
 
