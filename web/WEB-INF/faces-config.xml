@@ -18,7 +18,7 @@
     <navigation-rule>
         <from-view-id>/register.xhtml</from-view-id>
         <navigation-case>
-            <if>#{!recruitmentManager.error}</if>
+            <if>#{!recruitmentManager.exception}</if>
             <to-view-id>/WEB-INF/error.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
@@ -26,7 +26,31 @@
     <navigation-rule>
         <from-view-id>/index.xhtml</from-view-id>
         <navigation-case>
-            <if>#{!recruitmentManager.error}</if>
+            <if>#{!recruitmentManager.exception}</if>
+            <to-view-id>/WEB-INF/error.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/resources/welcomeApplicant.xhtml</from-view-id>
+        <navigation-case>
+            <if>#{!recruitmentManager.exception}</if>
+            <to-view-id>/WEB-INF/error.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/resources/welcomeRecruiter.xhtml</from-view-id>
+        <navigation-case>
+            <if>#{!recruitmentManager.exception}</if>
+            <to-view-id>/WEB-INF/error.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/resources/logOut.xhtml</from-view-id>
+        <navigation-case>
+            <if>#{!recruitmentManager.exception}</if>
             <to-view-id>/WEB-INF/error.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
@@ -34,7 +58,7 @@
     <navigation-rule>
         <from-view-id>/index.xhtml</from-view-id>
         <navigation-case>
-            <if>#{recruitmentManager.loginSuccess and recruitmentManager.applicant}</if>
+            <if>#{recruitmentManager.applicant}</if>
             <to-view-id>/resources/welcomeApplicant.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
@@ -42,7 +66,7 @@
     <navigation-rule>
         <from-view-id>/index.xhtml</from-view-id>
         <navigation-case>
-            <if>#{recruitmentManager.loginSuccess and recruitmentManager.recruit}</if>
+            <if>#{recruitmentManager.recruit}</if>
             <to-view-id>/resources/welcomeRecruiter.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>

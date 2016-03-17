@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="482127743">
+  <component name="DataSourceManagerImpl" format="xml" hash="171869992">
     <data-source source="LOCAL" name="MySQL - recruitdb@81.224.134.26" uuid="8d1d6a80-4442-4347-9560-1385db7b355f">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
@@ -21,6 +21,25 @@
           <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/mysql-connector-java-5.1.35-bin.jar</url>
         </library>
       </libraries>
+    </data-source>
+    <data-source source="LOCAL" name="recruitPU/EclipseLink" uuid="a8ae28ae-1fab-4a9d-8ab5-ca157f86397c">
+      <driver-ref>mysql</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml</remarks>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://81.224.134.26:3306/recruitdb</jdbc-url>
+      <explain-plan-config>
+        <provider>com.intellij.database.plan.ExplainPlanProvider.NullExplainPlanProvider</provider>
+      </explain-plan-config>
+      <driver-properties>
+        <property name="autoReconnect" value="true" />
+        <property name="zeroDateTimeBehavior" value="convertToNull" />
+        <property name="tinyInt1isBit" value="false" />
+        <property name="characterEncoding" value="utf8" />
+        <property name="characterSetResults" value="utf8" />
+        <property name="yearIsDateType" value="false" />
+      </driver-properties>
     </data-source>
   </component>
 </project>

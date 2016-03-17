@@ -17,13 +17,23 @@
 
     <filter>
         <filter-name>LoginFilter</filter-name>
-        <filter-class>model.LoginFilter</filter-class>
+        <filter-class>view.LoginFilter</filter-class>
     </filter>
+
+
     <filter-mapping>
         <filter-name>LoginFilter</filter-name>
         <url-pattern>/resources/welcomeApplicant.xhtml</url-pattern>
         <url-pattern>/resources/welcomeRecruiter.xhtml</url-pattern>
     </filter-mapping>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Templates</web-resource-name>
+            <url-pattern>/templates/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint></auth-constraint>
+    </security-constraint>
 
     <display-name>REST Web Application Demo</display-name>
     <servlet>
