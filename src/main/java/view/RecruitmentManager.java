@@ -42,7 +42,7 @@ public class RecruitmentManager implements Serializable {
     private String ssn;
     private String email;
     private String message;
-    private Exception error;
+    private Exception exception;
     private boolean loginSuccess;
     private boolean applicant;
     private boolean recruit;
@@ -178,12 +178,12 @@ public class RecruitmentManager implements Serializable {
         this.recruit = recruit;
     }
 
-    public boolean getError() {
-        return error == null;
+    public boolean getexception() {
+        return exception == null;
     }
 
     public Exception getException() {
-        return error;
+        return exception;
     }
 
     public Date getToDate() {
@@ -228,7 +228,7 @@ public class RecruitmentManager implements Serializable {
 
     private void handleException(Exception e) {
         e.printStackTrace(System.err);
-        error = e;
+        exception = e;
     }
 
     @PostConstruct
@@ -244,7 +244,7 @@ public class RecruitmentManager implements Serializable {
      */
     public String setCurrentLocale(String lang) {
         try {
-            error = null;
+            exception = null;
             if (lang.equals("swe")) {
                 currentLocale = new Locale("sv", "SE");
                 labels = ResourceBundle.getBundle("labelsbundle", currentLocale);
@@ -273,7 +273,7 @@ public class RecruitmentManager implements Serializable {
      */
     public String logOut() {
         try {
-            error = null;
+            exception = null;
             ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
             HttpSession session = (HttpSession) externalContext.getSession(false);
             session.invalidate();
@@ -290,7 +290,7 @@ public class RecruitmentManager implements Serializable {
      */
     public String login() {
         try {
-            error = null;
+            exception = null;
             if (validateLoginParameters()) {
                 if (controller.login(loginName, loginPw, this)) {
                     setCompetenceList();
@@ -310,13 +310,13 @@ public class RecruitmentManager implements Serializable {
      * Validates all the fields that a user has typed in and
      * if the fields are validated method calls controller.register(RegisterDTO dto)
      * to continue registration.
-     * Otherwise an errormessage is set by this method
+     * Otherwise an exceptionmessage is set by this method
      *
      * @return returns an empty string due to jsf22bugfix
      */
     public String register() {
         try {
-            error = null;
+            exception = null;
             if (validateRegisterParameters()) {
                 loginSuccess = controller.register(new RegisterDTO(role, firstname, lastname, ssn, email, username, password), this);
                 setCompetenceList();
@@ -407,7 +407,7 @@ public class RecruitmentManager implements Serializable {
 
     /*public String addDates() {
         try {
-            error = null;
+            exception = null;
             RequestContext requestContext = RequestContext.getCurrentInstance();
             requestContext.update("form:display");
             requestContext.execute("PF('dlg').show()");
@@ -422,7 +422,7 @@ public class RecruitmentManager implements Serializable {
 
     public String addCompetence() {
         try {
-            error = null;
+            exception = null;
             //TODO validate competence?
             if (controller.addCompetence(competence, years)) {
                 setMessage("competenceAdded");

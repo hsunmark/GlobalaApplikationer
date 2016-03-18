@@ -55,12 +55,12 @@ public class RecruitmentController {
                 user = em.createNamedQuery(
                         "PersonEntity.findByUsername", PersonEntity.class)
                         .setParameter("username", username);
+                personEntity = user.getSingleResult();
             } catch (Exception e) {
                 manager.setMessage("LoginMessage2");
                 logger.info("Someone used a WRONG username: " + username + " at login");
                 return false;
             }
-            personEntity = user.getSingleResult();
             setPermission(personEntity);
 
             if (personEntity.getPassword().equals(password)) {
@@ -71,7 +71,6 @@ public class RecruitmentController {
                 logger.info("Someone used a WRONG password for user: " + username + " at login");
                 return false;
             }
-
         } else {
             manager.setMessage("LoginMessage2");
             logger.info("logging attempt with invalid parameters from user: " + username);
@@ -214,7 +213,6 @@ public class RecruitmentController {
             for (Competence_TranslationEntity j : i.getTranslations_fk()) {
                 if (j.getLocale().equals(manager.getCurrentLocale().toString())) {
                     competenceList.add(j.getName());
-
                 }
             }
         }

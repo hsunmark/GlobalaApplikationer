@@ -205,4 +205,7 @@ locale</columns>
       </foreign-key>
     </database-model>
   </data-source>
+  <data-source name="recruitPU/EclipseLink" uuid="a8ae28ae-1fab-4a9d-8ab5-ca157f86397c">
+    <database-info product="" version="" jdbc-version="" driver-name="" driver-version=""/>
+  </data-source>
 </component>

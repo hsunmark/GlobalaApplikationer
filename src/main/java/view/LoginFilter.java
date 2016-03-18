@@ -1,4 +1,4 @@
-package model;
+package view;
 
 import view.RecruitmentManager;
 
@@ -20,10 +20,10 @@ import java.io.IOException;
  */
 public class LoginFilter implements Filter {
 
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-
-        RecruitmentManager manager = (RecruitmentManager)((HttpServletRequest)request).getSession().getAttribute("recruitmentManager");
-
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+        RecruitmentManager manager = (RecruitmentManager)((HttpServletRequest)request)
+                .getSession().getAttribute("recruitmentManager");
         String contextPath = ((HttpServletRequest)request).getContextPath();
 
         if (manager == null || !manager.getLoginSuccess()) {
