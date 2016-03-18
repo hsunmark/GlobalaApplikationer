@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="dataSourceStorage">
-  <data-source name="MySQL - recruitdb@130.228.181.187" uuid="8d1d6a80-4442-4347-9560-1385db7b355f">
+  <data-source name="MySQL - recruitdb@130.229.181.187" uuid="8d1d6a80-4442-4347-9560-1385db7b355f">
     <database-info product="MySQL" version="5.7.10-log" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
       <extra-name-characters>#@</extra-name-characters>
       <identifier-quote-string>`</identifier-quote-string>
@@ -204,8 +204,5 @@ locale</columns>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
     </database-model>
-  </data-source>
-  <data-source name="recruitPU/EclipseLink" uuid="a8ae28ae-1fab-4a9d-8ab5-ca157f86397c">
-    <database-info product="" version="" jdbc-version="" driver-name="" driver-version=""/>
   </data-source>
 </component>
